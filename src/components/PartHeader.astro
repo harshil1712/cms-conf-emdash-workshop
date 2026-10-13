@@ -1,0 +1,30 @@
+---
+interface Props {
+  id: string;
+  label: string;
+  name: string;
+  time: string;
+  lede: string;
+  concepts?: { title: string; text: string }[];
+}
+const { id, label, name, time, lede, concepts = [] } = Astro.props;
+---
+
+<section id={id} class="part" aria-labelledby={`${id}-title`}>
+  <p class="part-label">{label} <time>{time}</time></p>
+  <h2 id={`${id}-title`} class="part-title">{name}<span class="dash">—</span></h2>
+  <p class="part-lede" set:html={lede} />
+  {
+    concepts.length > 0 && (
+      <div class="concepts">
+        {concepts.map((c) => (
+          <div class="concept">
+            <h3>{c.title}</h3>
+            <p set:html={c.text} />
+          </div>
+        ))}
+      </div>
+    )
+  }
+  <slot />
+</section>

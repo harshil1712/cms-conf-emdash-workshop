@@ -1,0 +1,19 @@
+---
+import Prompt from "./Prompt.astro";
+import type { PromptKey } from "../data/prompts";
+
+interface Props {
+  letter: "A" | "B" | "C";
+  name: PromptKey;
+  summary: string;
+}
+const { letter, name, summary } = Astro.props;
+---
+
+<details class="aside checkpoint">
+  <summary><span><b>checkpoint-{letter.toLowerCase()}</b>Fell behind? Catch up to Checkpoint {letter}</span></summary>
+  <div class="aside-body">
+    <p set:html={summary} />
+    <Prompt name={name} label="Catch-up prompt" />
+  </div>
+</details>

@@ -1,0 +1,18 @@
+---
+interface Props {
+  code: string;
+  /** Shown in the bar, e.g. a file name or "terminal". */
+  label?: string;
+  /** Pre-highlighted HTML. When set, `code` is still what gets copied. */
+  html?: string;
+}
+const { code, label = "terminal", html } = Astro.props;
+---
+
+<div class="code">
+  <div class="code-bar">
+    <span>{label}</span>
+    <button type="button" class="btn-copy" data-copy data-copy-text={code}>Copy</button>
+  </div>
+  {html ? <pre set:html={html} /> : <pre>{code}</pre>}
+</div>

@@ -1,0 +1,25 @@
+---
+type Cell = { text: string; mark?: "yes" | "no" | "note" };
+type Col = { title: string; sub?: string; tone: "green" | "accent" | "ink"; cells: Cell[] };
+interface Props {
+  cols: [Col, Col];
+  label?: string;
+}
+const { cols, label } = Astro.props;
+---
+
+<div class="compare" role="group" aria-label={label}>
+  {
+    cols.map((col) => (
+      <div class="compare-col" data-tone={col.tone}>
+        <div class="compare-head">
+          {col.title}
+          {col.sub && <small>{col.sub}</small>}
+        </div>
+        {col.cells.map((c) => (
+          <div class="compare-cell" data-mark={c.mark} set:html={c.text} />
+        ))}
+      </div>
+    ))
+  }
+</div>

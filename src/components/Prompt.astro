@@ -1,0 +1,42 @@
+---
+import { prompts, type PromptKey } from "../data/prompts";
+
+interface Props {
+  /** Key into src/data/prompts.ts. */
+  name: PromptKey;
+  label?: string;
+  /** Collapsed prompts show the first lines and a "Show full prompt" toggle. */
+  collapsed?: boolean;
+  /** Lets attendees edit the prompt in place before copying (e.g. change the topic). */
+  editable?: boolean;
+  hint?: string;
+}
+const {
+  name,
+  label = "Copy this prompt into your agent",
+  collapsed = true,
+  editable = false,
+  hint,
+} = Astro.props;
+const text = prompts[name];
+---
+
+<div class="prompt" data-prompt={name} data-expanded={collapsed ? "false" : "true"}>
+  <div class="prompt-bar">
+    <span class="prompt-label">{label}</span>
+    <button type="button" class="btn-copy" data-copy>Copy prompt</button>
+  </div>
+  <pre
+    data-copy-source
+    contenteditable={editable ? "true" : undefined}
+    spellcheck="false"
+    aria-label={editable ? "Editable prompt" : undefined}>{text}</pre>
+  {
+    collapsed && (
+      <button type="button" class="prompt-toggle" aria-expanded="false" data-toggle>
+        Show full prompt
+      </button>
+    )
+  }
+</div>
+{hint && <p class="prompt-hint" set:html={hint} />}

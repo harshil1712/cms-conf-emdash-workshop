@@ -1,0 +1,756 @@
+---
+import Base from "../layouts/Base.astro";
+import Hero from "../components/Hero.astro";
+import StepNav from "../components/StepNav.astro";
+import PartHeader from "../components/PartHeader.astro";
+import StepCard from "../components/StepCard.astro";
+import Facts from "../components/Facts.astro";
+import Prompt from "../components/Prompt.astro";
+import Callout from "../components/Callout.astro";
+import Code from "../components/Code.astro";
+import Compare from "../components/Compare.astro";
+import Consent from "../components/Consent.astro";
+import Checkpoint from "../components/Checkpoint.astro";
+import { workshop as W, repoUrl, steps } from "../data/workshop";
+
+const step = (id: string) => steps.find((s) => s.id === id)!;
+
+// Labels are the exact wording on EmDash's consent screen (oauth/authorize SCOPE_LABELS).
+const baseScopes = [
+  { name: "content:read", note: "Read content (posts, pages, etc.)", on: true },
+  { name: "content:write", note: "Create, edit, and delete content; manage menus and taxonomies", on: true },
+  { name: "media:read", note: "View media files", on: true },
+  { name: "media:write", note: "Upload and manage media files", on: true },
+  { name: "schema:read", note: "View collection schemas", on: true },
+  { name: "schema:write", note: "Create and modify collection schemas", danger: true },
+  { name: "taxonomies:manage", note: "Manage taxonomies" },
+  { name: "menus:manage", note: "Manage navigation menus" },
+  { name: "settings:read", note: "View site settings" },
+  { name: "settings:manage", note: "Modify site settings" },
+  { name: "mcp:tools", note: "Use MCP tools from all enabled plugins" },
+  { name: "transfer:export", note: "Export a copy of the entire site" },
+  { name: "transfer:analyze", note: "Upload site packages and check whether they can be imported" },
+  { name: "transfer:execute", note: "Import a site package into this empty site" },
+  { name: "admin", note: "Full administrative access", danger: true },
+];
+
+const manifestCode = `"capabilities": [
+  "network:request",
+  "content:write",
+  "media:write",
+  "hooks.content-policy:register"
+],
+"allowedHosts": ["api.replicate.com", "*.replicate.delivery"],
+"admin": {
+  "pages": [{ "path": "/settings", "label": "Settings" }],
+  "settingsSchema": {
+    "replicateToken": { "type": "secret", "label": "Replicate API token" }
+  },
+  "editorActions": [{
+    "id": "generate-cover",
+    "label": "Generate cover",
+    "placement": "toolbar",
+    "collections": ["posts"],
+    "route": "covers/generate"
+  }]
+}`;
+
+const manifestHtml = `<span class="k">"capabilities"</span>: [
+  <span class="s">"network:request"</span>,              <span class="c">// ctx.http, only to allowedHosts</span>
+  <span class="s">"content:write"</span>,                <span class="c">// ctx.content (implies read)</span>
+  <span class="s">"media:write"</span>,                  <span class="c">// ctx.media.upload (implies read)</span>
+  <span class="s">"hooks.content-policy:register"</span>  <span class="c">// may veto a publish</span>
+],
+<span class="k">"allowedHosts"</span>: [<span class="s">"api.replicate.com"</span>, <span class="s">"*.replicate.delivery"</span>],
+<span class="k">"admin"</span>: {
+  <span class="k">"pages"</span>: [{ <span class="k">"path"</span>: <span class="s">"/settings"</span>, <span class="k">"label"</span>: <span class="s">"Settings"</span> }],
+  <span class="k">"settingsSchema"</span>: {
+    <span class="c">// "secret": stored encrypted, never sent back to a browser</span>
+    <span class="k">"replicateToken"</span>: { <span class="k">"type"</span>: <span class="s">"secret"</span>, <span class="k">"label"</span>: <span class="s">"Replicate API token"</span> }
+  },
+  <span class="k">"editorActions"</span>: [{
+    <span class="k">"id"</span>: <span class="s">"generate-cover"</span>,
+    <span class="k">"label"</span>: <span class="s">"Generate cover"</span>,     <span class="c">// a button in the post editor</span>
+    <span class="k">"placement"</span>: <span class="s">"toolbar"</span>,        <span class="c">// required: toolbar or overflow</span>
+    <span class="k">"collections"</span>: [<span class="s">"posts"</span>],      <span class="c">// only on posts</span>
+    <span class="k">"route"</span>: <span class="s">"covers/generate"</span>     <span class="c">// a private plugin route</span>
+  }]
+}`;
+---
+
+<Base
+  title={`${W.title} · ${W.subtitle}`}
+  description="Deploy an EmDash blog to Cloudflare, let an AI agent run it with scopes you choose, and build a sandboxed plugin that generates cover images without leaking its API key."
+>
+  <Hero />
+
+  <div class="page-shell">
+    <StepNav />
+
+    <main class="page-main" id="main">
+      <section class="intro" aria-labelledby="leave-title">
+        <h2 class="kicker" id="leave-title">What you'll leave with</h2>
+        <ol class="leave-list">
+          <li>A live EmDash blog on Cloudflare Workers, D1 and R2, with a content model you changed yourself.</li>
+          <li>An AI agent connected to your site over MCP, with scopes you chose, that has drafted, tagged and scheduled real posts.</li>
+          <li>
+            A <strong>Cover Images</strong> plugin you wrote. Editors and agents both use it, it blocks posts without a
+            cover, and it holds a Replicate token it can only ever send to Replicate.
+          </li>
+        </ol>
+      </section>
+
+      <!-- ───────────────────────── START ───────────────────────── -->
+
+      <PartHeader
+        id="part-start"
+        label="Before you start"
+        name="Get ready"
+        time="0:00"
+        lede="How this works: almost every step is a prompt you paste into your coding agent. The agent runs the commands and explains each one. When something needs your eyes, a browser, or a decision, the page says <strong>You do this</strong>."
+      />
+
+      <StepCard
+        id="setup"
+        num={step("setup").num}
+        title="Check your setup"
+        lede="Paste this into your coding agent. It checks your machine and helps you fix anything missing."
+      >
+        <Facts
+          items={[
+            { label: "Checks", text: "Node 22.16+, pnpm, git, Wrangler, and that R2 is on." },
+            { label: "Asks first", text: "Before it installs or updates anything." },
+            { label: "You sign in", text: "The Cloudflare login opens your browser. You run it." },
+          ]}
+        />
+        <Prompt name="setup" />
+        <Callout variant="success">You should see a table of your tools and <strong>Ready</strong>.</Callout>
+
+        <details class="aside">
+          <summary><span>What to bring <small>accounts and tokens</small></span></summary>
+          <div class="aside-body">
+            <ul class="plain-list">
+              <li>
+                <strong>A Cloudflare account with R2 enabled.</strong> R2 has to be switched on in the
+                <a href={W.links.r2}>dashboard</a> before the first deploy can create a bucket. It may ask for a payment
+                method, even on the free plan, so do it at home.
+              </li>
+              <li>
+                <strong>A coding agent that speaks MCP</strong>: Claude Code, Codex, OpenCode, Cursor, or VS Code with
+                Copilot. No agent? Pair up with a neighbour.
+              </li>
+              <li>
+                <strong>An Atmosphere handle or DID</strong>, for example your <a href={W.links.bluesky}>Bluesky</a>
+                handle. It goes in the plugin manifest's <code>publisher</code> field. No account? We hand out a placeholder.
+              </li>
+              <li>
+                <strong>A Replicate token (optional).</strong> Bring your own from
+                <a href={W.links.replicateTokens}>replicate.com</a> with billing set up, or use the workshop token we
+                share in the room. We revoke it after the session.
+              </li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="aside">
+          <summary><span>No Cloudflare account? <small>take the local track</small></span></summary>
+          <div class="aside-body">
+            <p>
+              Everything works locally on Node.js and SQLite. In step 1, scaffold with
+              <code>--template node:blog</code> instead of <code>cloudflare:blog</code>, skip step 2, and run
+              <code>pnpm dev</code>. Wherever the page says <em>your site URL</em>, use
+              <code>http://localhost:4321</code>.
+            </p>
+            <p>
+              In Part 3, the plugin runs sandboxed on your laptop through <code>workerd</code>. See
+              <a href={W.links.sandbox}>Plugin sandbox → Node.js</a>.
+            </p>
+          </div>
+        </details>
+      </StepCard>
+
+      <!-- ───────────────────────── PART 1 ───────────────────────── -->
+
+      <PartHeader
+        id="part-ship"
+        label="Part 1"
+        name="Ship"
+        time="0:12 – 0:42"
+        lede="Scaffold a blog, put it on Cloudflare, claim it, and change its content model. Thirty minutes from nothing to a live site you can edit."
+        concepts={[
+          {
+            title: "An Astro integration",
+            text: "Admin, REST API, auth, media and plugins come with <code>emdash()</code> in your Astro config. No separate backend.",
+          },
+          {
+            title: "Cloudflare primitives",
+            text: "Workers run the site, D1 holds content, R2 holds media. It also runs on Node with SQLite or Postgres.",
+          },
+          {
+            title: "Content lives in the database",
+            text: "Each collection is a real SQL table (<code>ec_posts</code>). Rich text is Portable Text: structured JSON, not HTML.",
+          },
+        ]}
+      />
+
+      <StepCard
+        id="create"
+        num={step("create").num}
+        title="Create your blog"
+        lede="One command scaffolds an Astro site with EmDash, the Blog template, and agent skills that teach your agent current EmDash APIs."
+      >
+        <Facts
+          items={[
+            { label: "Template", text: "Blog on Cloudflare Workers, with sample posts." },
+            { label: "Folder", text: `<code>${W.workspaceDir}/${W.siteDir}</code>` },
+            { label: "Sandbox", text: "Off for now. Part 3 explains why." },
+          ]}
+        />
+        <Prompt name="create" />
+        <Callout variant="success">You should see a short summary of the project and its full path.</Callout>
+        <Callout variant="restart" title="Restart your agent inside that folder">
+          <p>
+            Your agent gave you the commands. It only loads the site's <code>AGENTS.md</code>, its skills, and the EmDash
+            docs MCP server when it starts there, and every step from now on relies on them.
+          </p>
+        </Callout>
+      </StepCard>
+
+      <StepCard
+        id="deploy"
+        num={step("deploy").num}
+        title="Deploy to Cloudflare"
+        lede="The first deploy creates everything the site needs: a D1 database, an R2 bucket, a KV namespace for sessions, and the Worker. Later deploys reuse them."
+      >
+        <Prompt name="deploy" />
+        <Callout variant="warn" title="Open the admin the moment it's live">
+          <p>
+            The URL is public, and <strong>the first person to finish setup becomes the admin</strong>. Don't share your
+            link until you've done step 3. The first load can take up to half a minute while the site sets up its
+            database: that's normal.
+          </p>
+        </Callout>
+      </StepCard>
+
+      <StepCard
+        id="claim"
+        num={step("claim").num}
+        title="Claim your admin"
+        lede="Run the setup wizard on your live site and sign in with a passkey."
+        tags={[{ text: "You do this", tone: "blue" }]}
+      >
+        <Callout variant="you">
+          <ol class="you-steps">
+            <li>Open your site's <code>/_emdash/admin</code> link from the last step.</li>
+            <li>Give the site a title. Keep <strong>Sample content</strong> on. Setting up takes up to a minute.</li>
+            <li>Enter your email and name, then <strong>register a passkey</strong> when your browser asks.</li>
+            <li>When the site asks you to sign in, use <strong>Sign in with Passkey</strong> with the passkey you just made.</li>
+            <li>Open the dashboard, then visit your site in another tab.</li>
+          </ol>
+        </Callout>
+        <Callout variant="success">
+          You should see the admin dashboard, and the sample posts on your live homepage.
+        </Callout>
+        <details class="aside">
+          <summary>Why passkeys, and why now?</summary>
+          <div class="aside-body">
+            <p>
+              A passkey only works on the hostname that registered it. Registering on your <code>workers.dev</code> URL
+              means you sign in there from now on. A passkey made on <code>localhost</code> won't work on your live site,
+              and the other way round.
+            </p>
+          </div>
+        </details>
+      </StepCard>
+
+      <StepCard
+        id="model"
+        num={step("model").num}
+        title="Change the content model"
+        lede="Content types live in the database, so you change them in the admin, not in code. Then your agent pulls the new schema into types and uses it."
+      >
+        <Callout variant="you">
+          <ol class="you-steps">
+            <li>In the admin, open <strong>Content Types → Posts</strong>.</li>
+            <li>Add a <strong>Boolean</strong> field called <code>featured</code>.</li>
+            <li>Add a <strong>short text</strong> field called <code>subtitle</code>. Posts already have <code>excerpt</code>.</li>
+            <li>Open one sample post, tick <strong>featured</strong>, and give it a subtitle. The post is already published, so your edits are saved as a draft: click <strong>Publish changes</strong> to put them live.</li>
+          </ol>
+        </Callout>
+        <Prompt name="model" />
+        <Callout variant="look" title="Try it yourself">
+          <p>Open your live homepage. The hero now shows the post you marked as featured, with its subtitle.</p>
+          <p>
+            Untick <strong>featured</strong> in the admin and refresh: the hero falls back to the newest post. No redeploy,
+            because the query runs on every request.
+          </p>
+        </Callout>
+        <Checkpoint
+          letter="A"
+          name="checkpointA"
+          summary="Checkpoint A has the homepage change from this step. Your agent copies it into your site and deploys it, keeping your Cloudflare config."
+        />
+      </StepCard>
+
+      <!-- ───────────────────────── PART 2 ───────────────────────── -->
+
+      <PartHeader
+        id="part-automate"
+        label="Part 2"
+        name="Automate"
+        time="0:42 – 1:12"
+        lede="Your site already has an MCP server. Connect your agent to it, let it run your content desk, and watch what happens when it reaches for more than you gave it."
+        concepts={[
+          {
+            title: "MCP server",
+            text: "Built into every site at <code>/_emdash/api/mcp</code>. Agents use it to work with content.",
+          },
+          {
+            title: "CLI",
+            text: "<code>npx emdash content …</code> and <code>schema …</code>. Outputs JSON, good for scripts and CI.",
+          },
+          {
+            title: "Agent skills",
+            text: "In <code>.agents/skills/</code>. They teach coding agents the current EmDash APIs, so they don't make them up.",
+          },
+          {
+            title: "Least privilege",
+            text: "OAuth scopes and user roles are checked separately. A token never gets more than both allow.",
+          },
+        ]}
+      />
+
+      <StepCard
+        id="connect"
+        num={step("connect").num}
+        title="Connect your agent"
+        lede="Add your site as an MCP server. When you sign in, your site asks what the agent may do. You choose."
+      >
+        <Prompt name="connect" />
+        <Consent scopes={baseScopes} />
+        <Callout variant="look" title="Why these five">
+          <ul>
+            <li><code>content:write</code> already includes managing tags and menus.</li>
+            <li><code>media:write</code> does <strong>not</strong> include <code>media:read</code>, which the agent needs to list images.</li>
+            <li><code>schema:read</code> lets the agent check the fields before it writes, so it doesn't guess.</li>
+            <li>No <code>schema:write</code>: the agent writes content, it doesn't redesign your site. Keep that in mind for step 7.</li>
+            <li>No <code>mcp:tools</code> yet: your site has no plugins. You'll add it in step 15.</li>
+          </ul>
+        </Callout>
+        <Callout variant="restart" title="Restart your agent if it says so">
+          <p>Most agents only load new MCP servers when they start. Restart, then paste the next prompt.</p>
+        </Callout>
+      </StepCard>
+
+      <StepCard
+        id="operate"
+        num={step("operate").num}
+        title="Run your content desk"
+        lede="Your agent drafts, tags, writes alt text and schedules, all through your site's MCP tools."
+      >
+        <Facts
+          items={[
+            { label: "Drafts", text: "Three posts, no images. Part 3 makes the covers." },
+            { label: "Tags", text: "Created and assigned." },
+            { label: "Alt text", text: "On the sample posts' featured images." },
+            { label: "Schedule", text: "One post, tomorrow at 9:00." },
+          ]}
+        />
+        <Prompt
+          name="operate"
+          label="Edit the topic, then copy"
+          editable
+          hint="Click into the prompt to change the first line to a topic you care about."
+        />
+        <Callout variant="look" title="See it yourself">
+          <p>
+            In the admin, open <strong>Posts</strong>: three drafts with tags, one marked as scheduled. Open a sample post
+            and check the image's alt text.
+          </p>
+          <p>
+            The post's image field keeps its own copy of <code>alt</code>. If the agent only updated the media library,
+            your site still renders the old text. Ask it to fix that.
+          </p>
+        </Callout>
+      </StepCard>
+
+      <StepCard
+        id="guardrail"
+        num={step("guardrail").num}
+        title="Hit the guardrail"
+        lede="Ask the agent for something you didn't allow."
+      >
+        <Prompt name="guardrail" collapsed={false} />
+        <Callout variant="success">
+          You should see <code>INSUFFICIENT_SCOPE</code>. The schema tools are listed, but the call fails.
+        </Callout>
+        <Callout variant="look" title="That's the point">
+          <p>
+            This isn't a bug. You cleared <code>schema:write</code> on the consent screen, so the token can't change
+            your content model, even though your own admin account could. Scopes limit the token. Roles limit the person.
+            The agent gets the smaller of the two.
+          </p>
+        </Callout>
+      </StepCard>
+
+      <StepCard
+        id="developer"
+        num={step("developer").num}
+        title="Agent as developer"
+        lede="Same agent, different job: change the site's code. The skills keep it on current EmDash APIs instead of ones it remembers from training."
+        optional
+      >
+        <Prompt name="developer" />
+        <Callout variant="look" title="Review the diff together">
+          <p>
+            Look for <code>entry.data.id</code> when the agent fetches a post's tags. <code>AGENTS.md</code> says
+            <code>entry.id</code> is the slug and <code>entry.data.id</code> is the database ID. That's the kind of
+            detail an agent gets wrong without the rules file and skills.
+          </p>
+        </Callout>
+        <Checkpoint
+          letter="B"
+          name="checkpointB"
+          summary="Checkpoint B has the site code so far and the <code>cover-images</code> starter. If your agent is connected, it also drafts three posts for Part 3."
+        />
+      </StepCard>
+
+      <div class="break" role="separator"><span><b>Break</b>five minutes · 1:12</span></div>
+
+      <!-- ───────────────────────── PART 3 ───────────────────────── -->
+
+      <PartHeader
+        id="part-extend"
+        label="Part 3"
+        name="Extend"
+        time="1:17 – 1:52"
+        lede="Build an AI plugin that needs a paid API token, then make sure the token can only go to one place. That's the job of EmDash's sandbox."
+        concepts={[
+          {
+            title: "The problem",
+            text: "On WordPress, most security vulnerabilities come from plugins. Any plugin can read every key stored in the site and send it anywhere.",
+          },
+          {
+            title: "A manifest is a contract",
+            text: "<code>emdash-plugin.jsonc</code> lists the capabilities and hosts a plugin needs. Nothing else is available to it.",
+          },
+          {
+            title: "Same plugin, two ways to run",
+            text: "<code>sandboxed: []</code> gives it its own isolate. <code>plugins: []</code> runs it in-process, with the same API gates but no isolation.",
+          },
+        ]}
+      >
+        <Compare
+          label="Sandboxed and in-process plugins compared"
+          cols={[
+            {
+              title: "sandboxed: []",
+              sub: "Workers Paid · own isolate",
+              tone: "green",
+              cells: [
+                { text: "Only the <code>ctx</code> APIs its capabilities grant", mark: "yes" },
+                { text: "<code>ctx.http.fetch</code> only reaches <code>allowedHosts</code>", mark: "yes" },
+                { text: "Direct <code>fetch()</code> and <code>process.env</code> blocked", mark: "yes" },
+                { text: "50 ms CPU, 10 subrequests, 30 s wall time per call", mark: "note" },
+              ],
+            },
+            {
+              title: "plugins: []",
+              sub: "Workers Free · in-process",
+              tone: "accent",
+              cells: [
+                { text: "Only the <code>ctx</code> APIs its capabilities grant", mark: "yes" },
+                { text: "<code>ctx.http.fetch</code> only reaches <code>allowedHosts</code>", mark: "yes" },
+                { text: "Code could still call <code>fetch()</code> directly", mark: "no" },
+                { text: "No per-plugin limits", mark: "no" },
+              ],
+            },
+          ]}
+        />
+        <Callout variant="stage">
+          <p>
+            Matt takes the finished plugin, running sandboxed, and adds one line that POSTs the Replicate token to
+            <code>evil.example</code>. <code>ctx.http.fetch()</code> throws, because the host isn't in
+            <code>allowedHosts</code>. A direct <code>fetch()</code> fails too, and so does reading <code>process.env</code>.
+            Cover generation keeps working.
+          </p>
+        </Callout>
+      </PartHeader>
+
+      <StepCard
+        id="starter"
+        num={step("starter").num}
+        title="Open the plugin starter"
+        lede="The starter has the parts that aren't worth typing in a workshop. You'll write the parts that teach you something."
+      >
+        <Facts
+          items={[
+            { label: "Already done", text: "Scaffold, Block Kit settings page, editor-action wiring, test setup." },
+            { label: "You write", text: "Trust contract, <code>generateCover</code>, entry points, publish rule." },
+            { label: "Folder", text: `<code>${W.workspaceDir}/${W.pluginDir}</code>, next to your site.` },
+          ]}
+        />
+        <Prompt name="starter" />
+        <details class="aside">
+          <summary>Rather start from scratch?</summary>
+          <div class="aside-body">
+            <p>The plugin CLI scaffolds the same shape. It asks for your publisher, author, security contact and repo:</p>
+            <Code code={`cd ${W.workspaceDir}\npnpm dlx @emdash-cms/plugin-cli init ${W.pluginDir}`} />
+          </div>
+        </details>
+      </StepCard>
+
+      <StepCard
+        id="manifest"
+        num={step("manifest").num}
+        title="Write the trust contract"
+        lede="The manifest says what the plugin may touch. An operator sees it before installing, and the runtime enforces it."
+      >
+        <Code code={manifestCode} html={manifestHtml} label="emdash-plugin.jsonc (excerpt)" />
+        <Prompt name="manifest" />
+        <Callout variant="look" title="Read it like an operator">
+          <p>
+            Four capabilities, two hosts. That's the plugin's whole reach. It can't read users, can't send email, and
+            can't call anything except Replicate. The token is stored encrypted, and the admin never sends it back to a browser.
+          </p>
+        </Callout>
+      </StepCard>
+
+      <StepCard
+        id="generate"
+        num={step("generate").num}
+        title="Generate a cover"
+        lede="One function, used by every entry point: read the post, ask FLUX Schnell for an image, store it, and set it as the cover."
+      >
+        <Facts
+          items={[
+            { label: "Model", text: `<a href="${W.links.replicate}">FLUX Schnell</a> on Replicate, about $0.003 an image.` },
+            { label: "Network", text: "Two calls: create the prediction, download the image." },
+            { label: "Budget", text: "Under 30 s wall time and 10 subrequests." },
+          ]}
+        />
+        <Prompt name="generate" />
+        <Callout variant="look" title="Why it's built like this">
+          <ul>
+            <li><strong>No polling.</strong> <code>Prefer: wait=20</code> holds the request open until the image is ready, and <code>Cancel-After</code> stops it before the sandbox would.</li>
+            <li><strong>Download straight away.</strong> Replicate deletes API outputs after an hour. Your media library keeps them.</li>
+            <li><strong>Return early if a cover exists.</strong> That makes it safe for an agent to call twice.</li>
+          </ul>
+        </Callout>
+      </StepCard>
+
+      <StepCard
+        id="expose"
+        num={step("expose").num}
+        title="Hand it to editors and agents"
+        lede="Editors get a button in the post editor. Agents get an MCP tool. Both call the same function through private routes."
+      >
+        <Compare
+          label="Two entry points"
+          cols={[
+            {
+              title: "Editors",
+              sub: "Generate cover button",
+              tone: "ink",
+              cells: [
+                { text: "Editor action → private route <code>covers/generate</code>", mark: "note" },
+                { text: "Post comes from <code>routeCtx.ui.entry</code>, which the host checks", mark: "yes" },
+                { text: "Replies with a toast and refreshes the editor", mark: "yes" },
+              ],
+            },
+            {
+              title: "Agents",
+              sub: `${W.pluginSlug}__generateCover`,
+              tone: "ink",
+              cells: [
+                { text: "MCP tool → private route, input checked with <code>zod</code>", mark: "note" },
+                { text: "Needs the scope <code>mcp:tools</code> (or the narrower <code>mcp:tools:" + W.pluginSlug + "</code>)", mark: "yes" },
+                { text: "The description tells the agent when to use it", mark: "yes" },
+              ],
+            },
+          ]}
+        />
+        <Prompt name="expose" />
+      </StepCard>
+
+      <StepCard
+        id="rule"
+        num={step("rule").num}
+        title="Enforce the publish rule"
+        lede="No cover, no publish. The rule runs on every path that publishes a post, whether that's a person, the scheduler or an agent."
+      >
+        <Prompt name="rule" />
+        <Callout variant="success">You should see four passing commands, and a <code>dist/</code> folder in the plugin.</Callout>
+        <Callout variant="look" title="Rules beat prompts">
+          <p>
+            You could ask your agent to always add a cover before publishing. It might forget. A
+            <code>content:beforePublish</code> hook doesn't forget, and it applies to every agent, editor and script.
+          </p>
+        </Callout>
+        <Checkpoint
+          letter="C"
+          name="checkpointC"
+          summary="Checkpoint C has the finished plugin with tests. Your agent swaps it into your plugin folder and keeps your publisher."
+        />
+      </StepCard>
+
+      <StepCard
+        id="install"
+        num={step("install").num}
+        title="Install and deploy"
+        lede="Add the plugin to your live site. How it runs depends on your Cloudflare plan."
+      >
+        <Compare
+          label="Plugin registration by plan"
+          cols={[
+            {
+              title: "Workers Free",
+              sub: "plugins: [coverImages]",
+              tone: "accent",
+              cells: [
+                { text: "Runs in-process, in your site's Worker", mark: "note" },
+                { text: "Capability gates and host allowlist on <code>ctx</code> apply", mark: "yes" },
+                { text: "No isolation boundary", mark: "no" },
+              ],
+            },
+            {
+              title: "Workers Paid",
+              sub: "sandboxed: [coverImages]",
+              tone: "green",
+              cells: [
+                { text: "Runs in its own Dynamic Worker via the <code>LOADER</code> binding", mark: "note" },
+                { text: "Capability gates and host allowlist on <code>ctx</code> apply", mark: "yes" },
+                { text: "Isolated, with CPU, subrequest and time limits", mark: "yes" },
+              ],
+            },
+          ]}
+        />
+        <Prompt name="install" />
+        <Callout variant="you">
+          <ol class="you-steps">
+            <li>In the admin, open <strong>Plugins</strong>. Check the capabilities and the two Replicate hosts, then enable <strong>Cover Images</strong>.</li>
+            <li>Turn on the plugin's <strong>MCP tools</strong>.</li>
+            <li>Open the plugin's <strong>Settings</strong>, paste your Replicate token (or the workshop one), and save.</li>
+            <li>Open one of the agent's drafts and click <strong>Generate cover</strong>.</li>
+          </ol>
+        </Callout>
+        <Callout variant="success">
+          After a few seconds you should see a toast, and the draft has an AI-generated cover image.
+        </Callout>
+        <details class="aside">
+          <summary>Settings won't save?</summary>
+          <div class="aside-body">
+            <p>
+              The Worker is missing <code>EMDASH_ENCRYPTION_KEY</code>. Step 3 of the prompt sets it from your
+              <code>.env</code>. Ask your agent to check <code>pnpm wrangler secret list</code>, then redeploy.
+            </p>
+          </div>
+        </details>
+      </StepCard>
+
+      <StepCard
+        id="payoff"
+        num={step("payoff").num}
+        title="The payoff"
+        lede="Give your agent one more scope and ask it to publish its drafts. Your plugin says no. Then your agent fixes it with your plugin's own tool."
+      >
+        <Prompt name="reconnect" label="First: reconnect with one extra scope" />
+        <Consent
+          title="Authorize this client, again"
+          scopes={[
+            ...baseScopes.slice(0, 5),
+            { name: "mcp:tools", note: "Use MCP tools from all enabled plugins", isNew: true },
+            { name: "schema:write", note: "Create and modify collection schemas. Still unticked.", danger: true },
+            { name: "admin", note: "Full administrative access. Still unticked.", danger: true },
+          ]}
+        />
+        <Prompt name="payoff" label="Then: ask it to publish" collapsed={false} />
+        <Callout variant="look" title="What you'll see">
+          <ol>
+            <li>The agent tries to publish and gets <code>PUBLISH_REJECTED</code>: "Add a cover image (try Generate cover)."</li>
+            <li>It calls <code>{W.pluginSlug}__generateCover</code> for each draft.</li>
+            <li>It publishes again, and your homepage fills with generated covers.</li>
+          </ol>
+          <p>
+            You didn't tell the agent about covers. The rule told it, and the tool's description told it how to fix it.
+          </p>
+        </Callout>
+        <Callout variant="warn" title="Agent did something odd?">
+          <p>
+            That happens, and it's the reason Part 3 exists. You don't rely on the agent behaving: the publish rule holds
+            either way. Paste the prompt again, or click <strong>Generate cover</strong> yourself and publish.
+          </p>
+        </Callout>
+      </StepCard>
+
+      <StepCard
+        id="ship-it"
+        num={step("ship-it").num}
+        title="Ship it"
+        lede="Bundle the plugin for the EmDash plugin registry, and see exactly what an operator will be asked to approve."
+      >
+        <Prompt name="shipIt" />
+        <Callout variant="stage">
+          <p>
+            Matt runs <code>emdash-plugin publish</code> live. Publishing signs the release with an Atmosphere account,
+            so it's a demo, not a step. After review, anyone can install it from the registry, and the consent dialog lists the
+            same four capabilities and two hosts you wrote.
+          </p>
+        </Callout>
+      </StepCard>
+
+      <!-- ───────────────────────── FINALE ───────────────────────── -->
+
+      <StepCard
+        id="done"
+        num="✓"
+        final
+        title="What you just built"
+        lede="Ship, automate, extend. You made every call; your agent did the typing."
+      >
+        <ul class="finale-list">
+          <li>A live blog you deployed and modelled yourself.</li>
+          <li>An agent that runs it with the scopes you chose, and stopped at the ones you didn't.</li>
+          <li>An AI plugin that editors and agents both use, that enforces a publish rule, and that can't leak its API key.</li>
+        </ul>
+
+        <Callout variant="look" title="Take it home">
+          <p>
+            Keep the habits, not just the code: connect agents with the narrowest scopes that work, put rules in hooks
+            rather than prompts, and give plugins a manifest you'd be happy to read as an operator.
+          </p>
+        </Callout>
+
+        <h3 class="finale-h">Keep going</h3>
+        <div class="links-grid">
+          <a class="link-card" href={W.links.wordpress}><b>Import from WordPress</b><span>Bring an existing site across.</span></a>
+          <a class="link-card" href={W.links.publishing}><b>Publish a plugin</b><span>Bundle, sign and release to the registry.</span></a>
+          <a class="link-card" href={W.links.docsMcp}><b>Docs MCP</b><span>Give any agent the EmDash docs.</span></a>
+          <a class="link-card" href={W.links.github}><b>EmDash on GitHub</b><span>Issues, discussions and source.</span></a>
+        </div>
+
+        <h3 class="finale-h">Clean up</h3>
+        <p>
+          Your site keeps running on Cloudflare until you delete it. If you used the workshop Replicate token, remove it from
+          the plugin's Settings: it stops working after today anyway.
+        </p>
+        <details class="aside">
+          <summary>Want everything gone?</summary>
+          <div class="aside-body">
+            <Prompt name="cleanup" />
+            <p>You can also delete the Worker, the D1 database, the KV namespace and the R2 bucket from the Cloudflare dashboard.</p>
+          </div>
+        </details>
+      </StepCard>
+    </main>
+  </div>
+
+  <footer class="footer">
+    <span>{W.title}</span><span class="sep">·</span><span>{W.event}</span><span class="sep">·</span>
+    <a href={W.links.docs}>EmDash docs</a>
+    <span class="sep">·</span>
+    <a href={repoUrl}>Workshop repo</a>
+    <span class="sep">·</span>
+    <a href={W.links.announcement}>EmDash 1.0</a>
+  </footer>
+</Base>

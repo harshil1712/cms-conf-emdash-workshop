@@ -1,0 +1,40 @@
+---
+interface Props {
+  id: string;
+  num: string;
+  title: string;
+  lede?: string;
+  optional?: boolean;
+  /** Short labels shown above the title, e.g. "You do this" or "~5 min". */
+  tags?: { text: string; tone?: "accent" | "blue" }[];
+  final?: boolean;
+}
+const { id, num, title, lede, optional, tags = [], final } = Astro.props;
+const allTags = optional ? [{ text: "Optional · first to cut", tone: undefined }, ...tags] : tags;
+---
+
+<article id={id} class="stepcard" data-step={id}>
+  <header class="stepcard-head">
+    <div class="stepcard-num" data-final={final ? "" : undefined} aria-hidden="true">{num}</div>
+    <div>
+      {
+        allTags.length > 0 && (
+          <div class="stepcard-tags">
+            {allTags.map((t) => (
+              <span class="tag" data-tone={t.tone}>
+                {t.text}
+              </span>
+            ))}
+          </div>
+        )
+      }
+      <h2 class="stepcard-title">
+        <span class="sr-only">{final ? "" : `Step ${num}: `}</span>{title}
+      </h2>
+      {lede && <p class="stepcard-lede" set:html={lede} />}
+    </div>
+  </header>
+  <div class="stepcard-body">
+    <slot />
+  </div>
+</article>

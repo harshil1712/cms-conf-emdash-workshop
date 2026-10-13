@@ -1,0 +1,81 @@
+.gitignore
+  s_3e63ed2fce543d::t_70e9f0e0c44299 1-5
+.npmrc
+  s_3e63ed2fce543d::t_012c1c8f94fd97 1-2
+RUNTHROUGH-REPORT.md
+  s_2cf5296abb4072::t_6a65673bba99cf 1-48
+astro.config.mjs
+  s_3e63ed2fce543d::t_1d0b6256a1a612 1-8
+outline.md
+  s_f876e4c42bb6ea::t_9035df951b19cb 1-235
+package.json
+  s_3e63ed2fce543d::t_716f62579e5627 1-20
+pnpm-lock.yaml
+  s_3e63ed2fce543d::t_085e504dfcb93b 1-3562
+pnpm-workspace.yaml
+  s_3e63ed2fce543d::t_e1434da669c65c 1-3
+public/favicon.svg
+  s_3e63ed2fce543d::t_c84766dcc7908e 1
+src/components/Callout.astro
+  s_3e63ed2fce543d::t_1ccba9da6c1064 1-34
+src/components/Checkpoint.astro
+  s_3e63ed2fce543d::t_bfe6fcf59cab9b 1-19
+src/components/Code.astro
+  s_3e63ed2fce543d::t_852e4e771d0f94 1-18
+src/components/Compare.astro
+  s_3e63ed2fce543d::t_5270ba3f9b18e5 1-25
+src/components/Facts.astro
+  s_3e63ed2fce543d::t_08bd91b1600f43 1-18
+src/components/Hero.astro
+  s_3e63ed2fce543d::t_a755f4eda3c745 1-50
+src/components/PartHeader.astro
+  s_3e63ed2fce543d::t_44699191500055 1-30
+src/components/Prompt.astro
+  s_3e63ed2fce543d::t_614565f318c89f 1-42
+src/components/StepCard.astro
+  s_3e63ed2fce543d::t_a7fe8c3075bfd5 1-40
+src/components/StepNav.astro
+  s_3e63ed2fce543d::t_4744e82a3be880 1-94
+src/data/prompts.ts
+  s_2cf5296abb4072::t_f56df660610f95 1-287
+src/layouts/Base.astro
+  s_3e63ed2fce543d::t_8abb9193f2a2d6 1-90
+src/styles/global.css
+  s_3e63ed2fce543d::t_997c2a06ec875b 1-1498
+tsconfig.json
+  s_3e63ed2fce543d::t_28754e61833ae2 1-5
+wrangler.jsonc
+  s_3e63ed2fce543d::t_6f249407e0f784 1-9
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "9e43a79b7c9ac29a3b0cafac461d421b1e9642ed",
+  "prompts": {},
+  "sessions": {
+    "s_2cf5296abb4072": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "01a13080-f366-7136-ad7d-aef2385d5b86",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Harshil Agrawal <harshil@cloudflare.com>"
+    },
+    "s_3e63ed2fce543d": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "01a1304a-f729-7136-ad7d-aef0e6f85c52",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Harshil Agrawal <harshil@cloudflare.com>"
+    },
+    "s_f876e4c42bb6ea": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "01a12091-4e41-738e-8326-1723ddd8fab7",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Harshil Agrawal <harshil@cloudflare.com>"
+    }
+  }
+}

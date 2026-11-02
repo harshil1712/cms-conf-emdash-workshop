@@ -34,7 +34,7 @@ pnpm deploy     # build + wrangler deploy
 | Admin → **Parts** | The four part headers: label, time, lede, concepts, and a `body` of blocks (the Part 3 comparison and stage callout). `break_before` puts the break separator above a part |
 | Admin → **Steps** | Every step card: number, rail label, part, lede, tag, and a `body` of blocks. `position` sets the order. A step with no part (the finale) goes at the end, outside the rail |
 | `seed/seed.json` | The schema (collections and block types) and the starting content. Applied once, by the setup wizard. Refresh it from a live site with `npx emdash export-seed --with-content` |
-| `src/data/workshop.ts` | Event details, repo name, placeholder DID, folder names, links, the run of show, and the `{{explain}}`, `{{narrate}}` and `{{mcpOnly}}` prompt snippets |
+| `src/data/workshop.ts` | Event details, the public checkpoints repo, placeholder DID, folder names, links, the run of show, and the `{{explain}}`, `{{narrate}}` and `{{mcpOnly}}` prompt snippets |
 | `src/data/scopes.ts` | The consent-screen scopes, worded exactly as EmDash shows them |
 | `src/pages/index.astro` | Loads parts and steps and lays out the page |
 | `src/components/GuideBlocks.astro`, `src/components/blocks/` | One renderer per block type |
@@ -53,7 +53,7 @@ pnpm deploy     # build + wrangler deploy
 ### Before the workshop: TODO
 
 - [ ] Deploy the guide and claim its admin (see **Deploying**), then invite Matt.
-- [ ] Set `repo` in `src/data/workshop.ts` to the real workshop repo. The starter and catch-up prompts fetch `cover-images/` and `checkpoint-a/b/c` from it with `giget`.
+- [ ] Create the public repo [`harshil1712/emdash-workshop`](https://github.com/harshil1712/emdash-workshop) (set as `repo` in `src/data/workshop.ts`) and push the `checkpoint-a`, `checkpoint-b` and `checkpoint-c` branches to it. The starter and catch-up prompts fetch `cover-images/` and the checkpoints from it with `giget`, which only works on public repos. Keep it separate from this guide repo, which has the talk plan and run-through notes in it.
 - [ ] Build `checkpoint-a` and `checkpoint-b` from the current Blog template (redesigned in the templates repo on 16 Oct 2026, EmDash 1.3.0+). The checkpoint prompts replace the attendee's whole `src/`, so an older template would bring back the old design. Checkpoint A's homepage change goes in `src/components/PostCard.astro` (`feature` variant) as well as `src/pages/index.astro`.
 - [ ] Build the `cover-images/` starter on `checkpoint-b` (scaffold, Block Kit settings page, editor-action wiring, test setup) so it matches the step 9 prompt. Use `emdash ^1.4.0` and `@emdash-cms/plugin-test ^0.2.11` as dev dependencies (`emdash-plugin init` 0.13.5 scaffolds `^1.0.0` and `^0.2.6`; older versions scaffolded EmDash 0.x), and don't list `emdash` under `dependencies`, so `pnpm add file:../cover-images` doesn't install a second copy in the site.
 - [ ] Set `placeholderDid` to a real DID we control.

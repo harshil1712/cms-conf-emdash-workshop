@@ -13,10 +13,11 @@ export const workshop = {
   speakers: ["Matt Kane", "Harshil Agrawal"],
 
   /**
-   * TODO(harshil): the public workshop repo with checkpoint-a/b/c branches and
-   * the `cover-images/` starter on checkpoint-b. Format: owner/repo.
+   * Public repo with the checkpoint-a/b/c branches, and the `cover-images/`
+   * starter on checkpoint-b. Attendees' agents fetch from it with giget, so it
+   * must be public. Separate from this (private) guide repo. Format: owner/repo.
    */
-  repo: "emdash-cms/cms-conf-workshop",
+  repo: "harshil1712/emdash-workshop",
 
   /** Placeholder publisher DID for attendees without an Atmosphere account. */
   placeholderDid: "did:plc:cmsconf2026workshop",

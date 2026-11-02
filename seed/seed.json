@@ -1972,7 +1972,7 @@
           "num": "4",
           "label": "Change the content model",
           "title": "Change the content model",
-          "lede": "[Content types](https://docs.emdashcms.com/concepts/content-model/) live in the database, so you change them in the admin, not in code. Then your agent pulls the new schema into [types](https://docs.emdashcms.com/reference/cli/) and uses it.",
+          "lede": "[Content types](https://docs.emdashcms.com/concepts/content-model/) live in the database, so you change them in the admin, not in code. You'll add two fields to Posts, then your agent pulls the new schema into [types](https://docs.emdashcms.com/reference/cli/) and uses it on the homepage.",
           "body": [
             {
               "_type": "callout",
@@ -1982,72 +1982,119 @@
               "body": [
                 {
                   "_type": "block",
-                  "_key": "k2x",
+                  "_key": "m4b6",
                   "style": "normal",
-                  "listItem": "number",
-                  "level": 1,
                   "markDefs": [],
                   "children": [
                     {
                       "_type": "span",
-                      "_key": "k2u",
-                      "text": "In the admin, open ",
+                      "_key": "m4s1",
+                      "text": "In the admin sidebar, open ",
                       "marks": []
                     },
                     {
                       "_type": "span",
-                      "_key": "k2v",
-                      "text": "Content Types → Posts",
+                      "_key": "m4s2",
+                      "text": "Content Types",
                       "marks": [
                         "strong"
                       ]
                     },
                     {
                       "_type": "span",
-                      "_key": "k2w",
-                      "text": ".",
-                      "marks": []
-                    }
-                  ]
-                },
-                {
-                  "_type": "block",
-                  "_key": "k33",
-                  "style": "normal",
-                  "listItem": "number",
-                  "level": 1,
-                  "markDefs": [
-                    {
-                      "_key": "lnk15",
-                      "_type": "link",
-                      "href": "https://docs.emdashcms.com/reference/field-types/"
-                    }
-                  ],
-                  "children": [
-                    {
-                      "_type": "span",
-                      "_key": "k2y",
-                      "text": "Add a ",
+                      "_key": "m4s3",
+                      "text": ", then ",
                       "marks": []
                     },
                     {
                       "_type": "span",
-                      "_key": "k2zb",
-                      "text": "Boolean",
+                      "_key": "m4s4",
+                      "text": "Posts",
                       "marks": [
-                        "strong",
-                        "lnk15"
+                        "strong"
                       ]
                     },
                     {
                       "_type": "span",
-                      "_key": "k30",
-                      "text": " field called ",
+                      "_key": "m4s5",
+                      "text": ".",
+                      "marks": []
+                    }
+                  ],
+                  "listItem": "number",
+                  "level": 1
+                },
+                {
+                  "_type": "block",
+                  "_key": "m4b26",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_type": "span",
+                      "_key": "m4s7",
+                      "text": "Click ",
                       "marks": []
                     },
                     {
                       "_type": "span",
-                      "_key": "k31",
+                      "_key": "m4s8",
+                      "text": "Add Field",
+                      "marks": [
+                        "strong"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "m4s9",
+                      "text": " and choose ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "m4s10",
+                      "text": "Boolean",
+                      "marks": [
+                        "strong"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "m4s11",
+                      "text": ". Set ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "m4s12",
+                      "text": "Label",
+                      "marks": [
+                        "strong"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "m4s13",
+                      "text": " to ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "m4s14",
+                      "text": "Featured",
+                      "marks": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "m4s15",
+                      "text": "; the slug fills in as ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "m4s16",
                       "text": "featured",
                       "marks": [
                         "code"
@@ -2055,43 +2102,141 @@
                     },
                     {
                       "_type": "span",
-                      "_key": "k32",
-                      "text": ".",
-                      "marks": []
-                    }
-                  ]
-                },
-                {
-                  "_type": "block",
-                  "_key": "k3b",
-                  "style": "normal",
-                  "listItem": "number",
-                  "level": 1,
-                  "markDefs": [],
-                  "children": [
-                    {
-                      "_type": "span",
-                      "_key": "k34",
-                      "text": "Add a ",
+                      "_key": "m4s17",
+                      "text": ". Leave ",
                       "marks": []
                     },
                     {
                       "_type": "span",
-                      "_key": "k35",
-                      "text": "short text",
+                      "_key": "m4s18",
+                      "text": "Required",
                       "marks": [
                         "strong"
                       ]
                     },
                     {
                       "_type": "span",
-                      "_key": "k36",
-                      "text": " field called ",
+                      "_key": "m4s19",
+                      "text": ", ",
                       "marks": []
                     },
                     {
                       "_type": "span",
-                      "_key": "k37",
+                      "_key": "m4s20",
+                      "text": "Unique",
+                      "marks": [
+                        "strong"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "m4s21",
+                      "text": " and ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "m4s22",
+                      "text": "Indexed",
+                      "marks": [
+                        "strong"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "m4s23",
+                      "text": " off, then click ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "m4s24",
+                      "text": "Add Field",
+                      "marks": [
+                        "strong"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "m4s25",
+                      "text": ".",
+                      "marks": []
+                    }
+                  ],
+                  "listItem": "number",
+                  "level": 1
+                },
+                {
+                  "_type": "block",
+                  "_key": "m4b40",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_type": "span",
+                      "_key": "m4s27",
+                      "text": "Click ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "m4s28",
+                      "text": "Add Field",
+                      "marks": [
+                        "strong"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "m4s29",
+                      "text": " again and choose ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "m4s30",
+                      "text": "Short Text",
+                      "marks": [
+                        "strong"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "m4s31",
+                      "text": ". Set ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "m4s32",
+                      "text": "Label",
+                      "marks": [
+                        "strong"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "m4s33",
+                      "text": " to ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "m4s34",
+                      "text": "Subtitle",
+                      "marks": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "m4s35",
+                      "text": "; the slug fills in as ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "m4s36",
                       "text": "subtitle",
                       "marks": [
                         "code"
@@ -2099,57 +2244,57 @@
                     },
                     {
                       "_type": "span",
-                      "_key": "k38",
-                      "text": ". Posts already have ",
+                      "_key": "m4s37",
+                      "text": ". Leave every switch off and the validation boxes empty, then click ",
                       "marks": []
                     },
                     {
                       "_type": "span",
-                      "_key": "k39",
-                      "text": "excerpt",
-                      "marks": [
-                        "code"
-                      ]
-                    },
-                    {
-                      "_type": "span",
-                      "_key": "k3a",
-                      "text": ".",
-                      "marks": []
-                    }
-                  ]
-                },
-                {
-                  "_type": "block",
-                  "_key": "k3h",
-                  "style": "normal",
-                  "listItem": "number",
-                  "level": 1,
-                  "markDefs": [],
-                  "children": [
-                    {
-                      "_type": "span",
-                      "_key": "k3c",
-                      "text": "Open one sample post, tick ",
-                      "marks": []
-                    },
-                    {
-                      "_type": "span",
-                      "_key": "k3d",
-                      "text": "featured",
+                      "_key": "m4s38",
+                      "text": "Add Field",
                       "marks": [
                         "strong"
                       ]
                     },
                     {
                       "_type": "span",
-                      "_key": "k3e",
-                      "text": ", and give it a subtitle. The post is already published, so your edits are saved as a draft: click ",
+                      "_key": "m4s39",
+                      "text": ".",
+                      "marks": []
+                    }
+                  ],
+                  "listItem": "number",
+                  "level": 1
+                },
+                {
+                  "_type": "block",
+                  "_key": "m4b46",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_type": "span",
+                      "_key": "m4s41",
+                      "text": "Open one sample post, switch ",
                       "marks": []
                     },
                     {
                       "_type": "span",
-                      "_key": "k3f",
+                      "_key": "m4s42",
+                      "text": "Featured",
+                      "marks": [
+                        "strong"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "m4s43",
+                      "text": " on, and type a subtitle. The post is already published, so your edits are saved as a draft: click ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "m4s44",
                       "text": "Publish changes",
                       "marks": [
                         "strong"
@@ -2157,8 +2302,284 @@
                     },
                     {
                       "_type": "span",
-                      "_key": "k3g",
+                      "_key": "m4s45",
                       "text": " to put them live.",
+                      "marks": []
+                    }
+                  ],
+                  "listItem": "number",
+                  "level": 1
+                },
+                {
+                  "_type": "block",
+                  "_key": "m4b50",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_type": "span",
+                      "_key": "m4s47",
+                      "text": "Each field saves when you click ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "m4s48",
+                      "text": "Add Field",
+                      "marks": [
+                        "strong"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "m4s49",
+                      "text": ". There's no separate save for the content type.",
+                      "marks": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "_type": "aside",
+              "_version": 1,
+              "_key": "aside-18b",
+              "summary": "Why these settings?",
+              "body": [
+                {
+                  "_type": "block",
+                  "_key": "m4b59",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_type": "span",
+                      "_key": "m4s51",
+                      "text": "Slug.",
+                      "marks": [
+                        "strong"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "m4s52",
+                      "text": " It's the name your code uses, as in ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "m4s53",
+                      "text": "post.data.featured",
+                      "marks": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "m4s54",
+                      "text": ", and the prompt below expects exactly ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "m4s55",
+                      "text": "featured",
+                      "marks": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "m4s56",
+                      "text": " and ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "m4s57",
+                      "text": "subtitle",
+                      "marks": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "m4s58",
+                      "text": ". You can change the label later but not the slug. Made a typo? Delete the field and add it again.",
+                      "marks": []
+                    }
+                  ],
+                  "listItem": "bullet",
+                  "level": 1
+                },
+                {
+                  "_type": "block",
+                  "_key": "m4b62",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_type": "span",
+                      "_key": "m4s60",
+                      "text": "Required: off.",
+                      "marks": [
+                        "strong"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "m4s61",
+                      "text": " The sample posts have no value for either field, and most posts will never have a subtitle. The homepage only shows one when it's set.",
+                      "marks": []
+                    }
+                  ],
+                  "listItem": "bullet",
+                  "level": 1
+                },
+                {
+                  "_type": "block",
+                  "_key": "m4b65",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_type": "span",
+                      "_key": "m4s63",
+                      "text": "Unique: off.",
+                      "marks": [
+                        "strong"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "m4s64",
+                      "text": " Unique is for values no two posts may share, like an SKU. Featured is a yes/no flag that most posts share as \"no\", so it doesn't fit. To show a single featured post, the homepage picks the newest one.",
+                      "marks": []
+                    }
+                  ],
+                  "listItem": "bullet",
+                  "level": 1
+                },
+                {
+                  "_type": "block",
+                  "_key": "m4b68",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_type": "span",
+                      "_key": "m4s66",
+                      "text": "Indexed: off.",
+                      "marks": [
+                        "strong"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "m4s67",
+                      "text": " Indexing adds a database index so lists can filter and sort on the field quickly. With a few posts it makes no difference, and you can switch it on later.",
+                      "marks": []
+                    }
+                  ],
+                  "listItem": "bullet",
+                  "level": 1
+                },
+                {
+                  "_type": "block",
+                  "_key": "m4b71",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_type": "span",
+                      "_key": "m4s69",
+                      "text": "Searchable: off.",
+                      "marks": [
+                        "strong"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "m4s70",
+                      "text": " It adds the subtitle to full-text search, which this blog doesn't use.",
+                      "marks": []
+                    }
+                  ],
+                  "listItem": "bullet",
+                  "level": 1
+                },
+                {
+                  "_type": "block",
+                  "_key": "m4b82",
+                  "style": "normal",
+                  "markDefs": [
+                    {
+                      "_key": "m4l79",
+                      "_type": "link",
+                      "href": "https://docs.emdashcms.com/reference/field-types/"
+                    }
+                  ],
+                  "children": [
+                    {
+                      "_type": "span",
+                      "_key": "m4s72",
+                      "text": "You can't change ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "m4s73",
+                      "text": "Required",
+                      "marks": [
+                        "strong"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "m4s74",
+                      "text": " or ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "m4s75",
+                      "text": "Unique",
+                      "marks": [
+                        "strong"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "m4s76",
+                      "text": " once a field exists, because existing posts might break the new rule. That's why it's worth deciding before you click ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "m4s77",
+                      "text": "Add Field",
+                      "marks": [
+                        "strong"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "m4s78",
+                      "text": ". Every field type is in the ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "m4s80",
+                      "text": "field types reference",
+                      "marks": [
+                        "m4l79"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "m4s81",
+                      "text": ".",
                       "marks": []
                     }
                   ]
@@ -2210,13 +2631,13 @@
                     {
                       "_type": "span",
                       "_key": "k3k",
-                      "text": "Untick ",
+                      "text": "Switch ",
                       "marks": []
                     },
                     {
                       "_type": "span",
                       "_key": "k3l",
-                      "text": "featured",
+                      "text": "Featured",
                       "marks": [
                         "strong"
                       ]
@@ -2224,7 +2645,7 @@
                     {
                       "_type": "span",
                       "_key": "k3ma",
-                      "text": " in the admin and refresh: the card falls back to the newest post. No redeploy, because ",
+                      "text": " off in the admin and publish the change, then refresh: the card falls back to the newest post. No redeploy, because ",
                       "marks": []
                     },
                     {
@@ -2251,7 +2672,7 @@
               "_key": "checkpoint-21",
               "letter": "A",
               "summary": "Checkpoint A has the homepage change from this step. Your agent copies it into your site and deploys it, keeping your Cloudflare config.",
-              "prompt": "Bring my site to the workshop's Checkpoint A. {{narrate}}\n\n1. In a temporary folder, fetch the checkpoint: `npx giget@latest gh:{{repo}}#checkpoint-a /tmp/emdash-checkpoint-a`.\n2. Copy `src/` and `emdash-env.d.ts` from it into `{{siteDir}}`, replacing mine. Don't touch `wrangler.jsonc`, `.env`, `.wrangler/` or `node_modules/`.\n3. Show me `git status` in one short list, then commit: `git add -A && git commit -m \"Checkpoint A\"`.\n4. Deploy with `pnpm run deploy`.\n\nIf my live site doesn't have the `featured` and `subtitle` fields yet, tell me to add them in the admin under Content Types → Posts. End with my site URL on its own line."
+              "prompt": "Bring my site to the workshop's Checkpoint A. {{narrate}}\n\n1. In a temporary folder, fetch the checkpoint: `npx giget@latest gh:{{repo}}#checkpoint-a /tmp/emdash-checkpoint-a`.\n2. Copy `src/` and `emdash-env.d.ts` from it into `{{siteDir}}`, replacing mine. Don't touch `wrangler.jsonc`, `.env`, `.wrangler/` or `node_modules/`.\n3. Show me `git status` in one short list, then commit: `git add -A && git commit -m \"Checkpoint A\"`.\n4. Deploy with `pnpm run deploy`.\n\nIf my live site doesn't have the `featured` and `subtitle` fields yet, tell me to add them in the admin under Content Types → Posts: a Boolean labelled `Featured` and a Short Text labelled `Subtitle`, with every switch off. End with my site URL on its own line."
             }
           ],
           "position": 4,

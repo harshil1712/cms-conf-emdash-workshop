@@ -1,4 +1,6 @@
 ---
+import { inline } from "../utils/inline";
+
 interface Props {
   id: string;
   num: string;
@@ -8,8 +10,10 @@ interface Props {
   /** Short labels shown above the title, e.g. "You do this" or "~5 min". */
   tags?: { text: string; tone?: "accent" | "blue" }[];
   final?: boolean;
+  /** Admin link, shown only to signed-in editors. */
+  editUrl?: string;
 }
-const { id, num, title, lede, optional, tags = [], final } = Astro.props;
+const { id, num, title, lede, optional, tags = [], final, editUrl } = Astro.props;
 const allTags = optional ? [{ text: "Optional · first to cut", tone: undefined }, ...tags] : tags;
 ---
 
@@ -31,7 +35,8 @@ const allTags = optional ? [{ text: "Optional · first to cut", tone: undefined 
       <h2 class="stepcard-title">
         <span class="sr-only">{final ? "" : `Step ${num}: `}</span>{title}
       </h2>
-      {lede && <p class="stepcard-lede" set:html={lede} />}
+      {lede && <p class="stepcard-lede" set:html={inline(lede)} />}
+      {editUrl && <a class="edit-link" href={editUrl}>Edit in admin</a>}
     </div>
   </header>
   <div class="stepcard-body">

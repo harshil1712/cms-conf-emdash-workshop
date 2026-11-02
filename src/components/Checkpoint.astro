@@ -1,19 +1,20 @@
 ---
 import Prompt from "./Prompt.astro";
-import type { PromptKey } from "../data/prompts";
+import { inline } from "../utils/inline";
 
 interface Props {
-  letter: "A" | "B" | "C";
-  name: PromptKey;
+  letter: string;
   summary: string;
+  /** Catch-up prompt text from the CMS. */
+  prompt: string;
 }
-const { letter, name, summary } = Astro.props;
+const { letter, summary, prompt } = Astro.props;
 ---
 
 <details class="aside checkpoint">
   <summary><span><b>checkpoint-{letter.toLowerCase()}</b>Fell behind? Catch up to Checkpoint {letter}</span></summary>
   <div class="aside-body">
-    <p set:html={summary} />
-    <Prompt name={name} label="Catch-up prompt" />
+    <p set:html={inline(summary)} />
+    <Prompt text={prompt} label="Catch-up prompt" />
   </div>
 </details>

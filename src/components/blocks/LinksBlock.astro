@@ -1,0 +1,19 @@
+---
+import type { BlockComponentProps } from "emdash/ui";
+import type { StepBodyLinksBlock } from "../../../emdash-env";
+import { fill } from "../../data/workshop";
+
+type Props = BlockComponentProps<StepBodyLinksBlock>;
+const { value } = Astro.props;
+---
+
+<div class="links-grid">
+  {
+    (value.items ?? []).map((l) => (
+      <a class="link-card" href={fill(l.url)}>
+        <b>{l.title}</b>
+        {l.text && <span>{l.text}</span>}
+      </a>
+    ))
+  }
+</div>

@@ -1,0 +1,26 @@
+---
+import { PortableText } from "emdash/ui";
+import type { PortableTextBlock } from "emdash";
+import { fill } from "../data/workshop";
+
+interface Props {
+  value: PortableTextBlock[] | null | undefined;
+}
+
+type Node = Record<string, unknown>;
+
+/** Fills {{placeholders}} in span text and link hrefs, leaving the rest of the tree alone. */
+function fillTree(node: unknown): unknown {
+  if (Array.isArray(node)) return node.map(fillTree);
+  if (!node || typeof node !== "object") return node;
+  const out: Node = {};
+  for (const [k, v] of Object.entries(node as Node)) {
+    out[k] = (k === "text" || k === "href") && typeof v === "string" ? fill(v) : fillTree(v);
+  }
+  return out;
+}
+
+const value = fillTree(Astro.props.value ?? []) as PortableTextBlock[];
+---
+
+<PortableText value={value} />

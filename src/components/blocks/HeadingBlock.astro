@@ -1,0 +1,10 @@
+---
+import type { BlockComponentProps } from "emdash/ui";
+import type { StepBodyHeadingBlock } from "../../../emdash-env";
+import { fill } from "../../data/workshop";
+
+type Props = BlockComponentProps<StepBodyHeadingBlock>;
+const { value } = Astro.props;
+---
+
+<h3 class="finale-h">{fill(value.text)}</h3>

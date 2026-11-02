@@ -3,3 +3,10 @@ dist/
 .astro/
 .wrangler/
 .DS_Store
+.emdash/migrations.json
+uploads
+.env
+.env.*
+!.env.example
+.dev.vars
+.dev.vars.*

@@ -1,0 +1,16 @@
+---
+import type { BlockComponentProps } from "emdash/ui";
+import type { StepBodyPromptBlock } from "../../../emdash-env";
+import Prompt from "../Prompt.astro";
+
+type Props = BlockComponentProps<StepBodyPromptBlock>;
+const { value } = Astro.props;
+---
+
+<Prompt
+  text={value.text}
+  label={value.label ?? undefined}
+  collapsed={!value.expanded}
+  editable={value.editable ?? false}
+  hint={value.hint ?? undefined}
+/>

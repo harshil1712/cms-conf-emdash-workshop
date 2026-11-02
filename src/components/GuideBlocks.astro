@@ -1,0 +1,36 @@
+---
+import { Blocks } from "emdash/ui";
+import AsideBlock from "./blocks/AsideBlock.astro";
+import CalloutBlock from "./blocks/CalloutBlock.astro";
+import CheckpointBlock from "./blocks/CheckpointBlock.astro";
+import CodeBlock from "./blocks/CodeBlock.astro";
+import CompareBlock from "./blocks/CompareBlock.astro";
+import ConsentBlock from "./blocks/ConsentBlock.astro";
+import FactsBlock from "./blocks/FactsBlock.astro";
+import HeadingBlock from "./blocks/HeadingBlock.astro";
+import LinksBlock from "./blocks/LinksBlock.astro";
+import PromptBlock from "./blocks/PromptBlock.astro";
+import ProseBlock from "./blocks/ProseBlock.astro";
+
+interface Props {
+  value: unknown;
+}
+
+// One renderer per block type in seed/seed.json (blockTypes).
+const components = {
+  prompt: PromptBlock,
+  callout: CalloutBlock,
+  facts: FactsBlock,
+  compare: CompareBlock,
+  consent: ConsentBlock,
+  code: CodeBlock,
+  checkpoint: CheckpointBlock,
+  aside: AsideBlock,
+  links: LinksBlock,
+  heading: HeadingBlock,
+  prose: ProseBlock,
+};
+const value = Array.isArray(Astro.props.value) ? Astro.props.value : [];
+---
+
+<Blocks value={value} components={components} />

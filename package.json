@@ -2,6 +2,9 @@
   "name": "cms-conf-emdash-workshop",
   "private": true,
   "type": "module",
+  "emdash": {
+    "seed": "seed/seed.json"
+  },
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
@@ -10,11 +13,18 @@
     "check": "astro check"
   },
   "dependencies": {
-    "astro": "^7.3.8"
+    "@astrojs/cloudflare": "^14.3.1",
+    "@astrojs/react": "^7.0.0",
+    "@emdash-cms/cloudflare": "^1.4.0",
+    "astro": "^7.4.4",
+    "emdash": "^1.4.0",
+    "react": "19.2.4",
+    "react-dom": "19.2.4"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
+    "@cloudflare/workers-types": "^5.20260820.1",
     "typescript": "^5.9.3",
-    "wrangler": "^4.149.0"
+    "wrangler": "^4.154.0"
   }
 }

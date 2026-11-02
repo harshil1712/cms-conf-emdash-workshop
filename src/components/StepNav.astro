@@ -1,5 +1,12 @@
 ---
-import { parts, steps } from "../data/workshop";
+export type NavPart = { id: string; label: string; name: string; time: string; showName: boolean };
+export type NavStep = { id: string; num: string; label: string; part: string; optional?: boolean };
+
+interface Props {
+  parts: NavPart[];
+  steps: NavStep[];
+}
+const { parts, steps } = Astro.props;
 ---
 
 <nav class="rail" aria-label="Workshop steps" data-rail>
@@ -17,7 +24,7 @@ import { parts, steps } from "../data/workshop";
           <p class="rail-part">
             <a href={`#part-${part.id}`}>
               {part.label}
-              {part.id !== "start" && <b>{part.name}</b>}
+              {part.showName && <b>{part.name}</b>}
             </a>
             <time>{part.time}</time>
           </p>

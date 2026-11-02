@@ -1,0 +1,10 @@
+---
+import type { BlockComponentProps } from "emdash/ui";
+import type { StepBodyCheckpointBlock } from "../../../emdash-env";
+import Checkpoint from "../Checkpoint.astro";
+
+type Props = BlockComponentProps<StepBodyCheckpointBlock>;
+const { value } = Astro.props;
+---
+
+<Checkpoint letter={value.letter} summary={value.summary ?? ""} prompt={value.prompt} />

@@ -1,0 +1,3727 @@
+{
+  "$schema": "https://emdashcms.com/seed.schema.json",
+  "version": "1",
+  "meta": {
+    "name": "Ship, Automate, Extend",
+    "description": "The attendee guide for the EmDash workshop at CMS Conf 2026",
+    "author": "Matt Kane & Harshil Agrawal"
+  },
+  "settings": {
+    "title": "Ship, Automate, Extend",
+    "tagline": "A hands-on EmDash CMS workshop"
+  },
+  "blockTypes": [
+    {
+      "slug": "prompt",
+      "label": "Prompt",
+      "description": "A prompt attendees copy into their coding agent",
+      "category": "Guide",
+      "currentVersion": 1,
+      "versions": [
+        {
+          "version": 1,
+          "fields": [
+            {
+              "slug": "label",
+              "label": "Label above the prompt",
+              "type": "string"
+            },
+            {
+              "slug": "text",
+              "label": "Prompt text ({{siteDir}}, {{explain}} and other placeholders are filled in)",
+              "type": "text",
+              "required": true
+            },
+            {
+              "slug": "expanded",
+              "label": "Show the whole prompt (otherwise the first lines and a toggle)",
+              "type": "boolean",
+              "defaultValue": false
+            },
+            {
+              "slug": "editable",
+              "label": "Attendees can edit it before copying",
+              "type": "boolean",
+              "defaultValue": false
+            },
+            {
+              "slug": "hint",
+              "label": "Hint under the prompt",
+              "type": "string"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "callout",
+      "label": "Callout",
+      "description": "A coloured box: what to expect, what to do, a warning",
+      "category": "Guide",
+      "currentVersion": 1,
+      "versions": [
+        {
+          "version": 1,
+          "fields": [
+            {
+              "slug": "variant",
+              "label": "Kind",
+              "type": "select",
+              "validation": {
+                "options": [
+                  "success",
+                  "look",
+                  "you",
+                  "warn",
+                  "restart",
+                  "stage"
+                ]
+              },
+              "required": true
+            },
+            {
+              "slug": "title",
+              "label": "Title (optional; 'you' and 'stage' have defaults)",
+              "type": "string"
+            },
+            {
+              "slug": "body",
+              "label": "Body",
+              "type": "portableText",
+              "required": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "facts",
+      "label": "Facts",
+      "description": "A short list of label and text pairs",
+      "category": "Guide",
+      "currentVersion": 1,
+      "versions": [
+        {
+          "version": 1,
+          "fields": [
+            {
+              "slug": "items",
+              "label": "Facts",
+              "type": "repeater",
+              "validation": {
+                "subFields": [
+                  {
+                    "slug": "label",
+                    "label": "Label",
+                    "type": "string",
+                    "required": true
+                  },
+                  {
+                    "slug": "text",
+                    "label": "Text",
+                    "type": "string",
+                    "required": true
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "compare",
+      "label": "Comparison",
+      "description": "Two columns side by side",
+      "category": "Guide",
+      "currentVersion": 1,
+      "versions": [
+        {
+          "version": 1,
+          "fields": [
+            {
+              "slug": "label",
+              "label": "Accessible label",
+              "type": "string"
+            },
+            {
+              "slug": "left_title",
+              "label": "Left title",
+              "type": "string",
+              "required": true
+            },
+            {
+              "slug": "left_sub",
+              "label": "Left subtitle",
+              "type": "string"
+            },
+            {
+              "slug": "left_tone",
+              "label": "Left colour",
+              "type": "select",
+              "validation": {
+                "options": [
+                  "green",
+                  "accent",
+                  "ink"
+                ]
+              }
+            },
+            {
+              "slug": "left_cells",
+              "label": "Left rows",
+              "type": "repeater",
+              "validation": {
+                "subFields": [
+                  {
+                    "slug": "text",
+                    "label": "Text",
+                    "type": "string",
+                    "required": true
+                  },
+                  {
+                    "slug": "mark",
+                    "label": "Mark",
+                    "type": "select",
+                    "options": [
+                      "yes",
+                      "no",
+                      "note"
+                    ]
+                  }
+                ]
+              }
+            },
+            {
+              "slug": "right_title",
+              "label": "Right title",
+              "type": "string",
+              "required": true
+            },
+            {
+              "slug": "right_sub",
+              "label": "Right subtitle",
+              "type": "string"
+            },
+            {
+              "slug": "right_tone",
+              "label": "Right colour",
+              "type": "select",
+              "validation": {
+                "options": [
+                  "green",
+                  "accent",
+                  "ink"
+                ]
+              }
+            },
+            {
+              "slug": "right_cells",
+              "label": "Right rows",
+              "type": "repeater",
+              "validation": {
+                "subFields": [
+                  {
+                    "slug": "text",
+                    "label": "Text",
+                    "type": "string",
+                    "required": true
+                  },
+                  {
+                    "slug": "mark",
+                    "label": "Mark",
+                    "type": "select",
+                    "options": [
+                      "yes",
+                      "no",
+                      "note"
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "consent",
+      "label": "Consent screen",
+      "description": "The scope checklist from the OAuth consent screen (scopes are in code)",
+      "category": "Guide",
+      "currentVersion": 1,
+      "versions": [
+        {
+          "version": 1,
+          "fields": [
+            {
+              "slug": "variant",
+              "label": "Which screen",
+              "type": "select",
+              "validation": {
+                "options": [
+                  "connect",
+                  "reconnect"
+                ]
+              },
+              "required": true
+            },
+            {
+              "slug": "title",
+              "label": "Title",
+              "type": "string"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "code",
+      "label": "Code",
+      "description": "A code or terminal block with a copy button",
+      "category": "Guide",
+      "currentVersion": 1,
+      "versions": [
+        {
+          "version": 1,
+          "fields": [
+            {
+              "slug": "label",
+              "label": "Label (file name or 'terminal')",
+              "type": "string"
+            },
+            {
+              "slug": "code",
+              "label": "Code",
+              "type": "text",
+              "required": true
+            },
+            {
+              "slug": "language",
+              "label": "Highlighting",
+              "type": "select",
+              "validation": {
+                "options": [
+                  "text",
+                  "jsonc"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "checkpoint",
+      "label": "Checkpoint",
+      "description": "A catch-up box with its own prompt",
+      "category": "Guide",
+      "currentVersion": 1,
+      "versions": [
+        {
+          "version": 1,
+          "fields": [
+            {
+              "slug": "letter",
+              "label": "Letter",
+              "type": "string",
+              "required": true
+            },
+            {
+              "slug": "summary",
+              "label": "Summary",
+              "type": "string"
+            },
+            {
+              "slug": "prompt",
+              "label": "Catch-up prompt",
+              "type": "text",
+              "required": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "aside",
+      "label": "Aside",
+      "description": "A collapsible box for optional detail",
+      "category": "Guide",
+      "currentVersion": 1,
+      "versions": [
+        {
+          "version": 1,
+          "fields": [
+            {
+              "slug": "summary",
+              "label": "Summary",
+              "type": "string",
+              "required": true
+            },
+            {
+              "slug": "note",
+              "label": "Small note next to the summary",
+              "type": "string"
+            },
+            {
+              "slug": "body",
+              "label": "Body",
+              "type": "portableText"
+            },
+            {
+              "slug": "code",
+              "label": "Code (optional)",
+              "type": "text"
+            },
+            {
+              "slug": "code_label",
+              "label": "Code label",
+              "type": "string"
+            },
+            {
+              "slug": "prompt",
+              "label": "Prompt (optional)",
+              "type": "text"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "links",
+      "label": "Link cards",
+      "description": "A grid of link cards",
+      "category": "Guide",
+      "currentVersion": 1,
+      "versions": [
+        {
+          "version": 1,
+          "fields": [
+            {
+              "slug": "items",
+              "label": "Links",
+              "type": "repeater",
+              "validation": {
+                "subFields": [
+                  {
+                    "slug": "title",
+                    "label": "Title",
+                    "type": "string",
+                    "required": true
+                  },
+                  {
+                    "slug": "text",
+                    "label": "Text",
+                    "type": "string"
+                  },
+                  {
+                    "slug": "url",
+                    "label": "URL",
+                    "type": "url",
+                    "required": true
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "heading",
+      "label": "Heading",
+      "description": "A small heading inside a step",
+      "category": "Guide",
+      "currentVersion": 1,
+      "versions": [
+        {
+          "version": 1,
+          "fields": [
+            {
+              "slug": "text",
+              "label": "Text",
+              "type": "string",
+              "required": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "prose",
+      "label": "Text",
+      "description": "Rich text",
+      "category": "Guide",
+      "currentVersion": 1,
+      "versions": [
+        {
+          "version": 1,
+          "fields": [
+            {
+              "slug": "body",
+              "label": "Body",
+              "type": "portableText",
+              "required": true
+            },
+            {
+              "slug": "style",
+              "label": "Style",
+              "type": "select",
+              "validation": {
+                "options": [
+                  "normal",
+                  "finale"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "collections": [
+    {
+      "slug": "parts",
+      "label": "Parts",
+      "labelSingular": "Part",
+      "supports": [
+        "drafts",
+        "revisions"
+      ],
+      "fields": [
+        {
+          "slug": "title",
+          "label": "Name",
+          "type": "string",
+          "required": true
+        },
+        {
+          "slug": "label",
+          "label": "Label",
+          "type": "string",
+          "required": true
+        },
+        {
+          "slug": "rail_label",
+          "label": "Label in the step rail (defaults to Label)",
+          "type": "string"
+        },
+        {
+          "slug": "time",
+          "label": "Time, e.g. 0:12 – 0:42",
+          "type": "string",
+          "required": true
+        },
+        {
+          "slug": "position",
+          "label": "Position",
+          "type": "integer",
+          "required": true
+        },
+        {
+          "slug": "lede",
+          "label": "Lede",
+          "type": "text"
+        },
+        {
+          "slug": "concepts",
+          "label": "Concepts",
+          "type": "repeater",
+          "validation": {
+            "subFields": [
+              {
+                "slug": "title",
+                "label": "Title",
+                "type": "string",
+                "required": true
+              },
+              {
+                "slug": "text",
+                "label": "Text",
+                "type": "text",
+                "required": true
+              }
+            ]
+          }
+        },
+        {
+          "slug": "break_before",
+          "label": "Break before this part, e.g. 'five minutes · 1:12'",
+          "type": "string"
+        },
+        {
+          "slug": "body",
+          "label": "Body",
+          "type": "blocks",
+          "validation": {
+            "allowedTypes": [
+              "prompt",
+              "callout",
+              "facts",
+              "compare",
+              "consent",
+              "code",
+              "checkpoint",
+              "aside",
+              "links",
+              "heading",
+              "prose"
+            ],
+            "maxItems": 20
+          }
+        }
+      ]
+    },
+    {
+      "slug": "steps",
+      "label": "Steps",
+      "labelSingular": "Step",
+      "supports": [
+        "drafts",
+        "revisions"
+      ],
+      "fields": [
+        {
+          "slug": "title",
+          "label": "Title",
+          "type": "string",
+          "required": true
+        },
+        {
+          "slug": "label",
+          "label": "Label in the step rail",
+          "type": "string",
+          "required": true
+        },
+        {
+          "slug": "num",
+          "label": "Number",
+          "type": "string",
+          "required": true
+        },
+        {
+          "slug": "position",
+          "label": "Position",
+          "type": "integer",
+          "required": true
+        },
+        {
+          "slug": "part",
+          "label": "Part (leave empty for the finale)",
+          "type": "select",
+          "validation": {
+            "options": [
+              "start",
+              "ship",
+              "automate",
+              "extend"
+            ]
+          }
+        },
+        {
+          "slug": "lede",
+          "label": "Lede",
+          "type": "text"
+        },
+        {
+          "slug": "optional",
+          "label": "Optional (first to cut)",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "slug": "tag",
+          "label": "Tag above the title, e.g. 'You do this'",
+          "type": "string"
+        },
+        {
+          "slug": "final",
+          "label": "Final card",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "slug": "body",
+          "label": "Body",
+          "type": "blocks",
+          "validation": {
+            "allowedTypes": [
+              "prompt",
+              "callout",
+              "facts",
+              "compare",
+              "consent",
+              "code",
+              "checkpoint",
+              "aside",
+              "links",
+              "heading",
+              "prose"
+            ],
+            "maxItems": 30
+          }
+        }
+      ]
+    }
+  ],
+  "content": {
+    "parts": [
+      {
+        "id": "start",
+        "slug": "start",
+        "status": "published",
+        "data": {
+          "title": "Get ready",
+          "label": "Before you start",
+          "rail_label": "Start",
+          "time": "0:00",
+          "position": 0,
+          "lede": "How this works: almost every step is a prompt you paste into your coding agent. The agent runs the commands and explains each one. When something needs your eyes, a browser, or a decision, the page says **You do this**."
+        }
+      },
+      {
+        "id": "ship",
+        "slug": "ship",
+        "status": "published",
+        "data": {
+          "title": "Ship",
+          "label": "Part 1",
+          "time": "0:12 – 0:42",
+          "position": 1,
+          "lede": "Scaffold a blog, put it on Cloudflare, claim it, and change its content model. Thirty minutes from nothing to a live site you can edit.",
+          "concepts": [
+            {
+              "title": "An Astro integration",
+              "text": "Admin, REST API, auth, media and plugins come with `emdash()` in your Astro config. No separate backend."
+            },
+            {
+              "title": "Cloudflare primitives",
+              "text": "Workers run the site, D1 holds content, R2 holds media. It also runs on Node with SQLite or Postgres."
+            },
+            {
+              "title": "Content lives in the database",
+              "text": "Each collection is a real SQL table (`ec_posts`). Rich text is Portable Text: structured JSON, not HTML."
+            }
+          ]
+        }
+      },
+      {
+        "id": "automate",
+        "slug": "automate",
+        "status": "published",
+        "data": {
+          "title": "Automate",
+          "label": "Part 2",
+          "time": "0:42 – 1:12",
+          "position": 2,
+          "lede": "Your site already has an MCP server. Connect your agent to it, let it run your content desk, and watch what happens when it reaches for more than you gave it.",
+          "concepts": [
+            {
+              "title": "MCP server",
+              "text": "Built into every site at `/_emdash/api/mcp`. Agents use it to work with content."
+            },
+            {
+              "title": "CLI",
+              "text": "`npx emdash content …` and `schema …`. Outputs JSON, good for scripts and CI."
+            },
+            {
+              "title": "Agent skills",
+              "text": "In `.agents/skills/`. They teach coding agents the current EmDash APIs, so they don't make them up."
+            },
+            {
+              "title": "Least privilege",
+              "text": "OAuth scopes and user roles are checked separately. A token never gets more than both allow."
+            }
+          ]
+        }
+      },
+      {
+        "id": "extend",
+        "slug": "extend",
+        "status": "published",
+        "data": {
+          "title": "Extend",
+          "label": "Part 3",
+          "time": "1:17 – 1:52",
+          "position": 3,
+          "break_before": "five minutes · 1:12",
+          "lede": "Build an AI plugin that needs a paid API token, then make sure the token can only go to one place. That's the job of EmDash's sandbox.",
+          "concepts": [
+            {
+              "title": "The problem",
+              "text": "On WordPress, most security vulnerabilities come from plugins. Any plugin can read every key stored in the site and send it anywhere."
+            },
+            {
+              "title": "A manifest is a contract",
+              "text": "`emdash-plugin.jsonc` lists the capabilities and hosts a plugin needs. Nothing else is available to it."
+            },
+            {
+              "title": "Same plugin, two ways to run",
+              "text": "`sandboxed: []` gives it its own isolate. `plugins: []` runs it in-process, with the same API gates but no isolation."
+            }
+          ],
+          "body": [
+            {
+              "_type": "compare",
+              "_version": 1,
+              "_key": "compare-1",
+              "label": "Sandboxed and in-process plugins compared",
+              "left_title": "sandboxed: []",
+              "left_sub": "Workers Paid · own isolate",
+              "left_tone": "green",
+              "left_cells": [
+                {
+                  "text": "Only the `ctx` APIs its capabilities grant",
+                  "mark": "yes"
+                },
+                {
+                  "text": "`ctx.http.fetch` only reaches `allowedHosts`",
+                  "mark": "yes"
+                },
+                {
+                  "text": "Direct `fetch()` and `process.env` blocked",
+                  "mark": "yes"
+                },
+                {
+                  "text": "50 ms CPU, 10 subrequests, 30 s wall time per call",
+                  "mark": "note"
+                }
+              ],
+              "right_title": "plugins: []",
+              "right_sub": "Workers Free · in-process",
+              "right_tone": "accent",
+              "right_cells": [
+                {
+                  "text": "Only the `ctx` APIs its capabilities grant",
+                  "mark": "yes"
+                },
+                {
+                  "text": "`ctx.http.fetch` only reaches `allowedHosts`",
+                  "mark": "yes"
+                },
+                {
+                  "text": "Code could still call `fetch()` directly",
+                  "mark": "no"
+                },
+                {
+                  "text": "No per-plugin limits",
+                  "mark": "no"
+                }
+              ]
+            },
+            {
+              "_type": "callout",
+              "_version": 1,
+              "_key": "callout-2",
+              "variant": "stage",
+              "body": [
+                {
+                  "_type": "block",
+                  "_key": "kb",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_type": "span",
+                      "_key": "k0",
+                      "text": "Matt takes the finished plugin, running sandboxed, and adds one line that POSTs the Replicate token to ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k1",
+                      "text": "evil.example",
+                      "marks": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k2",
+                      "text": ". ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k3",
+                      "text": "ctx.http.fetch()",
+                      "marks": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k4",
+                      "text": " throws, because the host isn't in ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k5",
+                      "text": "allowedHosts",
+                      "marks": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k6",
+                      "text": ". A direct ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k7",
+                      "text": "fetch()",
+                      "marks": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k8",
+                      "text": " fails too, and so does reading ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k9",
+                      "text": "process.env",
+                      "marks": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "ka",
+                      "text": ". Cover generation keeps working.",
+                      "marks": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "steps": [
+      {
+        "id": "setup",
+        "slug": "setup",
+        "status": "published",
+        "data": {
+          "num": "0",
+          "label": "Check your setup",
+          "title": "Check your setup",
+          "lede": "Paste this into your coding agent. It checks your machine and helps you fix anything missing.",
+          "body": [
+            {
+              "_type": "facts",
+              "_version": 1,
+              "_key": "facts-3",
+              "items": [
+                {
+                  "label": "Checks",
+                  "text": "Node 22.16+, pnpm, git, Wrangler, and that R2 is on."
+                },
+                {
+                  "label": "Asks first",
+                  "text": "Before it installs or updates anything."
+                },
+                {
+                  "label": "You sign in",
+                  "text": "The Cloudflare login opens your browser. You run it."
+                }
+              ]
+            },
+            {
+              "_type": "prompt",
+              "_version": 1,
+              "_key": "prompt-4",
+              "label": "Copy this prompt into your agent",
+              "text": "Check that my machine is ready for the EmDash workshop at {{event}}. {{narrate}}\n\n1. Check: `node -v` (v22.16 or newer), `pnpm -v`, `git --version`, `npx wrangler@latest whoami`.\n2. Missing or outdated tool: tell me the install command for my OS and ask before you run it. For pnpm, prefer `corepack enable pnpm`.\n3. Not signed in to Cloudflare: don't sign in for me. Tell me to run `npx wrangler login` myself (it opens my browser), wait for me, then check again.\n4. More than one Cloudflare account: list them in the table and ask me which one I'll use for the workshop. Don't save it anywhere: we'll set it when we deploy.\n5. Check that R2 is enabled on that account: `npx wrangler r2 bucket list`. With more than one account, run it as `CLOUDFLARE_ACCOUNT_ID=<id> npx wrangler r2 bucket list`, or Wrangler refuses to pick one. If it says R2 isn't enabled (error 10042), tell me to open the Cloudflare dashboard, go to R2, and enable it (it may ask for a payment method, even on the free plan). Wait for me, then check again.\n6. Tell me which coding agent you are, and confirm you can connect to remote MCP servers over HTTP with OAuth.\n\nIgnore Wrangler warnings about missing optional permissions: the workshop doesn't need them.\n\nFinish with a short table (tool, status, version or account), then \"Ready\" or what's left to fix. Don't create or deploy anything yet.",
+              "expanded": false,
+              "editable": false
+            },
+            {
+              "_type": "callout",
+              "_version": 1,
+              "_key": "callout-5",
+              "variant": "success",
+              "body": [
+                {
+                  "_type": "block",
+                  "_key": "kf",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_type": "span",
+                      "_key": "kc",
+                      "text": "You should see a table of your tools and ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "kd",
+                      "text": "Ready",
+                      "marks": [
+                        "strong"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "ke",
+                      "text": ".",
+                      "marks": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "_type": "aside",
+              "_version": 1,
+              "_key": "aside-6",
+              "summary": "What to bring",
+              "note": "accounts and tokens",
+              "body": [
+                {
+                  "_type": "block",
+                  "_key": "kl",
+                  "style": "normal",
+                  "listItem": "bullet",
+                  "level": 1,
+                  "markDefs": [
+                    {
+                      "_key": "ki",
+                      "_type": "link",
+                      "href": "https://dash.cloudflare.com/?to=/:account/r2/overview"
+                    }
+                  ],
+                  "children": [
+                    {
+                      "_type": "span",
+                      "_key": "kg",
+                      "text": "A Cloudflare account with R2 enabled.",
+                      "marks": [
+                        "strong"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "kh",
+                      "text": " R2 has to be switched on in the ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "kj",
+                      "text": "dashboard",
+                      "marks": [
+                        "ki"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "kk",
+                      "text": " before the first deploy can create a bucket. It may ask for a payment method, even on the free plan, so do it at home.",
+                      "marks": []
+                    }
+                  ]
+                },
+                {
+                  "_type": "block",
+                  "_key": "ko",
+                  "style": "normal",
+                  "listItem": "bullet",
+                  "level": 1,
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_type": "span",
+                      "_key": "km",
+                      "text": "A coding agent that speaks MCP",
+                      "marks": [
+                        "strong"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "kn",
+                      "text": ": Claude Code, Codex, OpenCode, Cursor, or VS Code with Copilot. No agent? Pair up with a neighbour.",
+                      "marks": []
+                    }
+                  ]
+                },
+                {
+                  "_type": "block",
+                  "_key": "kw",
+                  "style": "normal",
+                  "listItem": "bullet",
+                  "level": 1,
+                  "markDefs": [
+                    {
+                      "_key": "kr",
+                      "_type": "link",
+                      "href": "https://bsky.app/"
+                    }
+                  ],
+                  "children": [
+                    {
+                      "_type": "span",
+                      "_key": "kp",
+                      "text": "An Atmosphere handle or DID",
+                      "marks": [
+                        "strong"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "kq",
+                      "text": ", for example your ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "ks",
+                      "text": "Bluesky",
+                      "marks": [
+                        "kr"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "kt",
+                      "text": " handle. It goes in the plugin manifest's ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "ku",
+                      "text": "publisher",
+                      "marks": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "kv",
+                      "text": " field. No account? We hand out a placeholder.",
+                      "marks": []
+                    }
+                  ]
+                },
+                {
+                  "_type": "block",
+                  "_key": "k12",
+                  "style": "normal",
+                  "listItem": "bullet",
+                  "level": 1,
+                  "markDefs": [
+                    {
+                      "_key": "kz",
+                      "_type": "link",
+                      "href": "https://replicate.com/account/api-tokens"
+                    }
+                  ],
+                  "children": [
+                    {
+                      "_type": "span",
+                      "_key": "kx",
+                      "text": "A Replicate token (optional).",
+                      "marks": [
+                        "strong"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "ky",
+                      "text": " Bring your own from ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k10",
+                      "text": "replicate.com",
+                      "marks": [
+                        "kz"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k11",
+                      "text": " with billing set up, or use the workshop token we share in the room. We revoke it after the session.",
+                      "marks": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "_type": "aside",
+              "_version": 1,
+              "_key": "aside-7",
+              "summary": "No Cloudflare account?",
+              "note": "take the local track",
+              "body": [
+                {
+                  "_type": "block",
+                  "_key": "k1e",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_type": "span",
+                      "_key": "k13",
+                      "text": "Everything works locally on Node.js and SQLite. In step 1, scaffold with ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k14",
+                      "text": "--template node:blog",
+                      "marks": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k15",
+                      "text": " instead of ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k16",
+                      "text": "cloudflare:blog",
+                      "marks": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k17",
+                      "text": ", skip step 2, and run ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k18",
+                      "text": "pnpm dev",
+                      "marks": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k19",
+                      "text": ". Wherever the page says ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k1a",
+                      "text": "your site URL",
+                      "marks": [
+                        "em"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k1b",
+                      "text": ", use ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k1c",
+                      "text": "http://localhost:4321",
+                      "marks": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k1d",
+                      "text": ".",
+                      "marks": []
+                    }
+                  ]
+                },
+                {
+                  "_type": "block",
+                  "_key": "k1l",
+                  "style": "normal",
+                  "markDefs": [
+                    {
+                      "_key": "k1i",
+                      "_type": "link",
+                      "href": "https://docs.emdashcms.com/deployment/plugin-sandbox/"
+                    }
+                  ],
+                  "children": [
+                    {
+                      "_type": "span",
+                      "_key": "k1f",
+                      "text": "In Part 3, the plugin runs sandboxed on your laptop through ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k1g",
+                      "text": "workerd",
+                      "marks": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k1h",
+                      "text": ". See ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k1j",
+                      "text": "Plugin sandbox → Node.js",
+                      "marks": [
+                        "k1i"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k1k",
+                      "text": ".",
+                      "marks": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "position": 0,
+          "part": "start"
+        }
+      },
+      {
+        "id": "create",
+        "slug": "create",
+        "status": "published",
+        "data": {
+          "num": "1",
+          "label": "Create your blog",
+          "title": "Create your blog",
+          "lede": "One command scaffolds an Astro site with EmDash, the Blog template, and agent skills that teach your agent current EmDash APIs.",
+          "body": [
+            {
+              "_type": "facts",
+              "_version": 1,
+              "_key": "facts-8",
+              "items": [
+                {
+                  "label": "Template",
+                  "text": "Blog on Cloudflare Workers, with sample posts."
+                },
+                {
+                  "label": "Folder",
+                  "text": "`{{workspaceDir}}/{{siteDir}}`"
+                },
+                {
+                  "label": "Sandbox",
+                  "text": "Off for now. Part 3 explains why."
+                }
+              ]
+            },
+            {
+              "_type": "prompt",
+              "_version": 1,
+              "_key": "prompt-9",
+              "label": "Copy this prompt into your agent",
+              "text": "Create a new EmDash blog for the {{event}} workshop. {{narrate}}\n\n1. Make a workshop folder and go into it: `mkdir -p {{workspaceDir}} && cd {{workspaceDir}}`.\n2. Scaffold the site without prompts: `pnpm create emdash@latest {{siteDir}} --template cloudflare:blog --pm pnpm --install --no-sandboxed-plugins`.\n   Tell me in one line why sandboxed plugins are off for now: they need the Worker Loader binding, which is on Workers Paid. We'll come back to it in Part 3.\n   If the install fails (for example a 401 from a private npm registry in my `.npmrc`), the project files are still created: show me the error, and we'll fix it and run `pnpm install` inside `{{siteDir}}`.\n3. Inside `{{siteDir}}`: if it isn't a git repository yet, run `git init`. Then `git add -A && git commit -m \"Scaffold EmDash blog\"`, so every later change shows up as a diff.\n4. In at most three short sentences, tell me what this project is: what EmDash adds to Astro, where content and media will live on Cloudflare, and that `.agents/skills/` and `AGENTS.md` hold instructions you'll use later. No file names beyond those.\n5. Give me the folder's full path and the exact commands to restart you inside it, with one line on why.\n\nKeep your whole reply short. Don't deploy yet.",
+              "expanded": false,
+              "editable": false
+            },
+            {
+              "_type": "callout",
+              "_version": 1,
+              "_key": "callout-10",
+              "variant": "success",
+              "body": [
+                {
+                  "_type": "block",
+                  "_key": "k1n",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_type": "span",
+                      "_key": "k1m",
+                      "text": "You should see a short summary of the project and its full path.",
+                      "marks": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "_type": "callout",
+              "_version": 1,
+              "_key": "callout-11",
+              "variant": "restart",
+              "title": "Restart your agent inside that folder",
+              "body": [
+                {
+                  "_type": "block",
+                  "_key": "k1r",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_type": "span",
+                      "_key": "k1o",
+                      "text": "Your agent gave you the commands. It only loads the site's ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k1p",
+                      "text": "AGENTS.md",
+                      "marks": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k1q",
+                      "text": ", its skills, and the EmDash docs MCP server when it starts there, and every step from now on relies on them.",
+                      "marks": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "position": 1,
+          "part": "ship"
+        }
+      },
+      {
+        "id": "deploy",
+        "slug": "deploy",
+        "status": "published",
+        "data": {
+          "num": "2",
+          "label": "Deploy to Cloudflare",
+          "title": "Deploy to Cloudflare",
+          "lede": "The first deploy creates everything the site needs: a D1 database, an R2 bucket, a KV namespace for sessions, and the Worker. Later deploys reuse them.",
+          "body": [
+            {
+              "_type": "prompt",
+              "_version": 1,
+              "_key": "prompt-12",
+              "label": "Copy this prompt into your agent",
+              "text": "Deploy my EmDash blog to Cloudflare Workers. {{explain}}\n\nSteps:\n\n1. Run `pnpm wrangler whoami`. Only if it lists more than one account: ask me which one to use (the one I picked in the setup check), then add `\"account_id\": \"<id>\"` at the top level of `wrangler.jsonc`.\n   Explain: deploys and secrets in this folder now use this account, in any terminal.\n2. Deploy: `pnpm run deploy`. Ignore the warnings about `workers_dev` and `preview_urls`: the defaults are what we want.\n   Explain: what this first deploy creates (a D1 database for content, an R2 bucket for media, a KV namespace for sessions, and the Worker), and that later deploys reuse them.\n   If it fails with code 10014 (\"a namespace with this … title already exists\"), a KV namespace is left over from an earlier attempt: show me `pnpm wrangler kv namespace list`, and ask before deleting it.\n3. Store the encryption key from `.env` as a Worker secret, without printing it: `grep '^EMDASH_ENCRYPTION_KEY=' .env | cut -d= -f2- | pnpm wrangler secret put EMDASH_ENCRYPTION_KEY`.\n   Explain: `.env` never leaves my machine, and in Part 3 the site needs this key to encrypt the plugin's API token.\n4. If anything in the repo changed, commit it: `git add -A && git commit -m \"Deploy to Cloudflare\"`.\n   Explain: in one line, what changed.\n\nThen stop. Don't open the site or the admin: I'll open them myself, straight away. Tell me the first load can take up to half a minute while the site sets up its database. End your reply with two links on their own lines: my site, then my site with `/_emdash/admin` on the end.",
+              "expanded": false,
+              "editable": false
+            },
+            {
+              "_type": "callout",
+              "_version": 1,
+              "_key": "callout-13",
+              "variant": "warn",
+              "title": "Open the admin the moment it's live",
+              "body": [
+                {
+                  "_type": "block",
+                  "_key": "k1v",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_type": "span",
+                      "_key": "k1s",
+                      "text": "The URL is public, and ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k1t",
+                      "text": "the first person to finish setup becomes the admin",
+                      "marks": [
+                        "strong"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k1u",
+                      "text": ". Don't share your link until you've done step 3. The first load can take up to half a minute while the site sets up its database: that's normal.",
+                      "marks": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "position": 2,
+          "part": "ship"
+        }
+      },
+      {
+        "id": "claim",
+        "slug": "claim",
+        "status": "published",
+        "data": {
+          "num": "3",
+          "label": "Claim your admin",
+          "title": "Claim your admin",
+          "lede": "Run the setup wizard on your live site and sign in with a passkey.",
+          "tag": "You do this",
+          "body": [
+            {
+              "_type": "callout",
+              "_version": 1,
+              "_key": "callout-14",
+              "variant": "you",
+              "body": [
+                {
+                  "_type": "block",
+                  "_key": "k1z",
+                  "style": "normal",
+                  "listItem": "number",
+                  "level": 1,
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_type": "span",
+                      "_key": "k1w",
+                      "text": "Open your site's ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k1x",
+                      "text": "/_emdash/admin",
+                      "marks": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k1y",
+                      "text": " link from the last step.",
+                      "marks": []
+                    }
+                  ]
+                },
+                {
+                  "_type": "block",
+                  "_key": "k23",
+                  "style": "normal",
+                  "listItem": "number",
+                  "level": 1,
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_type": "span",
+                      "_key": "k20",
+                      "text": "Give the site a title. Keep ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k21",
+                      "text": "Sample content",
+                      "marks": [
+                        "strong"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k22",
+                      "text": " on. Setting up takes up to a minute.",
+                      "marks": []
+                    }
+                  ]
+                },
+                {
+                  "_type": "block",
+                  "_key": "k27",
+                  "style": "normal",
+                  "listItem": "number",
+                  "level": 1,
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_type": "span",
+                      "_key": "k24",
+                      "text": "Enter your email and name, then ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k25",
+                      "text": "register a passkey",
+                      "marks": [
+                        "strong"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k26",
+                      "text": " when your browser asks.",
+                      "marks": []
+                    }
+                  ]
+                },
+                {
+                  "_type": "block",
+                  "_key": "k2b",
+                  "style": "normal",
+                  "listItem": "number",
+                  "level": 1,
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_type": "span",
+                      "_key": "k28",
+                      "text": "Click ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k29",
+                      "text": "Open the dashboard",
+                      "marks": [
+                        "strong"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k2a",
+                      "text": ", then visit your site in another tab.",
+                      "marks": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "_type": "callout",
+              "_version": 1,
+              "_key": "callout-15",
+              "variant": "success",
+              "body": [
+                {
+                  "_type": "block",
+                  "_key": "k2d",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_type": "span",
+                      "_key": "k2c",
+                      "text": "You should see the admin dashboard, and the sample posts on your live homepage.",
+                      "marks": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "_type": "aside",
+              "_version": 1,
+              "_key": "aside-16",
+              "summary": "Admin in Polish?",
+              "body": [
+                {
+                  "_type": "block",
+                  "_key": "k2n",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_type": "span",
+                      "_key": "k2e",
+                      "text": "The admin follows your browser's language, and it's fully translated into Polish. This page uses the English labels. To match them, open ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k2f",
+                      "text": "Settings",
+                      "marks": [
+                        "strong"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k2g",
+                      "text": " (",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k2h",
+                      "text": "Ustawienia",
+                      "marks": [
+                        "em"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k2i",
+                      "text": ") in the admin and set ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k2j",
+                      "text": "Language",
+                      "marks": [
+                        "strong"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k2k",
+                      "text": " (",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k2l",
+                      "text": "Język",
+                      "marks": [
+                        "em"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k2m",
+                      "text": ") to English. The sign-in page has the same picker. The consent screen in step 5 is always in English.",
+                      "marks": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "_type": "aside",
+              "_version": 1,
+              "_key": "aside-17",
+              "summary": "Why passkeys, and why now?",
+              "body": [
+                {
+                  "_type": "block",
+                  "_key": "k2t",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_type": "span",
+                      "_key": "k2o",
+                      "text": "A passkey only works on the hostname that registered it. Registering on your ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k2p",
+                      "text": "workers.dev",
+                      "marks": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k2q",
+                      "text": " URL means you sign in there from now on. A passkey made on ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k2r",
+                      "text": "localhost",
+                      "marks": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k2s",
+                      "text": " won't work on your live site, and the other way round.",
+                      "marks": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "position": 3,
+          "part": "ship"
+        }
+      },
+      {
+        "id": "model",
+        "slug": "model",
+        "status": "published",
+        "data": {
+          "num": "4",
+          "label": "Change the content model",
+          "title": "Change the content model",
+          "lede": "Content types live in the database, so you change them in the admin, not in code. Then your agent pulls the new schema into types and uses it.",
+          "body": [
+            {
+              "_type": "callout",
+              "_version": 1,
+              "_key": "callout-18",
+              "variant": "you",
+              "body": [
+                {
+                  "_type": "block",
+                  "_key": "k2x",
+                  "style": "normal",
+                  "listItem": "number",
+                  "level": 1,
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_type": "span",
+                      "_key": "k2u",
+                      "text": "In the admin, open ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k2v",
+                      "text": "Content Types → Posts",
+                      "marks": [
+                        "strong"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k2w",
+                      "text": ".",
+                      "marks": []
+                    }
+                  ]
+                },
+                {
+                  "_type": "block",
+                  "_key": "k33",
+                  "style": "normal",
+                  "listItem": "number",
+                  "level": 1,
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_type": "span",
+                      "_key": "k2y",
+                      "text": "Add a ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k2z",
+                      "text": "Boolean",
+                      "marks": [
+                        "strong"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k30",
+                      "text": " field called ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k31",
+                      "text": "featured",
+                      "marks": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k32",
+                      "text": ".",
+                      "marks": []
+                    }
+                  ]
+                },
+                {
+                  "_type": "block",
+                  "_key": "k3b",
+                  "style": "normal",
+                  "listItem": "number",
+                  "level": 1,
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_type": "span",
+                      "_key": "k34",
+                      "text": "Add a ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k35",
+                      "text": "short text",
+                      "marks": [
+                        "strong"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k36",
+                      "text": " field called ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k37",
+                      "text": "subtitle",
+                      "marks": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k38",
+                      "text": ". Posts already have ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k39",
+                      "text": "excerpt",
+                      "marks": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k3a",
+                      "text": ".",
+                      "marks": []
+                    }
+                  ]
+                },
+                {
+                  "_type": "block",
+                  "_key": "k3h",
+                  "style": "normal",
+                  "listItem": "number",
+                  "level": 1,
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_type": "span",
+                      "_key": "k3c",
+                      "text": "Open one sample post, tick ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k3d",
+                      "text": "featured",
+                      "marks": [
+                        "strong"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k3e",
+                      "text": ", and give it a subtitle. The post is already published, so your edits are saved as a draft: click ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k3f",
+                      "text": "Publish changes",
+                      "marks": [
+                        "strong"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k3g",
+                      "text": " to put them live.",
+                      "marks": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "_type": "prompt",
+              "_version": 1,
+              "_key": "prompt-19",
+              "label": "Copy this prompt into your agent",
+              "text": "I added two fields to Posts in my live site's admin: `featured` (boolean) and `subtitle` (short text). Use them on the homepage. {{explain}}\n\nSteps:\n\n1. Sign the EmDash CLI in to my live site: `npx emdash login --url <my site URL>`. It shows a code and a link: give me both, tell me to open the link and approve, and wait for me.\n   Explain: the content model lives in the live database, not in the repo, so the CLI needs access to read it.\n2. Generate types from the live schema: `npx emdash types --url <my site URL>`. Show me only the lines for `featured` and `subtitle` in `.emdash/types.ts`.\n   These are standalone types. The site's own types are in `emdash-env.d.ts`, which `pnpm dev` generates from the local database, and that doesn't have the new fields. So copy the two lines into the `Post` interface in `emdash-env.d.ts`.\n   Explain: why the types come from a running site and not from a file in the repo.\n3. Use the `building-emdash-site` skill. Under the site title, the homepage (`src/pages/index.astro`) shows a featured post card, drawn by `src/components/PostCard.astro` with `variant=\"feature\"`. Change it so the card shows the newest post where `featured` is true, falling back to the newest post when none is, and leave that post out of the grid below. Query it with `getEmDashCollection(\"posts\", { where: { featured: true }, orderBy: { published_at: \"desc\" }, limit: 1 })`. EmDash's `WhereValue` type doesn't list booleans yet, although the query works, so cast the value (`true as unknown as WhereValue`, with `WhereValue` imported from `emdash`) and add a one-line comment saying why. Show the post's `subtitle` under its title when it has one, in the `feature` variant only: the grid cards use the same component. Show me only the lines you changed.\n   Explain: in one line, what `where` does here, and that `posts` is a real SQL table behind the scenes.\n4. Run `pnpm run typecheck`, commit, then deploy with `pnpm run deploy`.\n   Explain: local `pnpm dev` uses a separate local database that has neither the new fields nor my content, so we check the change on the deployed site.\n\nEnd by telling me to open my site (URL on its own line) and check that the featured post card under the site title shows the post I marked as featured, with its subtitle.",
+              "expanded": false,
+              "editable": false
+            },
+            {
+              "_type": "callout",
+              "_version": 1,
+              "_key": "callout-20",
+              "variant": "look",
+              "title": "Try it yourself",
+              "body": [
+                {
+                  "_type": "block",
+                  "_key": "k3j",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_type": "span",
+                      "_key": "k3i",
+                      "text": "Open your live homepage. The featured post card, under your site's title, now shows the post you marked as featured, with its subtitle.",
+                      "marks": []
+                    }
+                  ]
+                },
+                {
+                  "_type": "block",
+                  "_key": "k3n",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_type": "span",
+                      "_key": "k3k",
+                      "text": "Untick ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k3l",
+                      "text": "featured",
+                      "marks": [
+                        "strong"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k3m",
+                      "text": " in the admin and refresh: the card falls back to the newest post. No redeploy, because the query runs on every request.",
+                      "marks": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "_type": "checkpoint",
+              "_version": 1,
+              "_key": "checkpoint-21",
+              "letter": "A",
+              "summary": "Checkpoint A has the homepage change from this step. Your agent copies it into your site and deploys it, keeping your Cloudflare config.",
+              "prompt": "Bring my site to the workshop's Checkpoint A. {{narrate}}\n\n1. In a temporary folder, fetch the checkpoint: `npx giget@latest gh:{{repo}}#checkpoint-a /tmp/emdash-checkpoint-a`.\n2. Copy `src/` and `emdash-env.d.ts` from it into `{{siteDir}}`, replacing mine. Don't touch `wrangler.jsonc`, `.env`, `.wrangler/` or `node_modules/`.\n3. Show me `git status` in one short list, then commit: `git add -A && git commit -m \"Checkpoint A\"`.\n4. Deploy with `pnpm run deploy`.\n\nIf my live site doesn't have the `featured` and `subtitle` fields yet, tell me to add them in the admin under Content Types → Posts. End with my site URL on its own line."
+            }
+          ],
+          "position": 4,
+          "part": "ship"
+        }
+      },
+      {
+        "id": "connect",
+        "slug": "connect",
+        "status": "published",
+        "data": {
+          "num": "5",
+          "label": "Connect your agent",
+          "title": "Connect your agent",
+          "lede": "Add your site as an MCP server. When you sign in, your site asks what the agent may do. You choose.",
+          "body": [
+            {
+              "_type": "prompt",
+              "_version": 1,
+              "_key": "prompt-22",
+              "label": "Copy this prompt into your agent",
+              "text": "Connect yourself to my EmDash site's MCP server, so you can work with its content. {{narrate}}\n\nThe server URL is my live site's URL with `/_emdash/api/mcp` on the end. Name the server `emdash-site`.\n\n1. Tell me which agent you are, then add the server:\n   - Claude Code: run `claude mcp add --transport http emdash-site <URL>`, then tell me to run `/mcp`, pick `emdash-site`, and authenticate.\n   - Codex: run `codex mcp add emdash-site --url <URL>`, then ask me and run `codex mcp login emdash-site`.\n   - OpenCode: add it as a remote server in `opencode.json`, then ask me and run `opencode mcp auth emdash-site`.\n   - Cursor: tell me to open Cursor Settings → MCP, add a server with this URL, and click Connect.\n   - VS Code: add it to `.vscode/mcp.json` under `servers` with `\"type\": \"http\"`, then tell me to click Start above it and use Copilot Chat in Agent mode.\n   - Any other agent: tell me how to add a remote MCP server with this URL.\n2. Tell me that my browser will open my site's consent screen. Every permission on it starts ticked, and it shows descriptions, not scope names. I keep exactly these five and untick everything else:\n   - \"Read content (posts, pages, etc.)\" (`content:read`)\n   - \"Create, edit, and delete content; manage menus and taxonomies\" (`content:write`)\n   - \"View media files\" (`media:read`)\n   - \"Upload and manage media files\" (`media:write`)\n   - \"View collection schemas\" (`schema:read`)\n   Unticking includes \"Create and modify collection schemas\" (`schema:write`), \"Use MCP tools from all enabled plugins\" (`mcp:tools`) and \"Full administrative access\" (`admin`).\n3. Wait for me. Then tell me whether I need to restart you (if unsure, say yes), and to paste the next prompt from the workshop page.\n\nDon't call any of the site's tools yet.",
+              "expanded": false,
+              "editable": false
+            },
+            {
+              "_type": "consent",
+              "_version": 1,
+              "_key": "consent-23",
+              "variant": "connect",
+              "title": "Authorize this client"
+            },
+            {
+              "_type": "callout",
+              "_version": 1,
+              "_key": "callout-24",
+              "variant": "look",
+              "title": "Why these five",
+              "body": [
+                {
+                  "_type": "block",
+                  "_key": "k3q",
+                  "style": "normal",
+                  "listItem": "bullet",
+                  "level": 1,
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_type": "span",
+                      "_key": "k3o",
+                      "text": "content:write",
+                      "marks": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k3p",
+                      "text": " already includes managing tags and menus.",
+                      "marks": []
+                    }
+                  ]
+                },
+                {
+                  "_type": "block",
+                  "_key": "k3x",
+                  "style": "normal",
+                  "listItem": "bullet",
+                  "level": 1,
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_type": "span",
+                      "_key": "k3r",
+                      "text": "media:write",
+                      "marks": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k3s",
+                      "text": " does ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k3t",
+                      "text": "not",
+                      "marks": [
+                        "strong"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k3u",
+                      "text": " include ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k3v",
+                      "text": "media:read",
+                      "marks": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k3w",
+                      "text": ", which the agent needs to list images.",
+                      "marks": []
+                    }
+                  ]
+                },
+                {
+                  "_type": "block",
+                  "_key": "k40",
+                  "style": "normal",
+                  "listItem": "bullet",
+                  "level": 1,
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_type": "span",
+                      "_key": "k3y",
+                      "text": "schema:read",
+                      "marks": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k3z",
+                      "text": " lets the agent check the fields before it writes, so it doesn't guess.",
+                      "marks": []
+                    }
+                  ]
+                },
+                {
+                  "_type": "block",
+                  "_key": "k44",
+                  "style": "normal",
+                  "listItem": "bullet",
+                  "level": 1,
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_type": "span",
+                      "_key": "k41",
+                      "text": "No ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k42",
+                      "text": "schema:write",
+                      "marks": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k43",
+                      "text": ": the agent writes content, it doesn't redesign your site. Keep that in mind for step 7.",
+                      "marks": []
+                    }
+                  ]
+                },
+                {
+                  "_type": "block",
+                  "_key": "k48",
+                  "style": "normal",
+                  "listItem": "bullet",
+                  "level": 1,
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_type": "span",
+                      "_key": "k45",
+                      "text": "No ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k46",
+                      "text": "mcp:tools",
+                      "marks": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k47",
+                      "text": " yet: your site has no plugins. You'll add it in step 15.",
+                      "marks": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "_type": "callout",
+              "_version": 1,
+              "_key": "callout-25",
+              "variant": "restart",
+              "title": "Restart your agent if it says so",
+              "body": [
+                {
+                  "_type": "block",
+                  "_key": "k4a",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_type": "span",
+                      "_key": "k49",
+                      "text": "Most agents only load new MCP servers when they start. Restart, then paste the next prompt.",
+                      "marks": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "position": 5,
+          "part": "automate"
+        }
+      },
+      {
+        "id": "operate",
+        "slug": "operate",
+        "status": "published",
+        "data": {
+          "num": "6",
+          "label": "Run your content desk",
+          "title": "Run your content desk",
+          "lede": "Your agent drafts, tags, writes alt text and schedules, all through your site's MCP tools.",
+          "body": [
+            {
+              "_type": "facts",
+              "_version": 1,
+              "_key": "facts-26",
+              "items": [
+                {
+                  "label": "Drafts",
+                  "text": "Three posts, no images. Part 3 makes the covers."
+                },
+                {
+                  "label": "Tags",
+                  "text": "Created and assigned."
+                },
+                {
+                  "label": "Alt text",
+                  "text": "On the sample posts' featured images."
+                },
+                {
+                  "label": "Schedule",
+                  "text": "One post, tomorrow at 9:00."
+                }
+              ]
+            },
+            {
+              "_type": "prompt",
+              "_version": 1,
+              "_key": "prompt-27",
+              "label": "Edit the topic, then copy",
+              "text": "Topic: what a CMS conference in Poland taught me about content teams.\n\nDo some editorial work on my site with this topic. {{mcpOnly}} Before each tool call, tell me in one line what it does.\n\n1. Read the Posts schema first, so you know the fields before you write anything.\n2. Draft three posts on the topic: title, subtitle, excerpt, and a few short paragraphs of content each. Leave them as drafts. No images: we'll generate covers in Part 3.\n3. Create tags that fit, and assign them to the three drafts.\n4. Write alt text for the featured images of the sample posts. Set it on each post's `featured_image` with `content_update`, not only on the media library item: the post keeps its own copy of `alt`, and that copy is what the site renders.\n5. Schedule one of the drafts for tomorrow at 9:00 my time.\n\nEnd with a short table: post title, status, tags. Then tell me to open my admin (URL on its own line) and look at Posts.",
+              "expanded": false,
+              "editable": true,
+              "hint": "Click into the prompt to change the first line to a topic you care about."
+            },
+            {
+              "_type": "callout",
+              "_version": 1,
+              "_key": "callout-28",
+              "variant": "look",
+              "title": "See it yourself",
+              "body": [
+                {
+                  "_type": "block",
+                  "_key": "k4e",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_type": "span",
+                      "_key": "k4b",
+                      "text": "In the admin, open ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k4c",
+                      "text": "Posts",
+                      "marks": [
+                        "strong"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k4d",
+                      "text": ": three drafts with tags, one marked as scheduled. Open a sample post and check the image's alt text.",
+                      "marks": []
+                    }
+                  ]
+                },
+                {
+                  "_type": "block",
+                  "_key": "k4i",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_type": "span",
+                      "_key": "k4f",
+                      "text": "The post's image field keeps its own copy of ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k4g",
+                      "text": "alt",
+                      "marks": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k4h",
+                      "text": ". If the agent only updated the media library, your site still renders the old text. Ask it to fix that.",
+                      "marks": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "position": 6,
+          "part": "automate"
+        }
+      },
+      {
+        "id": "guardrail",
+        "slug": "guardrail",
+        "status": "published",
+        "data": {
+          "num": "7",
+          "label": "Hit the guardrail",
+          "title": "Hit the guardrail",
+          "lede": "Ask the agent for something you didn't allow.",
+          "body": [
+            {
+              "_type": "prompt",
+              "_version": 1,
+              "_key": "prompt-29",
+              "label": "Copy this prompt into your agent",
+              "text": "Add a `reading_level` select field (beginner, intermediate, advanced) to the Posts collection. {{mcpOnly}}\n\nIf the call fails, don't look for a workaround. Show me the exact error code, then explain in two plain sentences why it failed and whether it's a bug.",
+              "expanded": true,
+              "editable": false
+            },
+            {
+              "_type": "callout",
+              "_version": 1,
+              "_key": "callout-30",
+              "variant": "success",
+              "body": [
+                {
+                  "_type": "block",
+                  "_key": "k4m",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_type": "span",
+                      "_key": "k4j",
+                      "text": "You should see ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k4k",
+                      "text": "INSUFFICIENT_SCOPE",
+                      "marks": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k4l",
+                      "text": ". The schema tools are listed, but the call fails.",
+                      "marks": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "_type": "callout",
+              "_version": 1,
+              "_key": "callout-31",
+              "variant": "look",
+              "title": "That's the point",
+              "body": [
+                {
+                  "_type": "block",
+                  "_key": "k4q",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_type": "span",
+                      "_key": "k4n",
+                      "text": "This isn't a bug. You cleared ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k4o",
+                      "text": "schema:write",
+                      "marks": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k4p",
+                      "text": " on the consent screen, so the token can't change your content model, even though your own admin account could. Scopes limit the token. Roles limit the person. The agent gets the smaller of the two.",
+                      "marks": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "position": 7,
+          "part": "automate"
+        }
+      },
+      {
+        "id": "developer",
+        "slug": "developer",
+        "status": "published",
+        "data": {
+          "num": "8",
+          "label": "Agent as developer",
+          "title": "Agent as developer",
+          "optional": true,
+          "lede": "Same agent, different job: change the site's code. The skills keep it on current EmDash APIs instead of ones it remembers from training.",
+          "body": [
+            {
+              "_type": "prompt",
+              "_version": 1,
+              "_key": "prompt-32",
+              "label": "Copy this prompt into your agent",
+              "text": "Add a \"Related posts\" section to the bottom of every post page: up to three other published posts that share a tag with this one, newest first. Hide the section when there are none. {{explain}}\n\nSteps:\n\n1. Read `AGENTS.md` and use the `building-emdash-site` skill. Check any API you're unsure of with the EmDash docs MCP server (`search_docs`) instead of guessing.\n   Explain: which rule in `AGENTS.md` matters most for this change, and why.\n2. Make the change. Show me only the lines you changed, and name the EmDash functions you used.\n   Explain: why each function is the current API, citing the skill or the docs.\n3. Run `pnpm run typecheck` and commit.\n   Explain: in one line, what the typecheck caught or confirmed.\n\nDon't deploy. End by telling me which file to open to review the change.",
+              "expanded": false,
+              "editable": false
+            },
+            {
+              "_type": "callout",
+              "_version": 1,
+              "_key": "callout-33",
+              "variant": "look",
+              "title": "Review the diff together",
+              "body": [
+                {
+                  "_type": "block",
+                  "_key": "k50",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_type": "span",
+                      "_key": "k4r",
+                      "text": "Look for ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k4s",
+                      "text": "entry.data.id",
+                      "marks": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k4t",
+                      "text": " when the agent fetches a post's tags. ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k4u",
+                      "text": "AGENTS.md",
+                      "marks": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k4v",
+                      "text": " says ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k4w",
+                      "text": "entry.id",
+                      "marks": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k4x",
+                      "text": " is the slug and ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k4y",
+                      "text": "entry.data.id",
+                      "marks": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k4z",
+                      "text": " is the database ID. That's the kind of detail an agent gets wrong without the rules file and skills.",
+                      "marks": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "_type": "checkpoint",
+              "_version": 1,
+              "_key": "checkpoint-34",
+              "letter": "B",
+              "summary": "Checkpoint B has the site code so far and the `cover-images` starter. If your agent is connected, it also drafts three posts for Part 3.",
+              "prompt": "Bring my site to the workshop's Checkpoint B. {{narrate}}\n\n1. Fetch the checkpoint: `npx giget@latest gh:{{repo}}#checkpoint-b /tmp/emdash-checkpoint-b`.\n2. Copy `src/` and `emdash-env.d.ts` from it into `{{siteDir}}`, replacing mine. Don't touch `wrangler.jsonc`, `.env`, `.wrangler/` or `node_modules/`. Copy `{{pluginDir}}/` from it into `{{workspaceDir}}/{{pluginDir}}` if that folder doesn't exist yet.\n3. Commit (`git add -A && git commit -m \"Checkpoint B\"`) and deploy with `pnpm run deploy`.\n4. If you're connected to my site's `emdash-site` MCP server and have fewer than three draft posts, draft three short posts about content teams, with no images.\n\nEnd with my site URL on its own line."
+            }
+          ],
+          "position": 8,
+          "part": "automate"
+        }
+      },
+      {
+        "id": "starter",
+        "slug": "starter",
+        "status": "published",
+        "data": {
+          "num": "9",
+          "label": "Open the plugin starter",
+          "title": "Open the plugin starter",
+          "lede": "The starter has the parts that aren't worth typing in a workshop. You'll write the parts that teach you something.",
+          "body": [
+            {
+              "_type": "facts",
+              "_version": 1,
+              "_key": "facts-35",
+              "items": [
+                {
+                  "label": "Already done",
+                  "text": "Scaffold, Block Kit settings page, editor-action wiring, test setup."
+                },
+                {
+                  "label": "You write",
+                  "text": "Trust contract, `generateCover`, entry points, publish rule."
+                },
+                {
+                  "label": "Folder",
+                  "text": "`{{workspaceDir}}/{{pluginDir}}`, next to your site."
+                }
+              ]
+            },
+            {
+              "_type": "prompt",
+              "_version": 1,
+              "_key": "prompt-36",
+              "label": "Copy this prompt into your agent",
+              "text": "Set up the Cover Images plugin starter next to my site. {{narrate}}\n\n1. Go to the workshop folder, the parent of `{{siteDir}}`: `cd {{workspaceDir}}`.\n2. Download the starter: `npx giget@latest gh:{{repo}}/{{pluginDir}}#checkpoint-b {{pluginDir}}`.\n3. In `{{pluginDir}}`, run `pnpm install`.\n4. Ask me for my Atmosphere handle or DID (for example a Bluesky handle). Set it as `publisher` in `{{pluginDir}}/emdash-plugin.jsonc`. If I don't have one, use the workshop placeholder `{{placeholderDid}}`.\n5. Walk me through the starter in at most five short bullets: what's already done for us, and what's left to write (the trust contract, `generateCover`, the editor and agent entry points, the publish rule). Open files only to answer this.\n\nKeep working from `{{siteDir}}`: refer to the plugin as `../{{pluginDir}}` from now on. Don't change anything else yet.",
+              "expanded": false,
+              "editable": false
+            },
+            {
+              "_type": "aside",
+              "_version": 1,
+              "_key": "aside-37",
+              "summary": "Rather start from scratch?",
+              "body": [
+                {
+                  "_type": "block",
+                  "_key": "k52",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_type": "span",
+                      "_key": "k51",
+                      "text": "The plugin CLI scaffolds the same shape. It asks for your publisher, author, security contact and repo:",
+                      "marks": []
+                    }
+                  ]
+                }
+              ],
+              "code": "cd {{workspaceDir}}\npnpm dlx @emdash-cms/plugin-cli init {{pluginDir}}"
+            }
+          ],
+          "position": 9,
+          "part": "extend"
+        }
+      },
+      {
+        "id": "manifest",
+        "slug": "manifest",
+        "status": "published",
+        "data": {
+          "num": "10",
+          "label": "Write the trust contract",
+          "title": "Write the trust contract",
+          "lede": "The manifest says what the plugin may touch. An operator sees it before installing, and the runtime enforces it.",
+          "body": [
+            {
+              "_type": "code",
+              "_version": 1,
+              "_key": "code-38",
+              "label": "emdash-plugin.jsonc (excerpt)",
+              "code": "\"capabilities\": [\n  \"network:request\",              // ctx.http, only to allowedHosts\n  \"content:write\",                // ctx.content (implies read)\n  \"media:write\",                  // ctx.media.upload (implies read)\n  \"hooks.content-policy:register\"  // may veto a publish\n],\n\"allowedHosts\": [\"api.replicate.com\", \"*.replicate.delivery\"],\n\"admin\": {\n  \"pages\": [{ \"path\": \"/settings\", \"label\": \"Settings\" }],\n  \"settingsSchema\": {\n    // \"secret\": stored encrypted, never sent back to a browser\n    \"replicateToken\": { \"type\": \"secret\", \"label\": \"Replicate API token\" }\n  },\n  \"editorActions\": [{\n    \"id\": \"generate-cover\",\n    \"label\": \"Generate cover\",     // a button in the post editor\n    \"placement\": \"toolbar\",        // required: toolbar or overflow\n    \"collections\": [\"posts\"],      // only on posts\n    \"route\": \"covers/generate\"     // a private plugin route\n  }]\n}",
+              "language": "jsonc"
+            },
+            {
+              "_type": "prompt",
+              "_version": 1,
+              "_key": "prompt-39",
+              "label": "Copy this prompt into your agent",
+              "text": "Fill in the trust contract in `../{{pluginDir}}/emdash-plugin.jsonc`. Use the `creating-plugins` skill, and check field names with the EmDash docs MCP server. {{explain}}\n\nSteps:\n\n1. Set `capabilities` to exactly `network:request`, `content:write`, `media:write`, `hooks.content-policy:register`.\n   Explain: what each one adds to `ctx`, and why we don't also list `content:read` or `media:read`.\n2. Set `allowedHosts` to exactly `api.replicate.com` and `*.replicate.delivery`.\n   Explain: Replicate serves generated files from `replicate.delivery` and its subdomains, and these are the only hosts the plugin can ever reach.\n3. Under `admin`: a `/settings` page labelled \"Settings\", a `settingsSchema` with `replicateToken` (type `secret`, label \"Replicate API token\"), and an editor action `generate-cover` labelled \"Generate cover\", with `placement: \"toolbar\"` and `collections: [\"posts\"]`, that calls the private route `covers/generate`. `placement` is required: validate fails without it.\n   Explain: what `type: \"secret\"` does to the token when it's stored.\n4. Run `pnpm run validate` in `../{{pluginDir}}`.\n   Explain: what validate checks, in one line.\n\nShow me only the final `capabilities`, `allowedHosts` and `admin` blocks. Don't write plugin code yet.",
+              "expanded": false,
+              "editable": false
+            },
+            {
+              "_type": "callout",
+              "_version": 1,
+              "_key": "callout-40",
+              "variant": "look",
+              "title": "Read it like an operator",
+              "body": [
+                {
+                  "_type": "block",
+                  "_key": "k54",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_type": "span",
+                      "_key": "k53",
+                      "text": "Four capabilities, two hosts. That's the plugin's whole reach. It can't read users, can't send email, and can't call anything except Replicate. The token is stored encrypted, and the admin never sends it back to a browser.",
+                      "marks": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "position": 10,
+          "part": "extend"
+        }
+      },
+      {
+        "id": "generate",
+        "slug": "generate",
+        "status": "published",
+        "data": {
+          "num": "11",
+          "label": "Generate a cover",
+          "title": "Generate a cover",
+          "lede": "One function, used by every entry point: read the post, ask FLUX Schnell for an image, store it, and set it as the cover.",
+          "body": [
+            {
+              "_type": "facts",
+              "_version": 1,
+              "_key": "facts-41",
+              "items": [
+                {
+                  "label": "Model",
+                  "text": "[FLUX Schnell](https://replicate.com/black-forest-labs/flux-schnell) on Replicate, about $0.003 an image."
+                },
+                {
+                  "label": "Network",
+                  "text": "Two calls: create the prediction, download the image."
+                },
+                {
+                  "label": "Budget",
+                  "text": "Under 30 s wall time and 10 subrequests."
+                }
+              ]
+            },
+            {
+              "_type": "prompt",
+              "_version": 1,
+              "_key": "prompt-42",
+              "label": "Copy this prompt into your agent",
+              "text": "In `../{{pluginDir}}/src/plugin.ts`, write one function, `generateCover(ctx, postId)`, that every entry point will share. Use the `creating-plugins` skill, and check each `ctx` API with the EmDash docs MCP server. {{explain}}\n\nSteps:\n\n1. Read the post with `ctx.content.get(\"posts\", postId)`. If it already has a `featured_image`, return it without generating anything. Otherwise build an image prompt from its title and excerpt: an editorial illustration, with no text in the image.\n   Explain: why returning early makes the function safe to call twice.\n2. Read the token with `ctx.settings.get(\"replicateToken\")`. If it's missing, return an error that tells the editor to add it under the plugin's Settings.\n3. Call Replicate with `ctx.http.fetch`, never the global `fetch`: POST `https://api.replicate.com/v1/models/black-forest-labs/flux-schnell/predictions` with headers `Authorization: Bearer <token>`, `Content-Type: application/json`, `Prefer: wait=20` and `Cancel-After: 25s`, and body `{ \"input\": { \"prompt\": <prompt>, \"aspect_ratio\": \"16:9\", \"output_format\": \"webp\", \"num_outputs\": 1 } }`. If `status` isn't `succeeded`, return a clear error. Don't poll.\n   Explain: how `Prefer: wait` and `Cancel-After` keep us under the sandbox's 30-second wall time, and why polling would burn the 10-subrequest budget.\n4. Download `output[0]` straight away with `ctx.http.fetch`, and read the bytes with `arrayBuffer()`.\n   Explain: Replicate deletes API outputs after an hour, so the site keeps its own copy.\n5. Upload it: `ctx.media.upload(\"cover.webp\", \"image/webp\", bytes)`, which returns `{ mediaId, url }`.\n6. Set the cover with `ctx.content.update(\"posts\", postId, { featured_image: { id: mediaId, src: url, alt } })`, writing `alt` from the post's title.\n   Explain: on a published post this stages a draft, so the live page doesn't change until someone publishes.\n\nReturn `{ ok: true, mediaId, url }` or `{ ok: false, error }`. Don't connect it to any route or hook yet. Run `pnpm run typecheck` in `../{{pluginDir}}`, then show me the function.",
+              "expanded": false,
+              "editable": false
+            },
+            {
+              "_type": "callout",
+              "_version": 1,
+              "_key": "callout-43",
+              "variant": "look",
+              "title": "Why it's built like this",
+              "body": [
+                {
+                  "_type": "block",
+                  "_key": "k5b",
+                  "style": "normal",
+                  "listItem": "bullet",
+                  "level": 1,
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_type": "span",
+                      "_key": "k55",
+                      "text": "No polling.",
+                      "marks": [
+                        "strong"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k56",
+                      "text": " ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k57",
+                      "text": "Prefer: wait=20",
+                      "marks": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k58",
+                      "text": " holds the request open until the image is ready, and ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k59",
+                      "text": "Cancel-After",
+                      "marks": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k5a",
+                      "text": " stops it before the sandbox would.",
+                      "marks": []
+                    }
+                  ]
+                },
+                {
+                  "_type": "block",
+                  "_key": "k5e",
+                  "style": "normal",
+                  "listItem": "bullet",
+                  "level": 1,
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_type": "span",
+                      "_key": "k5c",
+                      "text": "Download straight away.",
+                      "marks": [
+                        "strong"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k5d",
+                      "text": " Replicate deletes API outputs after an hour. Your media library keeps them.",
+                      "marks": []
+                    }
+                  ]
+                },
+                {
+                  "_type": "block",
+                  "_key": "k5h",
+                  "style": "normal",
+                  "listItem": "bullet",
+                  "level": 1,
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_type": "span",
+                      "_key": "k5f",
+                      "text": "Return early if a cover exists.",
+                      "marks": [
+                        "strong"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k5g",
+                      "text": " That makes it safe for an agent to call twice.",
+                      "marks": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "position": 11,
+          "part": "extend"
+        }
+      },
+      {
+        "id": "expose",
+        "slug": "expose",
+        "status": "published",
+        "data": {
+          "num": "12",
+          "label": "Hand it to editors and agents",
+          "title": "Hand it to editors and agents",
+          "lede": "Editors get a button in the post editor. Agents get an MCP tool. Both call the same function through private routes.",
+          "body": [
+            {
+              "_type": "compare",
+              "_version": 1,
+              "_key": "compare-44",
+              "label": "Two entry points",
+              "left_title": "Editors",
+              "left_sub": "Generate cover button",
+              "left_tone": "ink",
+              "left_cells": [
+                {
+                  "text": "Editor action → private route `covers/generate`",
+                  "mark": "note"
+                },
+                {
+                  "text": "Post comes from `routeCtx.ui.entry`, which the host checks",
+                  "mark": "yes"
+                },
+                {
+                  "text": "Replies with a toast and refreshes the editor",
+                  "mark": "yes"
+                }
+              ],
+              "right_title": "Agents",
+              "right_sub": "{{pluginSlug}}__generateCover",
+              "right_tone": "ink",
+              "right_cells": [
+                {
+                  "text": "MCP tool → private route, input checked with `zod`",
+                  "mark": "note"
+                },
+                {
+                  "text": "Needs the scope `mcp:tools` (or the narrower `mcp:tools:{{pluginSlug}}`)",
+                  "mark": "yes"
+                },
+                {
+                  "text": "The description tells the agent when to use it",
+                  "mark": "yes"
+                }
+              ]
+            },
+            {
+              "_type": "prompt",
+              "_version": 1,
+              "_key": "prompt-45",
+              "label": "Copy this prompt into your agent",
+              "text": "Give `generateCover` two entry points in `../{{pluginDir}}/src/plugin.ts`, both backed by private routes. Use the `creating-plugins` skill (its API routes and MCP tools reference). {{explain}}\n\nSteps:\n\n1. Editors: implement the private route `covers/generate` behind the \"Generate cover\" editor action. Give it the permission `content:edit_any`. Read the post from `routeCtx.ui.entry`, call `generateCover`, and reply with a toast and a refresh, so the editor sees the new cover.\n   Explain: why the route reads the entry from `routeCtx.ui.entry` and not from the request body, and why we use `content:edit_any`: a plugin route checks only the user's role, not who owns the post or whether it's a draft, so `content:edit_own` or `content:edit_own_drafts` would let Authors or Contributors change anyone's post.\n2. Agents: add `zod` as a dependency. Add an MCP tool under `mcp.tools` named `generateCover`, with input `z.object({ postId: z.string() })`, pointing at a second private route with the same permission that reads `routeCtx.input`. Description: \"Generate an AI cover image for a post that has none. Use it when publishing fails because a post has no cover.\"\n   Explain: why the description matters to an agent, and why the tool doesn't need `destructive: true` (`generateCover` never replaces an existing cover).\n3. Run `pnpm run validate` and `pnpm run typecheck`.\n   Explain: the tool will show up as `{{pluginSlug}}__generateCover`, and calling it needs the token scope `mcp:tools` (or the narrower `mcp:tools:{{pluginSlug}}`), which your connection doesn't have yet.\n\nShow me only the routes and the `mcp` block.",
+              "expanded": false,
+              "editable": false
+            }
+          ],
+          "position": 12,
+          "part": "extend"
+        }
+      },
+      {
+        "id": "rule",
+        "slug": "rule",
+        "status": "published",
+        "data": {
+          "num": "13",
+          "label": "Enforce the publish rule",
+          "title": "Enforce the publish rule",
+          "lede": "No cover, no publish. The rule runs on every path that publishes a post, whether that's a person, the scheduler or an agent.",
+          "body": [
+            {
+              "_type": "prompt",
+              "_version": 1,
+              "_key": "prompt-46",
+              "label": "Copy this prompt into your agent",
+              "text": "Make a cover image required for publishing, in `../{{pluginDir}}/src/plugin.ts`, and test it. {{explain}}\n\nSteps:\n\n1. Add a `content:beforePublish` hook. For the `posts` collection, when `featured_image` is empty, return `{ cancel: true, reason: \"Add a cover image (try Generate cover).\" }`.\n   Explain: this hook runs on every way to publish: the admin, the REST API, MCP, the scheduler, and other plugins.\n2. Register the same check as `content:beforeSchedule`.\n   Explain: without it, scheduling a post would be a way around the rule.\n3. Rewrite the generated test so it calls `host.invokeHook(\"content:beforePublish\", …)` twice: with a post that has a cover (allowed), and with one that doesn't (cancelled, with our reason). Don't test generation.\n   Explain: generation needs Replicate, so we check it live instead, and the tests stay fast and free.\n4. In `../{{pluginDir}}`, run `pnpm run validate`, `pnpm run typecheck`, `pnpm run test` and `pnpm run build`.\n   Explain: in one line, what `build` writes to `dist/`.\n\nEnd with a short table of the four commands and their results.",
+              "expanded": false,
+              "editable": false
+            },
+            {
+              "_type": "callout",
+              "_version": 1,
+              "_key": "callout-47",
+              "variant": "success",
+              "body": [
+                {
+                  "_type": "block",
+                  "_key": "k5l",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_type": "span",
+                      "_key": "k5i",
+                      "text": "You should see four passing commands, and a ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k5j",
+                      "text": "dist/",
+                      "marks": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k5k",
+                      "text": " folder in the plugin.",
+                      "marks": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "_type": "callout",
+              "_version": 1,
+              "_key": "callout-48",
+              "variant": "look",
+              "title": "Rules beat prompts",
+              "body": [
+                {
+                  "_type": "block",
+                  "_key": "k5p",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_type": "span",
+                      "_key": "k5m",
+                      "text": "You could ask your agent to always add a cover before publishing. It might forget. A ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k5n",
+                      "text": "content:beforePublish",
+                      "marks": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k5o",
+                      "text": " hook doesn't forget, and it applies to every agent, editor and script.",
+                      "marks": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "_type": "checkpoint",
+              "_version": 1,
+              "_key": "checkpoint-49",
+              "letter": "C",
+              "summary": "Checkpoint C has the finished plugin with tests. Your agent swaps it into your plugin folder and keeps your publisher.",
+              "prompt": "Bring my plugin to the workshop's Checkpoint C. {{narrate}}\n\n1. Fetch the checkpoint: `npx giget@latest gh:{{repo}}#checkpoint-c /tmp/emdash-checkpoint-c`.\n2. Replace `{{workspaceDir}}/{{pluginDir}}` with the checkpoint's `{{pluginDir}}/`, keeping the `publisher` in my `emdash-plugin.jsonc`.\n3. In `{{pluginDir}}`, run `pnpm install`, `pnpm run test` and `pnpm run build`.\n\nThen carry on from \"Install and deploy\" on the workshop page."
+            }
+          ],
+          "position": 13,
+          "part": "extend"
+        }
+      },
+      {
+        "id": "install",
+        "slug": "install",
+        "status": "published",
+        "data": {
+          "num": "14",
+          "label": "Install and deploy",
+          "title": "Install and deploy",
+          "lede": "Add the plugin to your live site. How it runs depends on your Cloudflare plan.",
+          "body": [
+            {
+              "_type": "compare",
+              "_version": 1,
+              "_key": "compare-50",
+              "label": "Plugin registration by plan",
+              "left_title": "Workers Free",
+              "left_sub": "plugins: [coverImages]",
+              "left_tone": "accent",
+              "left_cells": [
+                {
+                  "text": "Runs in-process, in your site's Worker",
+                  "mark": "note"
+                },
+                {
+                  "text": "Capability gates and host allowlist on `ctx` apply",
+                  "mark": "yes"
+                },
+                {
+                  "text": "No isolation boundary",
+                  "mark": "no"
+                }
+              ],
+              "right_title": "Workers Paid",
+              "right_sub": "sandboxed: [coverImages]",
+              "right_tone": "green",
+              "right_cells": [
+                {
+                  "text": "Runs in its own Dynamic Worker via the `LOADER` binding",
+                  "mark": "note"
+                },
+                {
+                  "text": "Capability gates and host allowlist on `ctx` apply",
+                  "mark": "yes"
+                },
+                {
+                  "text": "Isolated, with CPU, subrequest and time limits",
+                  "mark": "yes"
+                }
+              ]
+            },
+            {
+              "_type": "prompt",
+              "_version": 1,
+              "_key": "prompt-51",
+              "label": "Copy this prompt into your agent",
+              "text": "Install the Cover Images plugin in my site, and deploy it. {{explain}}\n\nSteps:\n\n1. In `{{siteDir}}`, run `pnpm add file:../{{pluginDir}}`.\n   Explain: the site now imports the built plugin like any other package.\n2. Ask me which plan this account is on: Workers Free, or Workers Paid (the workshop's enterprise account counts as Paid). Then register the plugin in `astro.config.mjs`:\n   - Free: import it and add it to `plugins: []` inside `emdash({ … })`.\n   - Paid: uncomment the `LOADER` binding under `worker_loaders` in `wrangler.jsonc`, add `sandboxRunner: sandbox()` (imported from `@emdash-cms/cloudflare`), add the plugin to `sandboxed: []`, and check that `src/worker.ts` exports `PluginBridge`.\n   Explain, honestly: on Free the plugin runs in-process, so the capability gates on `ctx` still apply, but its code could call `fetch()` directly. On Paid it runs in its own isolate, where it can't.\n3. Check that the Worker has `EMDASH_ENCRYPTION_KEY`: `pnpm wrangler secret list`. If it's missing, set it from `.env` without printing it: `grep '^EMDASH_ENCRYPTION_KEY=' .env | cut -d= -f2- | pnpm wrangler secret put EMDASH_ENCRYPTION_KEY`.\n   Explain: without this key, the site refuses to save secret settings.\n4. Run `pnpm run typecheck`, commit, and deploy with `pnpm run deploy`.\n\nThen stop. End by telling me to finish the setup in my admin (admin URL on its own line), and that the steps are on the workshop page.",
+              "expanded": false,
+              "editable": false
+            },
+            {
+              "_type": "callout",
+              "_version": 1,
+              "_key": "callout-52",
+              "variant": "you",
+              "body": [
+                {
+                  "_type": "block",
+                  "_key": "k5v",
+                  "style": "normal",
+                  "listItem": "number",
+                  "level": 1,
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_type": "span",
+                      "_key": "k5q",
+                      "text": "In the admin, open ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k5r",
+                      "text": "Plugins",
+                      "marks": [
+                        "strong"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k5s",
+                      "text": ". Check the capabilities and the two Replicate hosts, then enable ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k5t",
+                      "text": "Cover Images",
+                      "marks": [
+                        "strong"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k5u",
+                      "text": ".",
+                      "marks": []
+                    }
+                  ]
+                },
+                {
+                  "_type": "block",
+                  "_key": "k5z",
+                  "style": "normal",
+                  "listItem": "number",
+                  "level": 1,
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_type": "span",
+                      "_key": "k5w",
+                      "text": "Turn on the plugin's ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k5x",
+                      "text": "MCP tools",
+                      "marks": [
+                        "strong"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k5y",
+                      "text": ".",
+                      "marks": []
+                    }
+                  ]
+                },
+                {
+                  "_type": "block",
+                  "_key": "k63",
+                  "style": "normal",
+                  "listItem": "number",
+                  "level": 1,
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_type": "span",
+                      "_key": "k60",
+                      "text": "Open the plugin's ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k61",
+                      "text": "Settings",
+                      "marks": [
+                        "strong"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k62",
+                      "text": ", paste your Replicate token (or the workshop one), and save.",
+                      "marks": []
+                    }
+                  ]
+                },
+                {
+                  "_type": "block",
+                  "_key": "k67",
+                  "style": "normal",
+                  "listItem": "number",
+                  "level": 1,
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_type": "span",
+                      "_key": "k64",
+                      "text": "Open one of the agent's drafts and click ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k65",
+                      "text": "Generate cover",
+                      "marks": [
+                        "strong"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k66",
+                      "text": ".",
+                      "marks": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "_type": "callout",
+              "_version": 1,
+              "_key": "callout-53",
+              "variant": "success",
+              "body": [
+                {
+                  "_type": "block",
+                  "_key": "k69",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_type": "span",
+                      "_key": "k68",
+                      "text": "After a few seconds you should see a toast, and the draft has an AI-generated cover image.",
+                      "marks": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "_type": "aside",
+              "_version": 1,
+              "_key": "aside-54",
+              "summary": "Settings won't save?",
+              "body": [
+                {
+                  "_type": "block",
+                  "_key": "k6h",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_type": "span",
+                      "_key": "k6a",
+                      "text": "The Worker is missing ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k6b",
+                      "text": "EMDASH_ENCRYPTION_KEY",
+                      "marks": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k6c",
+                      "text": ". Step 3 of the prompt sets it from your ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k6d",
+                      "text": ".env",
+                      "marks": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k6e",
+                      "text": ". Ask your agent to check ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k6f",
+                      "text": "pnpm wrangler secret list",
+                      "marks": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k6g",
+                      "text": ", then redeploy.",
+                      "marks": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "position": 14,
+          "part": "extend"
+        }
+      },
+      {
+        "id": "payoff",
+        "slug": "payoff",
+        "status": "published",
+        "data": {
+          "num": "15",
+          "label": "The payoff",
+          "title": "The payoff",
+          "lede": "Give your agent one more scope and ask it to publish its drafts. Your plugin says no. Then your agent fixes it with your plugin's own tool.",
+          "body": [
+            {
+              "_type": "prompt",
+              "_version": 1,
+              "_key": "prompt-55",
+              "label": "First: reconnect with one extra scope",
+              "text": "Reconnect to my site's `emdash-site` MCP server with one extra scope. {{narrate}}\n\n1. Tell me which agent you are, then help me sign in again so I see the consent screen:\n   - Claude Code: tell me to run `/mcp`, pick `emdash-site`, clear its authentication, and authenticate again.\n   - Codex: ask me, then run `codex mcp logout emdash-site` and `codex mcp login emdash-site`.\n   - OpenCode: ask me, then run `opencode mcp logout emdash-site` and `opencode mcp auth emdash-site`.\n   - Cursor or VS Code: tell me to disconnect the server and connect it again.\n   - Any other agent: tell me how to sign out of a remote MCP server and sign in again.\n2. On the consent screen, I keep the same five as before and tick exactly one more: \"Use MCP tools from all enabled plugins\" (`mcp:tools`). Everything else stays unticked.\n   Tell me in one line: EmDash also has a narrower scope, `mcp:tools:{{pluginSlug}}`, but the consent screen only lists the scopes my agent asks for, and MCP clients ask for `mcp:tools`. With one plugin installed, the two allow the same thing.\n3. Wait for me. Then tell me whether I need to restart you (if unsure, say yes), and to paste the next prompt from the workshop page.\n\nDon't call any of the site's tools yet.",
+              "expanded": false,
+              "editable": false
+            },
+            {
+              "_type": "consent",
+              "_version": 1,
+              "_key": "consent-56",
+              "variant": "reconnect",
+              "title": "Authorize this client, again"
+            },
+            {
+              "_type": "prompt",
+              "_version": 1,
+              "_key": "prompt-57",
+              "label": "Then: ask it to publish",
+              "text": "Publish the three drafts you wrote earlier. {{mcpOnly}}\n\nIf a publish is rejected, read the reason, fix the cause with the tools you have, and publish again. Before each tool call, tell me in one line what it does.\n\nEnd with a short table: post, what happened on the first attempt, what you did about it, final status. Then tell me to open my homepage (URL on its own line).",
+              "expanded": true,
+              "editable": false
+            },
+            {
+              "_type": "callout",
+              "_version": 1,
+              "_key": "callout-58",
+              "variant": "look",
+              "title": "What you'll see",
+              "body": [
+                {
+                  "_type": "block",
+                  "_key": "k6l",
+                  "style": "normal",
+                  "listItem": "number",
+                  "level": 1,
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_type": "span",
+                      "_key": "k6i",
+                      "text": "The agent tries to publish and gets ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k6j",
+                      "text": "PUBLISH_REJECTED",
+                      "marks": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k6k",
+                      "text": ": \"Add a cover image (try Generate cover).\"",
+                      "marks": []
+                    }
+                  ]
+                },
+                {
+                  "_type": "block",
+                  "_key": "k6p",
+                  "style": "normal",
+                  "listItem": "number",
+                  "level": 1,
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_type": "span",
+                      "_key": "k6m",
+                      "text": "It calls ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k6n",
+                      "text": "{{pluginSlug}}__generateCover",
+                      "marks": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k6o",
+                      "text": " for each draft.",
+                      "marks": []
+                    }
+                  ]
+                },
+                {
+                  "_type": "block",
+                  "_key": "k6r",
+                  "style": "normal",
+                  "listItem": "number",
+                  "level": 1,
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_type": "span",
+                      "_key": "k6q",
+                      "text": "It publishes again, and your homepage fills with generated covers.",
+                      "marks": []
+                    }
+                  ]
+                },
+                {
+                  "_type": "block",
+                  "_key": "k6t",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_type": "span",
+                      "_key": "k6s",
+                      "text": "You didn't tell the agent about covers. The rule told it, and the tool's description told it how to fix it.",
+                      "marks": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "_type": "callout",
+              "_version": 1,
+              "_key": "callout-59",
+              "variant": "warn",
+              "title": "Agent did something odd?",
+              "body": [
+                {
+                  "_type": "block",
+                  "_key": "k6x",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_type": "span",
+                      "_key": "k6u",
+                      "text": "That happens, and it's the reason Part 3 exists. You don't rely on the agent behaving: the publish rule holds either way. Paste the prompt again, or click ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k6v",
+                      "text": "Generate cover",
+                      "marks": [
+                        "strong"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k6w",
+                      "text": " yourself and publish.",
+                      "marks": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "position": 15,
+          "part": "extend"
+        }
+      },
+      {
+        "id": "ship-it",
+        "slug": "ship-it",
+        "status": "published",
+        "data": {
+          "num": "16",
+          "label": "Ship it",
+          "title": "Ship it",
+          "lede": "Bundle the plugin for the EmDash plugin registry, and see exactly what an operator will be asked to approve.",
+          "body": [
+            {
+              "_type": "prompt",
+              "_version": 1,
+              "_key": "prompt-60",
+              "label": "Copy this prompt into your agent",
+              "text": "Package the Cover Images plugin for the EmDash plugin registry, without publishing it. {{narrate}}\n\n1. In `../{{pluginDir}}`, run `pnpm exec emdash-plugin validate`, then `pnpm exec emdash-plugin bundle`.\n2. Tell me where the tarball is and how big it is.\n3. In a short table, list what a site operator will be asked to approve before installing this plugin: each capability and each allowed host, with one plain line on what it allows.\n\nDon't run `emdash-plugin publish`: we'll watch that on stage.",
+              "expanded": false,
+              "editable": false
+            },
+            {
+              "_type": "callout",
+              "_version": 1,
+              "_key": "callout-61",
+              "variant": "stage",
+              "body": [
+                {
+                  "_type": "block",
+                  "_key": "k71",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_type": "span",
+                      "_key": "k6y",
+                      "text": "Matt runs ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k6z",
+                      "text": "emdash-plugin publish",
+                      "marks": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k70",
+                      "text": " live. Publishing signs the release with an Atmosphere account, so it's a demo, not a step. After review, anyone can install it from the registry, and the consent dialog lists the same four capabilities and two hosts you wrote.",
+                      "marks": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "position": 16,
+          "part": "extend"
+        }
+      },
+      {
+        "id": "done",
+        "slug": "done",
+        "status": "published",
+        "data": {
+          "num": "✓",
+          "label": "What you just built",
+          "title": "What you just built",
+          "final": true,
+          "lede": "Ship, automate, extend. You made every call; your agent did the typing.",
+          "body": [
+            {
+              "_type": "prose",
+              "_version": 1,
+              "_key": "prose-62",
+              "body": [
+                {
+                  "_type": "block",
+                  "_key": "k73",
+                  "style": "normal",
+                  "listItem": "bullet",
+                  "level": 1,
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_type": "span",
+                      "_key": "k72",
+                      "text": "A live blog you deployed and modelled yourself.",
+                      "marks": []
+                    }
+                  ]
+                },
+                {
+                  "_type": "block",
+                  "_key": "k75",
+                  "style": "normal",
+                  "listItem": "bullet",
+                  "level": 1,
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_type": "span",
+                      "_key": "k74",
+                      "text": "An agent that runs it with the scopes you chose, and stopped at the ones you didn't.",
+                      "marks": []
+                    }
+                  ]
+                },
+                {
+                  "_type": "block",
+                  "_key": "k77",
+                  "style": "normal",
+                  "listItem": "bullet",
+                  "level": 1,
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_type": "span",
+                      "_key": "k76",
+                      "text": "An AI plugin that editors and agents both use, that enforces a publish rule, and that can't leak its API key.",
+                      "marks": []
+                    }
+                  ]
+                }
+              ],
+              "style": "finale"
+            },
+            {
+              "_type": "callout",
+              "_version": 1,
+              "_key": "callout-63",
+              "variant": "look",
+              "title": "Take it home",
+              "body": [
+                {
+                  "_type": "block",
+                  "_key": "k79",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_type": "span",
+                      "_key": "k78",
+                      "text": "Keep the habits, not just the code: connect agents with the narrowest scopes that work, put rules in hooks rather than prompts, and give plugins a manifest you'd be happy to read as an operator.",
+                      "marks": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "_type": "heading",
+              "_version": 1,
+              "_key": "heading-64",
+              "text": "Keep going"
+            },
+            {
+              "_type": "links",
+              "_version": 1,
+              "_key": "links-65",
+              "items": [
+                {
+                  "title": "Import from WordPress",
+                  "text": "Bring an existing site across.",
+                  "url": "https://docs.emdashcms.com/migration/from-wordpress/"
+                },
+                {
+                  "title": "Publish a plugin",
+                  "text": "Bundle, sign and release to the registry.",
+                  "url": "https://docs.emdashcms.com/plugins/creating-plugins/publishing/"
+                },
+                {
+                  "title": "Docs MCP",
+                  "text": "Give any agent the EmDash docs.",
+                  "url": "https://docs.emdashcms.com/docs-mcp/"
+                },
+                {
+                  "title": "EmDash on GitHub",
+                  "text": "Issues, discussions and source.",
+                  "url": "https://github.com/emdash-cms/emdash"
+                }
+              ]
+            },
+            {
+              "_type": "heading",
+              "_version": 1,
+              "_key": "heading-66",
+              "text": "Clean up"
+            },
+            {
+              "_type": "prose",
+              "_version": 1,
+              "_key": "prose-67",
+              "body": [
+                {
+                  "_type": "block",
+                  "_key": "k7b",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_type": "span",
+                      "_key": "k7a",
+                      "text": "Your site keeps running on Cloudflare until you delete it. If you used the workshop Replicate token, remove it from the plugin's Settings: it stops working after today anyway.",
+                      "marks": []
+                    }
+                  ]
+                }
+              ],
+              "style": "normal"
+            },
+            {
+              "_type": "aside",
+              "_version": 1,
+              "_key": "aside-68",
+              "summary": "Want everything gone?",
+              "body": [
+                {
+                  "_type": "block",
+                  "_key": "k7d",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_type": "span",
+                      "_key": "k7c",
+                      "text": "Paste this into your agent. You can also delete the Worker, the D1 database, the KV namespace and the R2 bucket from the Cloudflare dashboard.",
+                      "marks": []
+                    }
+                  ]
+                }
+              ],
+              "prompt": "Delete everything this workshop created on Cloudflare. {{narrate}}\n\n1. Find the real names: the Worker, the D1 database and the R2 bucket from `{{siteDir}}/wrangler.jsonc`. They may differ from the defaults. The first deploy also created a KV namespace for sessions, named after the Worker with `-session` on the end: find its ID with `pnpm wrangler kv namespace list`.\n2. List exactly what you'll delete, and wait for my yes.\n3. Empty and delete the R2 bucket (`pnpm wrangler r2 bucket delete <name>`; if it isn't empty, tell me to empty it in the dashboard first), then delete the D1 database (`pnpm wrangler d1 delete <name>`), the KV namespace (`pnpm wrangler kv namespace delete --namespace-id <id>`) and the Worker (`pnpm wrangler delete <name>`).\n4. Remove the `emdash-site` MCP server from your config.\n\nDon't touch any other Workers, databases, namespaces or buckets. End with a short list of what's gone, and remind me that the local `{{workspaceDir}}` folder is still on my machine, and that a shared Replicate token from the workshop stops working after today."
+            }
+          ],
+          "position": 17
+        }
+      }
+    ]
+  }
+}

@@ -1007,7 +1007,8 @@ strong {
 
 /* ── Human steps list inside "you" callouts ──────────────────── */
 
-.you-steps {
+.you-steps,
+.callout[data-variant="you"] ol {
   list-style: none;
   margin: 0;
   padding: 0 !important;
@@ -1015,14 +1016,16 @@ strong {
   display: grid;
   gap: 8px;
 }
-.you-steps > li {
+.you-steps > li,
+.callout[data-variant="you"] ol > li {
   counter-increment: you;
   position: relative;
   margin: 0 !important;
   padding-left: 36px;
   min-height: 24px;
 }
-.you-steps > li::before {
+.you-steps > li::before,
+.callout[data-variant="you"] ol > li::before {
   content: counter(you);
   position: absolute;
   left: 0;
@@ -1306,11 +1309,14 @@ details.checkpoint > summary b {
 
 /* ── Inline lists in cards ───────────────────────────────────── */
 
-.plain-list {
+.plain-list,
+.aside-body ul,
+.aside-body ol {
   margin: 0;
   padding-left: 20px;
 }
-.plain-list li + li {
+.plain-list li + li,
+.aside-body li + li {
   margin-top: 6px;
 }
 
@@ -1342,20 +1348,23 @@ details.checkpoint > summary b {
 
 /* ── Finale ──────────────────────────────────────────────────── */
 
-.finale-list {
+.finale-list,
+.prose[data-style="finale"] ul {
   list-style: none;
   margin: 0;
   padding: 0;
   display: grid;
   gap: 10px;
 }
-.finale-list li {
+.finale-list li,
+.prose[data-style="finale"] ul > li {
   display: grid;
   grid-template-columns: 28px 1fr;
   gap: 10px;
   font-size: 17px;
 }
-.finale-list li::before {
+.finale-list li::before,
+.prose[data-style="finale"] ul > li::before {
   content: "—";
   font-family: var(--font-display);
   font-style: italic;
@@ -1495,4 +1504,28 @@ details.checkpoint > summary b {
   .intro {
     padding: 22px 20px;
   }
+}
+
+/* ── CMS additions ───────────────────────────────────────────── */
+
+.prose p {
+  margin: 0;
+}
+.prose p + p {
+  margin-top: 10px;
+}
+.edit-link {
+  display: inline-block;
+  margin-top: 8px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--ink-3);
+}
+.edit-link:hover {
+  color: var(--accent-deep);
+}
+.empty {
+  padding: 24px;
+  border: 1.5px dashed var(--line-2);
+  border-radius: 12px;
 }

@@ -1,0 +1,18 @@
+---
+import type { BlockComponentProps } from "emdash/ui";
+import type { StepBodyCompareBlock } from "../../../emdash-env";
+import Compare from "../Compare.astro";
+
+type Props = BlockComponentProps<StepBodyCompareBlock>;
+const { value: v } = Astro.props;
+const cells = (rows: StepBodyCompareBlock["left_cells"]) =>
+  (rows ?? []).map((r) => ({ text: r.text, mark: r.mark ?? undefined }));
+---
+
+<Compare
+  label={v.label ?? undefined}
+  cols={[
+    { title: v.left_title, sub: v.left_sub ?? undefined, tone: v.left_tone ?? "ink", cells: cells(v.left_cells) },
+    { title: v.right_title, sub: v.right_sub ?? undefined, tone: v.right_tone ?? "ink", cells: cells(v.right_cells) },
+  ]}
+/>

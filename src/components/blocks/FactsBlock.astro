@@ -1,0 +1,10 @@
+---
+import type { BlockComponentProps } from "emdash/ui";
+import type { StepBodyFactsBlock } from "../../../emdash-env";
+import Facts from "../Facts.astro";
+
+type Props = BlockComponentProps<StepBodyFactsBlock>;
+const { value } = Astro.props;
+---
+
+<Facts items={value.items ?? []} />

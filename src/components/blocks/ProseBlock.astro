@@ -1,0 +1,10 @@
+---
+import type { BlockComponentProps } from "emdash/ui";
+import type { StepBodyProseBlock } from "../../../emdash-env";
+import Rich from "../Rich.astro";
+
+type Props = BlockComponentProps<StepBodyProseBlock>;
+const { value } = Astro.props;
+---
+
+<div class="prose" data-style={value.style ?? "normal"}><Rich value={value.body} /></div>

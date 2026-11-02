@@ -1,0 +1,20 @@
+---
+import type { BlockComponentProps } from "emdash/ui";
+import type { StepBodyAsideBlock } from "../../../emdash-env";
+import Code from "../Code.astro";
+import Prompt from "../Prompt.astro";
+import Rich from "../Rich.astro";
+import { fill } from "../../data/workshop";
+
+type Props = BlockComponentProps<StepBodyAsideBlock>;
+const { value } = Astro.props;
+---
+
+<details class="aside">
+  <summary>{value.note ? <span>{value.summary} <small>{value.note}</small></span> : value.summary}</summary>
+  <div class="aside-body">
+    {value.body && value.body.length > 0 && <Rich value={value.body} />}
+    {value.code && <Code code={fill(value.code)} label={value.code_label || undefined} />}
+    {value.prompt && <Prompt text={value.prompt} />}
+  </div>
+</details>

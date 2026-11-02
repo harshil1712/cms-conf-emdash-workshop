@@ -1,4 +1,6 @@
 ---
+import { inline } from "../utils/inline";
+
 interface Props {
   items: { label: string; text: string }[];
   label?: string;
@@ -11,7 +13,7 @@ const { items, label = "What happens in this step" } = Astro.props;
     items.map((f) => (
       <li>
         <span class="facts-label">{f.label}</span>
-        <span set:html={f.text} />
+        <span set:html={inline(f.text)} />
       </li>
     ))
   }

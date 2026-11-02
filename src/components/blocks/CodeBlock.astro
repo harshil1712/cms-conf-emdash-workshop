@@ -1,0 +1,13 @@
+---
+import type { BlockComponentProps } from "emdash/ui";
+import type { StepBodyCodeBlock } from "../../../emdash-env";
+import Code from "../Code.astro";
+import { fill } from "../../data/workshop";
+import { highlightJsonc } from "../../utils/highlight";
+
+type Props = BlockComponentProps<StepBodyCodeBlock>;
+const { value } = Astro.props;
+const code = fill(value.code);
+---
+
+<Code code={code} label={value.label || undefined} html={value.language === "jsonc" ? highlightJsonc(code) : undefined} />

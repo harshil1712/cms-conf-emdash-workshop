@@ -1,9 +1,10 @@
 ---
-import { prompts, type PromptKey } from "../data/prompts";
+import { fill } from "../data/workshop";
+import { inline } from "../utils/inline";
 
 interface Props {
-  /** Key into src/data/prompts.ts. */
-  name: PromptKey;
+  /** Prompt text from the CMS. {{placeholders}} are filled in. */
+  text: string;
   label?: string;
   /** Collapsed prompts show the first lines and a "Show full prompt" toggle. */
   collapsed?: boolean;
@@ -11,19 +12,13 @@ interface Props {
   editable?: boolean;
   hint?: string;
 }
-const {
-  name,
-  label = "Copy this prompt into your agent",
-  collapsed = true,
-  editable = false,
-  hint,
-} = Astro.props;
-const text = prompts[name];
+const { label, collapsed = true, editable = false, hint } = Astro.props;
+const text = fill(Astro.props.text);
 ---
 
-<div class="prompt" data-prompt={name} data-expanded={collapsed ? "false" : "true"}>
+<div class="prompt" data-expanded={collapsed ? "false" : "true"}>
   <div class="prompt-bar">
-    <span class="prompt-label">{label}</span>
+    <span class="prompt-label">{label || "Copy this prompt into your agent"}</span>
     <button type="button" class="btn-copy" data-copy>Copy prompt</button>
   </div>
   <pre
@@ -39,4 +34,4 @@ const text = prompts[name];
     )
   }
 </div>
-{hint && <p class="prompt-hint" set:html={hint} />}
+{hint && <p class="prompt-hint" set:html={inline(hint)} />}

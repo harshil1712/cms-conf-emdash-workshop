@@ -1,0 +1,11 @@
+---
+import type { BlockComponentProps } from "emdash/ui";
+import type { StepBodyConsentBlock } from "../../../emdash-env";
+import Consent from "../Consent.astro";
+import { baseScopes, reconnectScopes } from "../../data/scopes";
+
+type Props = BlockComponentProps<StepBodyConsentBlock>;
+const { value } = Astro.props;
+---
+
+<Consent scopes={value.variant === "reconnect" ? reconnectScopes : baseScopes} title={value.title || undefined} />

@@ -1,6 +1,7 @@
 /**
  * Workshop-wide settings. Everything an organiser might need to change before
- * the day lives here, so prompts and pages never hard-code it.
+ * the day lives here. The steps themselves live in EmDash (collections `parts`
+ * and `steps`) and refer to these values as {{placeholders}}.
  */
 export const workshop = {
   title: "Ship, Automate, Extend",
@@ -50,48 +51,39 @@ export const workshop = {
 
 export const repoUrl = `https://github.com/${workshop.repo}`;
 
-/** A section of the workshop, shown as a group in the step rail. */
-export type Part = {
-  id: string;
-  label: string;
-  name: string;
-  time: string;
+/** Reusable prompt fragments. Content uses them as {{explain}}, {{narrate}} and {{mcpOnly}}. */
+export const snippets = {
+  explain: `I'm learning, so explain why each step matters.
+
+Format each step like this, and keep the whole reply short:
+
+**1. What you did, in one line**
+> One or two plain sentences on why it matters, with no label in front.`,
+  narrate: "Before each command, tell me in one line what it does.",
+  mcpOnly:
+    "Work only through the `emdash-site` MCP tools: don't edit files, run the CLI, or use the admin.",
 };
 
-export type Step = {
-  id: string;
-  num: string;
-  label: string;
-  part: Part["id"];
-  optional?: boolean;
+const values: Record<string, string> = {
+  event: workshop.event,
+  repo: workshop.repo,
+  repoUrl,
+  placeholderDid: workshop.placeholderDid,
+  workspaceDir: workshop.workspaceDir,
+  siteDir: workshop.siteDir,
+  pluginDir: workshop.pluginDir,
+  pluginSlug: workshop.pluginSlug,
+  ...snippets,
 };
 
-export const parts: Part[] = [
-  { id: "start", label: "Start", name: "Before you start", time: "0:00" },
-  { id: "ship", label: "Part 1", name: "Ship", time: "0:12" },
-  { id: "automate", label: "Part 2", name: "Automate", time: "0:42" },
-  { id: "extend", label: "Part 3", name: "Extend", time: "1:17" },
-];
-
-export const steps: Step[] = [
-  { id: "setup", num: "0", label: "Check your setup", part: "start" },
-  { id: "create", num: "1", label: "Create your blog", part: "ship" },
-  { id: "deploy", num: "2", label: "Deploy to Cloudflare", part: "ship" },
-  { id: "claim", num: "3", label: "Claim your admin", part: "ship" },
-  { id: "model", num: "4", label: "Change the content model", part: "ship" },
-  { id: "connect", num: "5", label: "Connect your agent", part: "automate" },
-  { id: "operate", num: "6", label: "Run your content desk", part: "automate" },
-  { id: "guardrail", num: "7", label: "Hit the guardrail", part: "automate" },
-  { id: "developer", num: "8", label: "Agent as developer", part: "automate", optional: true },
-  { id: "starter", num: "9", label: "Open the plugin starter", part: "extend" },
-  { id: "manifest", num: "10", label: "Write the trust contract", part: "extend" },
-  { id: "generate", num: "11", label: "Generate a cover", part: "extend" },
-  { id: "expose", num: "12", label: "Hand it to editors and agents", part: "extend" },
-  { id: "rule", num: "13", label: "Enforce the publish rule", part: "extend" },
-  { id: "install", num: "14", label: "Install and deploy", part: "extend" },
-  { id: "payoff", num: "15", label: "The payoff", part: "extend" },
-  { id: "ship-it", num: "16", label: "Ship it", part: "extend" },
-];
+/**
+ * Fills {{placeholders}} in content from the CMS with the values above, so names
+ * like the repo or folder are set once here and every step picks them up.
+ * Unknown placeholders are left as they are, so a typo shows on the page.
+ */
+export function fill(text: string): string {
+  return text.replace(/\{\{\s*([a-zA-Z]+)\s*\}\}/g, (match, key: string) => values[key] ?? match);
+}
 
 export const runOfShow = [
   { time: "0:00", label: "Opening" },

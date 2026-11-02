@@ -1,0 +1,11 @@
+---
+import type { BlockComponentProps } from "emdash/ui";
+import type { StepBodyCalloutBlock } from "../../../emdash-env";
+import Callout from "../Callout.astro";
+import Rich from "../Rich.astro";
+
+type Props = BlockComponentProps<StepBodyCalloutBlock>;
+const { value } = Astro.props;
+---
+
+<Callout variant={value.variant} title={value.title || undefined}><Rich value={value.body} /></Callout>

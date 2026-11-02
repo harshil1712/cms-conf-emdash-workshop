@@ -1,4 +1,6 @@
 ---
+import { inline } from "../utils/inline";
+
 interface Props {
   id: string;
   label: string;
@@ -6,21 +8,24 @@ interface Props {
   time: string;
   lede: string;
   concepts?: { title: string; text: string }[];
+  /** Admin link, shown only to signed-in editors. */
+  editUrl?: string;
 }
-const { id, label, name, time, lede, concepts = [] } = Astro.props;
+const { id, label, name, time, lede, concepts = [], editUrl } = Astro.props;
 ---
 
 <section id={id} class="part" aria-labelledby={`${id}-title`}>
   <p class="part-label">{label} <time>{time}</time></p>
   <h2 id={`${id}-title`} class="part-title">{name}<span class="dash">—</span></h2>
-  <p class="part-lede" set:html={lede} />
+  <p class="part-lede" set:html={inline(lede)} />
+  {editUrl && <a class="edit-link" href={editUrl}>Edit in admin</a>}
   {
     concepts.length > 0 && (
       <div class="concepts">
         {concepts.map((c) => (
           <div class="concept">
             <h3>{c.title}</h3>
-            <p set:html={c.text} />
+            <p set:html={inline(c.text)} />
           </div>
         ))}
       </div>

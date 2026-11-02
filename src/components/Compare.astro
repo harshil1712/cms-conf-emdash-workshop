@@ -1,4 +1,6 @@
 ---
+import { inline } from "../utils/inline";
+
 type Cell = { text: string; mark?: "yes" | "no" | "note" };
 type Col = { title: string; sub?: string; tone: "green" | "accent" | "ink"; cells: Cell[] };
 interface Props {
@@ -13,11 +15,11 @@ const { cols, label } = Astro.props;
     cols.map((col) => (
       <div class="compare-col" data-tone={col.tone}>
         <div class="compare-head">
-          {col.title}
-          {col.sub && <small>{col.sub}</small>}
+          <span set:html={inline(col.title)} />
+          {col.sub && <small set:html={inline(col.sub)} />}
         </div>
         {col.cells.map((c) => (
-          <div class="compare-cell" data-mark={c.mark} set:html={c.text} />
+          <div class="compare-cell" data-mark={c.mark} set:html={inline(c.text)} />
         ))}
       </div>
     ))

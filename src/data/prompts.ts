@@ -74,12 +74,12 @@ Steps:
 2. Generate types from the live schema: \`npx emdash types --url <my site URL>\`. Show me only the lines for \`featured\` and \`subtitle\` in \`.emdash/types.ts\`.
    These are standalone types. The site's own types are in \`emdash-env.d.ts\`, which \`pnpm dev\` generates from the local database, and that doesn't have the new fields. So copy the two lines into the \`Post\` interface in \`emdash-env.d.ts\`.
    Explain: why the types come from a running site and not from a file in the repo.
-3. Use the \`building-emdash-site\` skill. Change the homepage hero so it shows the newest post where \`featured\` is true, falling back to the newest post when none is. Query it with \`getEmDashCollection("posts", { where: { featured: true }, orderBy: { published_at: "desc" }, limit: 1 })\`. EmDash's \`WhereValue\` type doesn't list booleans yet, although the query works, so cast the value (\`true as unknown as WhereValue\`, with \`WhereValue\` imported from \`emdash\`) and add a one-line comment saying why. Show the post's \`subtitle\` under its title when it has one. Show me only the lines you changed.
+3. Use the \`building-emdash-site\` skill. Under the site title, the homepage (\`src/pages/index.astro\`) shows a featured post card, drawn by \`src/components/PostCard.astro\` with \`variant="feature"\`. Change it so the card shows the newest post where \`featured\` is true, falling back to the newest post when none is, and leave that post out of the grid below. Query it with \`getEmDashCollection("posts", { where: { featured: true }, orderBy: { published_at: "desc" }, limit: 1 })\`. EmDash's \`WhereValue\` type doesn't list booleans yet, although the query works, so cast the value (\`true as unknown as WhereValue\`, with \`WhereValue\` imported from \`emdash\`) and add a one-line comment saying why. Show the post's \`subtitle\` under its title when it has one, in the \`feature\` variant only: the grid cards use the same component. Show me only the lines you changed.
    Explain: in one line, what \`where\` does here, and that \`posts\` is a real SQL table behind the scenes.
 4. Run \`pnpm run typecheck\`, commit, then deploy with \`pnpm run deploy\`.
    Explain: local \`pnpm dev\` uses a separate local database that has neither the new fields nor my content, so we check the change on the deployed site.
 
-End by telling me to open my site (URL on its own line) and check that the hero shows the post I marked as featured, with its subtitle.`,
+End by telling me to open my site (URL on its own line) and check that the featured post card under the site title shows the post I marked as featured, with its subtitle.`,
 
   connect: `Connect yourself to my EmDash site's MCP server, so you can work with its content. ${NARRATE}
 
@@ -178,8 +178,8 @@ Return \`{ ok: true, mediaId, url }\` or \`{ ok: false, error }\`. Don't connect
 
 Steps:
 
-1. Editors: implement the private route \`covers/generate\` behind the "Generate cover" editor action. Give it the narrowest EmDash permission that lets someone edit a post (check the exact name in the docs). Read the post from \`routeCtx.ui.entry\`, call \`generateCover\`, and reply with a toast and a refresh, so the editor sees the new cover.
-   Explain: why the route reads the entry from \`routeCtx.ui.entry\` and not from the request body.
+1. Editors: implement the private route \`covers/generate\` behind the "Generate cover" editor action. Give it the permission \`content:edit_any\`. Read the post from \`routeCtx.ui.entry\`, call \`generateCover\`, and reply with a toast and a refresh, so the editor sees the new cover.
+   Explain: why the route reads the entry from \`routeCtx.ui.entry\` and not from the request body, and why we use \`content:edit_any\`: a plugin route checks only the user's role, not who owns the post or whether it's a draft, so \`content:edit_own\` or \`content:edit_own_drafts\` would let Authors or Contributors change anyone's post.
 2. Agents: add \`zod\` as a dependency. Add an MCP tool under \`mcp.tools\` named \`generateCover\`, with input \`z.object({ postId: z.string() })\`, pointing at a second private route with the same permission that reads \`routeCtx.input\`. Description: "Generate an AI cover image for a post that has none. Use it when publishing fails because a post has no cover."
    Explain: why the description matters to an agent, and why the tool doesn't need \`destructive: true\` (\`generateCover\` never replaces an existing cover).
 3. Run \`pnpm run validate\` and \`pnpm run typecheck\`.

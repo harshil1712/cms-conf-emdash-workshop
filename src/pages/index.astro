@@ -244,13 +244,23 @@ const manifestHtml = `<span class="k">"capabilities"</span>: [
             <li>Open your site's <code>/_emdash/admin</code> link from the last step.</li>
             <li>Give the site a title. Keep <strong>Sample content</strong> on. Setting up takes up to a minute.</li>
             <li>Enter your email and name, then <strong>register a passkey</strong> when your browser asks.</li>
-            <li>When the site asks you to sign in, use <strong>Sign in with Passkey</strong> with the passkey you just made.</li>
-            <li>Open the dashboard, then visit your site in another tab.</li>
+            <li>Click <strong>Open the dashboard</strong>, then visit your site in another tab.</li>
           </ol>
         </Callout>
         <Callout variant="success">
           You should see the admin dashboard, and the sample posts on your live homepage.
         </Callout>
+        <details class="aside">
+          <summary>Admin in Polish?</summary>
+          <div class="aside-body">
+            <p>
+              The admin follows your browser's language, and it's fully translated into Polish. This page uses the
+              English labels. To match them, open <strong>Settings</strong> (<em>Ustawienia</em>) in the admin and set
+              <strong>Language</strong> (<em>Język</em>) to English. The sign-in page has the same picker. The consent
+              screen in step 5 is always in English.
+            </p>
+          </div>
+        </details>
         <details class="aside">
           <summary>Why passkeys, and why now?</summary>
           <div class="aside-body">
@@ -279,9 +289,12 @@ const manifestHtml = `<span class="k">"capabilities"</span>: [
         </Callout>
         <Prompt name="model" />
         <Callout variant="look" title="Try it yourself">
-          <p>Open your live homepage. The hero now shows the post you marked as featured, with its subtitle.</p>
           <p>
-            Untick <strong>featured</strong> in the admin and refresh: the hero falls back to the newest post. No redeploy,
+            Open your live homepage. The featured post card, under your site's title, now shows the post you marked as
+            featured, with its subtitle.
+          </p>
+          <p>
+            Untick <strong>featured</strong> in the admin and refresh: the card falls back to the newest post. No redeploy,
             because the query runs on every request.
           </p>
         </Callout>

@@ -6,39 +6,22 @@ const W = workshop;
 <header class="hero">
   <div class="hero-inner">
     <div>
-      <p class="hero-eyebrow">
-        <span class="badge">
-          <svg xmlns="http://www.w3.org/2000/svg" width="34" height="16" viewBox="0 0 66 30" fill="none" aria-hidden="true"><path fill="#F6821F" d="M52.688 13.028c-.22 0-.437.008-.654.015a.3.3 0 0 0-.102.024.37.37 0 0 0-.236.255l-.93 3.249c-.401 1.397-.252 2.687.422 3.634.618.876 1.646 1.39 2.894 1.45l5.045.306a.45.45 0 0 1 .435.41.5.5 0 0 1-.025.223.64.64 0 0 1-.547.426l-5.242.306c-2.848.132-5.912 2.456-6.987 5.29l-.378 1a.28.28 0 0 0 .248.382h18.054a.48.48 0 0 0 .464-.35c.32-1.153.482-2.344.48-3.54 0-7.22-5.79-13.072-12.933-13.072"></path><path fill="#FBAD41" d="M44.807 29.578l.334-1.175c.402-1.397.253-2.687-.42-3.634-.62-.876-1.647-1.39-2.896-1.45l-23.665-.306a.47.47 0 0 1-.374-.199.5.5 0 0 1-.052-.434.64.64 0 0 1 .552-.426l23.886-.306c2.836-.131 5.9-2.456 6.975-5.29l1.362-3.6a.9.9 0 0 0 .04-.477C48.997 5.259 42.789 0 35.367 0c-6.842 0-12.647 4.462-14.73 10.665a6.92 6.92 0 0 0-4.911-1.374c-3.28.33-5.92 3.002-6.246 6.318a7.2 7.2 0 0 0 .18 2.472C4.3 18.241 0 22.679 0 28.133q0 .74.106 1.453a.46.46 0 0 0 .457.402h43.704a.57.57 0 0 0 .54-.418"></path></svg>
-          {W.event}
-        </span>
-        <span class="sep">·</span>
-        <span>{W.place}</span>
-        <span class="sep">·</span>
-        <span>Hands-on workshop</span>
-      </p>
-      <h1 class="hero-title">
-        <span class="line">Ship<span class="dash">—</span></span>
-        <span class="line">Automate<span class="dash">—</span></span>
-        <span class="line">Extend</span>
-      </h1>
+      <p class="hero-eyebrow">{W.event} · {W.place} · {W.dates}</p>
+      <h1 class="hero-title">{W.title}</h1>
       <p class="hero-sub">{W.subtitle}, from zero to an agent-run site.</p>
       <p class="hero-copy">
-        In two hours you'll deploy an <a href={W.links.docs}>EmDash</a> blog to Cloudflare, hand it to an AI agent
-        with permissions you choose, and write a plugin that generates cover images, holds an API key, and
-        can't leak it. Your coding agent does the typing. You make the calls.
+        {"In two hours you'll deploy an "}<a href={W.links.docs}>EmDash</a>{" blog to "}<a href="https://developers.cloudflare.com/workers/">Cloudflare Workers</a>{", hand it to an AI agent with permissions you choose, and write a plugin that generates cover images, holds an API key, and can't leak it. Your coding agent does the typing. You make the calls."}
       </p>
-      <ul class="hero-meta">
-        <li><span>With</span><span>{W.speakers.join(" & ")}</span></li>
-        <li><span>Length</span><span>{W.duration}</span></li>
-        <li><span>Stack</span><span>Astro · Workers · D1 · R2</span></li>
-      </ul>
+      <p class="hero-meta">
+        {`With ${W.speakers.join(" & ")} · ${W.duration} · `}<a href="https://astro.build/">Astro</a>{", "}<a href="https://developers.cloudflare.com/workers/">Workers</a>{", "}<a href="https://developers.cloudflare.com/d1/">D1</a>{" and "}<a href="https://developers.cloudflare.com/r2/">R2</a>
+      </p>
     </div>
     <aside class="program" aria-label="Run of show">
-      <div class="program-head"><span>Run of show</span><span>{W.dates}</span></div>
+      <p class="program-head">Run of show</p>
       <ol>
         {
           runOfShow.map((r) => (
-            <li data-accent={r.accent ? "" : undefined}>
+            <li>
               <time>{r.time}</time>
               <span>{r.label}</span>
             </li>

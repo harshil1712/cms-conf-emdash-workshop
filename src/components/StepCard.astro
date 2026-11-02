@@ -19,25 +19,21 @@ const allTags = optional ? [{ text: "Optional · first to cut", tone: undefined 
 
 <article id={id} class="stepcard" data-step={id}>
   <header class="stepcard-head">
-    <div class="stepcard-num" data-final={final ? "" : undefined} aria-hidden="true">{num}</div>
-    <div>
+    <p class="stepcard-eyebrow">
+      <span aria-hidden="true">{final ? "Wrap-up" : `Step ${num}`}</span>
       {
-        allTags.length > 0 && (
-          <div class="stepcard-tags">
-            {allTags.map((t) => (
-              <span class="tag" data-tone={t.tone}>
-                {t.text}
-              </span>
-            ))}
-          </div>
-        )
+        allTags.map((t) => (
+          <span class="tag" data-tone={t.tone}>
+            {t.text}
+          </span>
+        ))
       }
-      <h2 class="stepcard-title">
-        <span class="sr-only">{final ? "" : `Step ${num}: `}</span>{title}
-      </h2>
-      {lede && <p class="stepcard-lede" set:html={inline(lede)} />}
-      {editUrl && <a class="edit-link" href={editUrl}>Edit in admin</a>}
-    </div>
+    </p>
+    <h2 class="stepcard-title">
+      <span class="sr-only">{final ? "" : `Step ${num}: `}</span>{title}
+    </h2>
+    {lede && <p class="stepcard-lede" set:html={inline(lede)} />}
+    {editUrl && <a class="edit-link" href={editUrl}>Edit in admin</a>}
   </header>
   <div class="stepcard-body">
     <slot />

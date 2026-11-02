@@ -4,7 +4,6 @@ interface Props {
   title?: string;
 }
 const { variant, title } = Astro.props;
-const iconless = variant === "success" || variant === "look" || variant === "you" || variant === "stage";
 const defaultTitle: Record<string, string> = {
   you: "You do this",
   stage: "Watch the stage",
@@ -12,23 +11,7 @@ const defaultTitle: Record<string, string> = {
 const label = title ?? defaultTitle[variant];
 ---
 
-{
-  iconless ? (
-    <div class="callout" data-variant={variant} role={variant === "success" ? "note" : undefined}>
-      {label && variant !== "success" && <p class="callout-title">{label}</p>}
-      <slot />
-    </div>
-  ) : (
-    <div class="callout" data-variant={variant}>
-      <span class="callout-icon" aria-hidden="true">
-        {variant === "restart" ? "↻" : "!"}
-      </span>
-      <div>
-        {label && <p class="callout-heading">{label}</p>}
-        <div class="callout-body">
-          <slot />
-        </div>
-      </div>
-    </div>
-  )
-}
+<div class="callout" data-variant={variant} role={variant === "success" ? "note" : undefined}>
+  {label && <p class="callout-title">{label}</p>}
+  <slot />
+</div>

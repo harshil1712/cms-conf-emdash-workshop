@@ -16,7 +16,7 @@ const { id, label, name, time, lede, concepts = [], editUrl } = Astro.props;
 
 <section id={id} class="part" aria-labelledby={`${id}-title`}>
   <p class="part-label">{label} <time>{time}</time></p>
-  <h2 id={`${id}-title`} class="part-title">{name}<span class="dash">—</span></h2>
+  <h2 id={`${id}-title`} class="part-title">{name}</h2>
   <p class="part-lede" set:html={inline(lede)} />
   {editUrl && <a class="edit-link" href={editUrl}>Edit in admin</a>}
   {
@@ -24,7 +24,7 @@ const { id, label, name, time, lede, concepts = [], editUrl } = Astro.props;
       <div class="concepts">
         {concepts.map((c) => (
           <div class="concept">
-            <h3>{c.title}</h3>
+            <h3 set:html={inline(c.title)} />
             <p set:html={inline(c.text)} />
           </div>
         ))}

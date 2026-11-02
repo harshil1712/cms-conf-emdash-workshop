@@ -8,10 +8,7 @@ const { scopes, title = "Authorize this client" } = Astro.props;
 ---
 
 <figure class="consent" aria-label="What to tick on your site's consent screen">
-  <div class="consent-chrome" aria-hidden="true">
-    <i></i><i></i><i></i>
-    <span class="consent-url">your-site.workers.dev/_emdash/oauth/authorize</span>
-  </div>
+  <p class="consent-url" aria-hidden="true">your-site.workers.dev/_emdash/oauth/authorize</p>
   <div class="consent-body">
     <h4>{title}</h4>
     <p>Every box starts ticked. Keep the green ones and untick the rest. Your screen shows the wording, not the scope names.</p>
@@ -27,7 +24,7 @@ const { scopes, title = "Authorize this client" } = Astro.props;
             <span class="scope-box" aria-hidden="true">
               {
                 (s.on || s.isNew) && (
-                  <svg viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M2.5 6.2 5 8.6l4.5-5" />
                   </svg>
                 )

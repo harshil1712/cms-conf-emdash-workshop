@@ -691,16 +691,16 @@
           "lede": "Scaffold a blog, put it on Cloudflare, claim it, and change its content model. Thirty minutes from nothing to a live site you can edit.",
           "concepts": [
             {
-              "title": "An Astro integration",
-              "text": "Admin, REST API, auth, media and plugins come with `emdash()` in your Astro config. No separate backend."
+              "title": "An [Astro integration](https://docs.emdashcms.com/concepts/architecture/)",
+              "text": "Admin, [REST API](https://docs.emdashcms.com/reference/rest-api/), auth, media and plugins come with `emdash()` in your [Astro config](https://docs.emdashcms.com/reference/configuration/). No separate backend."
             },
             {
               "title": "Cloudflare primitives",
-              "text": "Workers run the site, D1 holds content, R2 holds media. It also runs on Node with SQLite or Postgres."
+              "text": "[Workers](https://developers.cloudflare.com/workers/) run the site, [D1](https://developers.cloudflare.com/d1/) holds content, [R2](https://developers.cloudflare.com/r2/) holds media. It also runs on [Node with SQLite or Postgres](https://docs.emdashcms.com/deployment/nodejs/)."
             },
             {
               "title": "Content lives in the database",
-              "text": "Each collection is a real SQL table (`ec_posts`). Rich text is Portable Text: structured JSON, not HTML."
+              "text": "Each [collection](https://docs.emdashcms.com/concepts/collections/) is a real SQL table (`ec_posts`). Rich text is [Portable Text](https://portabletext.org/): structured JSON, not HTML."
             }
           ]
         }
@@ -714,23 +714,23 @@
           "label": "Part 2",
           "time": "0:42 – 1:12",
           "position": 2,
-          "lede": "Your site already has an MCP server. Connect your agent to it, let it run your content desk, and watch what happens when it reaches for more than you gave it.",
+          "lede": "Your site already has an [MCP server](https://docs.emdashcms.com/reference/mcp-server/). Connect your agent to it, let it run your content desk, and watch what happens when it reaches for more than you gave it.",
           "concepts": [
             {
-              "title": "MCP server",
+              "title": "[MCP server](https://docs.emdashcms.com/reference/mcp-server/)",
               "text": "Built into every site at `/_emdash/api/mcp`. Agents use it to work with content."
             },
             {
-              "title": "CLI",
+              "title": "[CLI](https://docs.emdashcms.com/reference/cli/)",
               "text": "`npx emdash content …` and `schema …`. Outputs JSON, good for scripts and CI."
             },
             {
-              "title": "Agent skills",
+              "title": "[Agent skills](https://docs.emdashcms.com/agent-skills/)",
               "text": "In `.agents/skills/`. They teach coding agents the current EmDash APIs, so they don't make them up."
             },
             {
               "title": "Least privilege",
-              "text": "OAuth scopes and user roles are checked separately. A token never gets more than both allow."
+              "text": "[OAuth scopes](https://docs.emdashcms.com/reference/mcp-server/#authentication) and [user roles](https://docs.emdashcms.com/guides/authentication/#user-roles) are checked separately. A token never gets more than both allow."
             }
           ]
         }
@@ -745,19 +745,19 @@
           "time": "1:17 – 1:52",
           "position": 3,
           "break_before": "five minutes · 1:12",
-          "lede": "Build an AI plugin that needs a paid API token, then make sure the token can only go to one place. That's the job of EmDash's sandbox.",
+          "lede": "Build an AI plugin that needs a paid API token, then make sure the token can only go to one place. That's the job of [EmDash's sandbox](https://docs.emdashcms.com/deployment/plugin-sandbox/).",
           "concepts": [
             {
               "title": "The problem",
-              "text": "On WordPress, most security vulnerabilities come from plugins. Any plugin can read every key stored in the site and send it anywhere."
+              "text": "On WordPress, [most security vulnerabilities come from plugins](https://patchstack.com/whitepaper/state-of-wordpress-security-in-2025/). Any plugin can read every key stored in the site and send it anywhere."
             },
             {
-              "title": "A manifest is a contract",
-              "text": "`emdash-plugin.jsonc` lists the capabilities and hosts a plugin needs. Nothing else is available to it."
+              "title": "[A manifest is a contract](https://docs.emdashcms.com/plugins/creating-plugins/manifest/)",
+              "text": "`emdash-plugin.jsonc` lists the [capabilities](https://docs.emdashcms.com/plugins/creating-plugins/capabilities/) and hosts a plugin needs. Nothing else is available to it."
             },
             {
               "title": "Same plugin, two ways to run",
-              "text": "`sandboxed: []` gives it its own isolate. `plugins: []` runs it in-process, with the same API gates but no isolation."
+              "text": "`sandboxed: []` gives it [its own isolate](https://docs.emdashcms.com/deployment/plugin-sandbox/). `plugins: []` runs it in-process, with the same API gates but no isolation."
             }
           ],
           "body": [
@@ -783,7 +783,7 @@
                   "mark": "yes"
                 },
                 {
-                  "text": "50 ms CPU, 10 subrequests, 30 s wall time per call",
+                  "text": "[50 ms CPU, 10 subrequests, 30 s wall time per call](https://docs.emdashcms.com/deployment/plugin-sandbox/#resource-limits)",
                   "mark": "note"
                 }
               ],
@@ -923,7 +923,7 @@
               "items": [
                 {
                   "label": "Checks",
-                  "text": "Node 22.16+, pnpm, git, Wrangler, and that R2 is on."
+                  "text": "[Node 22.16+](https://nodejs.org/), [pnpm](https://pnpm.io/installation), [git](https://git-scm.com/), [Wrangler](https://developers.cloudflare.com/workers/wrangler/), and that [R2](https://developers.cloudflare.com/r2/) is on."
                 },
                 {
                   "label": "Asks first",
@@ -998,13 +998,27 @@
                       "_key": "ki",
                       "_type": "link",
                       "href": "https://dash.cloudflare.com/?to=/:account/r2/overview"
+                    },
+                    {
+                      "_key": "lnk1",
+                      "_type": "link",
+                      "href": "https://dash.cloudflare.com/sign-up"
                     }
                   ],
                   "children": [
                     {
                       "_type": "span",
-                      "_key": "kg",
-                      "text": "A Cloudflare account with R2 enabled.",
+                      "_key": "kgb",
+                      "text": "A Cloudflare account",
+                      "marks": [
+                        "strong",
+                        "lnk1"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "kgc",
+                      "text": " with R2 enabled.",
                       "marks": [
                         "strong"
                       ]
@@ -1037,20 +1051,130 @@
                   "style": "normal",
                   "listItem": "bullet",
                   "level": 1,
-                  "markDefs": [],
+                  "markDefs": [
+                    {
+                      "_key": "lnk2",
+                      "_type": "link",
+                      "href": "https://modelcontextprotocol.io/"
+                    },
+                    {
+                      "_key": "lnk3",
+                      "_type": "link",
+                      "href": "https://code.claude.com/docs/en/overview"
+                    },
+                    {
+                      "_key": "lnk4",
+                      "_type": "link",
+                      "href": "https://developers.openai.com/codex/"
+                    },
+                    {
+                      "_key": "lnk5",
+                      "_type": "link",
+                      "href": "https://opencode.ai/"
+                    },
+                    {
+                      "_key": "lnk6",
+                      "_type": "link",
+                      "href": "https://cursor.com/"
+                    },
+                    {
+                      "_key": "lnk7",
+                      "_type": "link",
+                      "href": "https://code.visualstudio.com/docs/copilot/chat/chat-agent-mode"
+                    }
+                  ],
                   "children": [
                     {
                       "_type": "span",
-                      "_key": "km",
-                      "text": "A coding agent that speaks MCP",
+                      "_key": "kma",
+                      "text": "A coding agent that ",
                       "marks": [
                         "strong"
                       ]
                     },
                     {
                       "_type": "span",
-                      "_key": "kn",
-                      "text": ": Claude Code, Codex, OpenCode, Cursor, or VS Code with Copilot. No agent? Pair up with a neighbour.",
+                      "_key": "kmb",
+                      "text": "speaks MCP",
+                      "marks": [
+                        "strong",
+                        "lnk2"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "kna",
+                      "text": ": ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "knb",
+                      "text": "Claude Code",
+                      "marks": [
+                        "lnk3"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "knca",
+                      "text": ", ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "kncb",
+                      "text": "Codex",
+                      "marks": [
+                        "lnk4"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "kncca",
+                      "text": ", ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "knccb",
+                      "text": "OpenCode",
+                      "marks": [
+                        "lnk5"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "knccca",
+                      "text": ", ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "kncccb",
+                      "text": "Cursor",
+                      "marks": [
+                        "lnk6"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "kncccca",
+                      "text": ", or ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "knccccb",
+                      "text": "VS Code with Copilot",
+                      "marks": [
+                        "lnk7"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "knccccc",
+                      "text": ". No agent? Pair up with a neighbour.",
                       "marks": []
                     }
                   ]
@@ -1066,15 +1190,21 @@
                       "_key": "kr",
                       "_type": "link",
                       "href": "https://bsky.app/"
+                    },
+                    {
+                      "_key": "lnk8",
+                      "_type": "link",
+                      "href": "https://docs.emdashcms.com/guides/atmosphere-auth/"
                     }
                   ],
                   "children": [
                     {
                       "_type": "span",
-                      "_key": "kp",
+                      "_key": "kpb",
                       "text": "An Atmosphere handle or DID",
                       "marks": [
-                        "strong"
+                        "strong",
+                        "lnk8"
                       ]
                     },
                     {
@@ -1170,12 +1300,32 @@
                   "_type": "block",
                   "_key": "k1e",
                   "style": "normal",
-                  "markDefs": [],
+                  "markDefs": [
+                    {
+                      "_key": "lnk9",
+                      "_type": "link",
+                      "href": "https://docs.emdashcms.com/deployment/nodejs/"
+                    }
+                  ],
                   "children": [
                     {
                       "_type": "span",
-                      "_key": "k13",
-                      "text": "Everything works locally on Node.js and SQLite. In step 1, scaffold with ",
+                      "_key": "k13a",
+                      "text": "Everything works locally on ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k13b",
+                      "text": "Node.js and SQLite",
+                      "marks": [
+                        "lnk9"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k13c",
+                      "text": ". In step 1, scaffold with ",
                       "marks": []
                     },
                     {
@@ -1259,6 +1409,11 @@
                       "_key": "k1i",
                       "_type": "link",
                       "href": "https://docs.emdashcms.com/deployment/plugin-sandbox/"
+                    },
+                    {
+                      "_key": "lnk10",
+                      "_type": "link",
+                      "href": "https://github.com/cloudflare/workerd"
                     }
                   ],
                   "children": [
@@ -1270,10 +1425,11 @@
                     },
                     {
                       "_type": "span",
-                      "_key": "k1g",
+                      "_key": "k1gb",
                       "text": "workerd",
                       "marks": [
-                        "code"
+                        "code",
+                        "lnk10"
                       ]
                     },
                     {
@@ -1313,7 +1469,7 @@
           "num": "1",
           "label": "Create your blog",
           "title": "Create your blog",
-          "lede": "One command scaffolds an Astro site with EmDash, the Blog template, and agent skills that teach your agent current EmDash APIs.",
+          "lede": "One command scaffolds an [Astro site](https://astro.build/) with EmDash, [the Blog template](https://github.com/emdash-cms/templates/tree/main/blog-cloudflare), and [agent skills](https://docs.emdashcms.com/agent-skills/) that teach your agent current EmDash APIs.",
           "body": [
             {
               "_type": "facts",
@@ -1330,7 +1486,7 @@
                 },
                 {
                   "label": "Sandbox",
-                  "text": "Off for now. Part 3 explains why."
+                  "text": "Off for now. [Part 3 explains why](#part-extend)."
                 }
               ]
             },
@@ -1376,7 +1532,18 @@
                   "_type": "block",
                   "_key": "k1r",
                   "style": "normal",
-                  "markDefs": [],
+                  "markDefs": [
+                    {
+                      "_key": "lnk11",
+                      "_type": "link",
+                      "href": "https://agents.md/"
+                    },
+                    {
+                      "_key": "lnk12",
+                      "_type": "link",
+                      "href": "https://docs.emdashcms.com/docs-mcp/"
+                    }
+                  ],
                   "children": [
                     {
                       "_type": "span",
@@ -1386,16 +1553,31 @@
                     },
                     {
                       "_type": "span",
-                      "_key": "k1p",
+                      "_key": "k1pb",
                       "text": "AGENTS.md",
                       "marks": [
-                        "code"
+                        "code",
+                        "lnk11"
                       ]
                     },
                     {
                       "_type": "span",
-                      "_key": "k1q",
-                      "text": ", its skills, and the EmDash docs MCP server when it starts there, and every step from now on relies on them.",
+                      "_key": "k1qa",
+                      "text": ", its skills, and the ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k1qb",
+                      "text": "EmDash docs MCP server",
+                      "marks": [
+                        "lnk12"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k1qc",
+                      "text": " when it starts there, and every step from now on relies on them.",
                       "marks": []
                     }
                   ]
@@ -1415,7 +1597,7 @@
           "num": "2",
           "label": "Deploy to Cloudflare",
           "title": "Deploy to Cloudflare",
-          "lede": "The first deploy creates everything the site needs: a D1 database, an R2 bucket, a KV namespace for sessions, and the Worker. Later deploys reuse them.",
+          "lede": "The [first deploy](https://docs.emdashcms.com/deployment/cloudflare/) creates everything the site needs: a [D1 database](https://developers.cloudflare.com/d1/), an [R2 bucket](https://developers.cloudflare.com/r2/), a [KV namespace](https://developers.cloudflare.com/kv/) for sessions, and [the Worker](https://developers.cloudflare.com/workers/). Later deploys reuse them.",
           "body": [
             {
               "_type": "prompt",
@@ -1476,7 +1658,7 @@
           "num": "3",
           "label": "Claim your admin",
           "title": "Claim your admin",
-          "lede": "Run the setup wizard on your live site and sign in with a passkey.",
+          "lede": "Run the [setup wizard](https://docs.emdashcms.com/guides/authentication/#set-up-the-first-user) on your live site and sign in with a [passkey](https://docs.emdashcms.com/guides/authentication/#log-in-with-a-passkey).",
           "tag": "You do this",
           "body": [
             {
@@ -1717,20 +1899,40 @@
                   "_type": "block",
                   "_key": "k2t",
                   "style": "normal",
-                  "markDefs": [],
+                  "markDefs": [
+                    {
+                      "_key": "lnk13",
+                      "_type": "link",
+                      "href": "https://passkeys.dev/"
+                    },
+                    {
+                      "_key": "lnk14",
+                      "_type": "link",
+                      "href": "https://developers.cloudflare.com/workers/configuration/routing/workers-dev/"
+                    }
+                  ],
                   "children": [
                     {
                       "_type": "span",
-                      "_key": "k2o",
-                      "text": "A passkey only works on the hostname that registered it. Registering on your ",
+                      "_key": "k2ob",
+                      "text": "A passkey",
+                      "marks": [
+                        "lnk13"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k2oc",
+                      "text": " only works on the hostname that registered it. Registering on your ",
                       "marks": []
                     },
                     {
                       "_type": "span",
-                      "_key": "k2p",
+                      "_key": "k2pb",
                       "text": "workers.dev",
                       "marks": [
-                        "code"
+                        "code",
+                        "lnk14"
                       ]
                     },
                     {
@@ -1770,7 +1972,7 @@
           "num": "4",
           "label": "Change the content model",
           "title": "Change the content model",
-          "lede": "Content types live in the database, so you change them in the admin, not in code. Then your agent pulls the new schema into types and uses it.",
+          "lede": "[Content types](https://docs.emdashcms.com/concepts/content-model/) live in the database, so you change them in the admin, not in code. Then your agent pulls the new schema into [types](https://docs.emdashcms.com/reference/cli/) and uses it.",
           "body": [
             {
               "_type": "callout",
@@ -1814,7 +2016,13 @@
                   "style": "normal",
                   "listItem": "number",
                   "level": 1,
-                  "markDefs": [],
+                  "markDefs": [
+                    {
+                      "_key": "lnk15",
+                      "_type": "link",
+                      "href": "https://docs.emdashcms.com/reference/field-types/"
+                    }
+                  ],
                   "children": [
                     {
                       "_type": "span",
@@ -1824,10 +2032,11 @@
                     },
                     {
                       "_type": "span",
-                      "_key": "k2z",
+                      "_key": "k2zb",
                       "text": "Boolean",
                       "marks": [
-                        "strong"
+                        "strong",
+                        "lnk15"
                       ]
                     },
                     {
@@ -1990,7 +2199,13 @@
                   "_type": "block",
                   "_key": "k3n",
                   "style": "normal",
-                  "markDefs": [],
+                  "markDefs": [
+                    {
+                      "_key": "lnk16",
+                      "_type": "link",
+                      "href": "https://docs.emdashcms.com/guides/querying-content/"
+                    }
+                  ],
                   "children": [
                     {
                       "_type": "span",
@@ -2008,8 +2223,22 @@
                     },
                     {
                       "_type": "span",
-                      "_key": "k3m",
-                      "text": " in the admin and refresh: the card falls back to the newest post. No redeploy, because the query runs on every request.",
+                      "_key": "k3ma",
+                      "text": " in the admin and refresh: the card falls back to the newest post. No redeploy, because ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k3mb",
+                      "text": "the query",
+                      "marks": [
+                        "lnk16"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k3mc",
+                      "text": " runs on every request.",
                       "marks": []
                     }
                   ]
@@ -2037,7 +2266,7 @@
           "num": "5",
           "label": "Connect your agent",
           "title": "Connect your agent",
-          "lede": "Add your site as an MCP server. When you sign in, your site asks what the agent may do. You choose.",
+          "lede": "Add your site as an [MCP server](https://docs.emdashcms.com/reference/mcp-server/). When you sign in, your site [asks what the agent may do](https://docs.emdashcms.com/reference/mcp-server/#authentication). You choose.",
           "body": [
             {
               "_type": "prompt",
@@ -2260,7 +2489,7 @@
           "num": "6",
           "label": "Run your content desk",
           "title": "Run your content desk",
-          "lede": "Your agent drafts, tags, writes alt text and schedules, all through your site's MCP tools.",
+          "lede": "Your agent drafts, tags, writes alt text and schedules, all through your site's [MCP tools](https://docs.emdashcms.com/reference/mcp-server/#tool-inventory).",
           "body": [
             {
               "_type": "facts",
@@ -2273,15 +2502,15 @@
                 },
                 {
                   "label": "Tags",
-                  "text": "Created and assigned."
+                  "text": "[Created and assigned](https://docs.emdashcms.com/guides/taxonomies/)."
                 },
                 {
                   "label": "Alt text",
-                  "text": "On the sample posts' featured images."
+                  "text": "On the sample posts' [featured images](https://docs.emdashcms.com/guides/media-library/)."
                 },
                 {
                   "label": "Schedule",
-                  "text": "One post, tomorrow at 9:00."
+                  "text": "One post, [tomorrow at 9:00](https://docs.emdashcms.com/reference/content-lifecycle/)."
                 }
               ]
             },
@@ -2334,7 +2563,13 @@
                   "_type": "block",
                   "_key": "k4i",
                   "style": "normal",
-                  "markDefs": [],
+                  "markDefs": [
+                    {
+                      "_key": "lnk17",
+                      "_type": "link",
+                      "href": "https://docs.emdashcms.com/guides/media-library/"
+                    }
+                  ],
                   "children": [
                     {
                       "_type": "span",
@@ -2352,8 +2587,22 @@
                     },
                     {
                       "_type": "span",
-                      "_key": "k4h",
-                      "text": ". If the agent only updated the media library, your site still renders the old text. Ask it to fix that.",
+                      "_key": "k4ha",
+                      "text": ". If the agent only updated the ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k4hb",
+                      "text": "media library",
+                      "marks": [
+                        "lnk17"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k4hc",
+                      "text": ", your site still renders the old text. Ask it to fix that.",
                       "marks": []
                     }
                   ]
@@ -2394,7 +2643,13 @@
                   "_type": "block",
                   "_key": "k4m",
                   "style": "normal",
-                  "markDefs": [],
+                  "markDefs": [
+                    {
+                      "_key": "lnk19",
+                      "_type": "link",
+                      "href": "https://docs.emdashcms.com/reference/mcp-server/#errors"
+                    }
+                  ],
                   "children": [
                     {
                       "_type": "span",
@@ -2404,10 +2659,11 @@
                     },
                     {
                       "_type": "span",
-                      "_key": "k4k",
+                      "_key": "k4kb",
                       "text": "INSUFFICIENT_SCOPE",
                       "marks": [
-                        "code"
+                        "code",
+                        "lnk19"
                       ]
                     },
                     {
@@ -2431,7 +2687,13 @@
                   "_type": "block",
                   "_key": "k4q",
                   "style": "normal",
-                  "markDefs": [],
+                  "markDefs": [
+                    {
+                      "_key": "lnk18",
+                      "_type": "link",
+                      "href": "https://docs.emdashcms.com/guides/authentication/#user-roles"
+                    }
+                  ],
                   "children": [
                     {
                       "_type": "span",
@@ -2449,8 +2711,22 @@
                     },
                     {
                       "_type": "span",
-                      "_key": "k4p",
-                      "text": " on the consent screen, so the token can't change your content model, even though your own admin account could. Scopes limit the token. Roles limit the person. The agent gets the smaller of the two.",
+                      "_key": "k4pa",
+                      "text": " on the consent screen, so the token can't change your content model, even though your own admin account could. Scopes limit the token. ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k4pb",
+                      "text": "Roles limit the person",
+                      "marks": [
+                        "lnk18"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k4pc",
+                      "text": ". The agent gets the smaller of the two.",
                       "marks": []
                     }
                   ]
@@ -2471,7 +2747,7 @@
           "label": "Agent as developer",
           "title": "Agent as developer",
           "optional": true,
-          "lede": "Same agent, different job: change the site's code. The skills keep it on current EmDash APIs instead of ones it remembers from training.",
+          "lede": "Same agent, different job: change the site's code. [The skills](https://docs.emdashcms.com/agent-skills/) keep it on current EmDash APIs instead of ones it remembers from training.",
           "body": [
             {
               "_type": "prompt",
@@ -2493,7 +2769,18 @@
                   "_type": "block",
                   "_key": "k50",
                   "style": "normal",
-                  "markDefs": [],
+                  "markDefs": [
+                    {
+                      "_key": "lnk20",
+                      "_type": "link",
+                      "href": "https://agents.md/"
+                    },
+                    {
+                      "_key": "lnk21",
+                      "_type": "link",
+                      "href": "https://docs.emdashcms.com/guides/querying-content/"
+                    }
+                  ],
                   "children": [
                     {
                       "_type": "span",
@@ -2503,10 +2790,11 @@
                     },
                     {
                       "_type": "span",
-                      "_key": "k4s",
+                      "_key": "k4sb",
                       "text": "entry.data.id",
                       "marks": [
-                        "code"
+                        "code",
+                        "lnk21"
                       ]
                     },
                     {
@@ -2517,10 +2805,11 @@
                     },
                     {
                       "_type": "span",
-                      "_key": "k4u",
+                      "_key": "k4ub",
                       "text": "AGENTS.md",
                       "marks": [
-                        "code"
+                        "code",
+                        "lnk20"
                       ]
                     },
                     {
@@ -2591,11 +2880,11 @@
               "items": [
                 {
                   "label": "Already done",
-                  "text": "Scaffold, Block Kit settings page, editor-action wiring, test setup."
+                  "text": "Scaffold, [Block Kit settings page](https://docs.emdashcms.com/plugins/creating-plugins/block-kit/), [editor-action wiring](https://docs.emdashcms.com/plugins/creating-plugins/block-kit/#saved-entry-panels-and-actions), [test setup](https://docs.emdashcms.com/plugins/creating-plugins/testing/)."
                 },
                 {
                   "label": "You write",
-                  "text": "Trust contract, `generateCover`, entry points, publish rule."
+                  "text": "[Trust contract](https://docs.emdashcms.com/plugins/creating-plugins/manifest/#trust-contract), `generateCover`, entry points, publish rule."
                 },
                 {
                   "label": "Folder",
@@ -2622,12 +2911,32 @@
                   "_type": "block",
                   "_key": "k52",
                   "style": "normal",
-                  "markDefs": [],
+                  "markDefs": [
+                    {
+                      "_key": "lnk22",
+                      "_type": "link",
+                      "href": "https://docs.emdashcms.com/plugins/creating-plugins/cli/"
+                    }
+                  ],
                   "children": [
                     {
                       "_type": "span",
-                      "_key": "k51",
-                      "text": "The plugin CLI scaffolds the same shape. It asks for your publisher, author, security contact and repo:",
+                      "_key": "k51a",
+                      "text": "The ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k51b",
+                      "text": "plugin CLI",
+                      "marks": [
+                        "lnk22"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k51c",
+                      "text": " scaffolds the same shape. It asks for your publisher, author, security contact and repo:",
                       "marks": []
                     }
                   ]
@@ -2648,7 +2957,7 @@
           "num": "10",
           "label": "Write the trust contract",
           "title": "Write the trust contract",
-          "lede": "The manifest says what the plugin may touch. An operator sees it before installing, and the runtime enforces it.",
+          "lede": "[The manifest](https://docs.emdashcms.com/plugins/creating-plugins/manifest/) says what the plugin may touch. An operator sees it before installing, and the runtime enforces it.",
           "body": [
             {
               "_type": "code",
@@ -2678,12 +2987,45 @@
                   "_type": "block",
                   "_key": "k54",
                   "style": "normal",
-                  "markDefs": [],
+                  "markDefs": [
+                    {
+                      "_key": "lnk23",
+                      "_type": "link",
+                      "href": "https://docs.emdashcms.com/plugins/creating-plugins/capabilities/"
+                    },
+                    {
+                      "_key": "lnk24",
+                      "_type": "link",
+                      "href": "https://docs.emdashcms.com/plugins/creating-plugins/settings/#secret-values"
+                    }
+                  ],
                   "children": [
                     {
                       "_type": "span",
-                      "_key": "k53",
-                      "text": "Four capabilities, two hosts. That's the plugin's whole reach. It can't read users, can't send email, and can't call anything except Replicate. The token is stored encrypted, and the admin never sends it back to a browser.",
+                      "_key": "k53b",
+                      "text": "Four capabilities",
+                      "marks": [
+                        "lnk23"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k53ca",
+                      "text": ", two hosts. That's the plugin's whole reach. It can't read users, can't send email, and can't call anything except Replicate. The token is ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k53cb",
+                      "text": "stored encrypted",
+                      "marks": [
+                        "lnk24"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k53cc",
+                      "text": ", and the admin never sends it back to a browser.",
                       "marks": []
                     }
                   ]
@@ -2703,7 +3045,7 @@
           "num": "11",
           "label": "Generate a cover",
           "title": "Generate a cover",
-          "lede": "One function, used by every entry point: read the post, ask FLUX Schnell for an image, store it, and set it as the cover.",
+          "lede": "One function, used by every entry point: read the post, ask [FLUX Schnell](https://replicate.com/black-forest-labs/flux-schnell) for an image, store it, and set it as the cover.",
           "body": [
             {
               "_type": "facts",
@@ -2712,7 +3054,7 @@
               "items": [
                 {
                   "label": "Model",
-                  "text": "[FLUX Schnell](https://replicate.com/black-forest-labs/flux-schnell) on Replicate, about $0.003 an image."
+                  "text": "[FLUX Schnell](https://replicate.com/black-forest-labs/flux-schnell) on [Replicate](https://replicate.com/), about $0.003 an image."
                 },
                 {
                   "label": "Network",
@@ -2720,7 +3062,7 @@
                 },
                 {
                   "label": "Budget",
-                  "text": "Under 30 s wall time and 10 subrequests."
+                  "text": "[Under 30 s wall time and 10 subrequests](https://docs.emdashcms.com/deployment/plugin-sandbox/#resource-limits)."
                 }
               ]
             },
@@ -2746,7 +3088,13 @@
                   "style": "normal",
                   "listItem": "bullet",
                   "level": 1,
-                  "markDefs": [],
+                  "markDefs": [
+                    {
+                      "_key": "lnk25",
+                      "_type": "link",
+                      "href": "https://replicate.com/docs/topics/predictions/create-a-prediction"
+                    }
+                  ],
                   "children": [
                     {
                       "_type": "span",
@@ -2764,10 +3112,11 @@
                     },
                     {
                       "_type": "span",
-                      "_key": "k57",
+                      "_key": "k57b",
                       "text": "Prefer: wait=20",
                       "marks": [
-                        "code"
+                        "code",
+                        "lnk25"
                       ]
                     },
                     {
@@ -2798,7 +3147,18 @@
                   "style": "normal",
                   "listItem": "bullet",
                   "level": 1,
-                  "markDefs": [],
+                  "markDefs": [
+                    {
+                      "_key": "lnk26",
+                      "_type": "link",
+                      "href": "https://replicate.com/docs/topics/predictions/data-retention"
+                    },
+                    {
+                      "_key": "lnk27",
+                      "_type": "link",
+                      "href": "https://docs.emdashcms.com/guides/media-library/"
+                    }
+                  ],
                   "children": [
                     {
                       "_type": "span",
@@ -2810,8 +3170,36 @@
                     },
                     {
                       "_type": "span",
-                      "_key": "k5d",
-                      "text": " Replicate deletes API outputs after an hour. Your media library keeps them.",
+                      "_key": "k5da",
+                      "text": " Replicate ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k5db",
+                      "text": "deletes API outputs after an hour",
+                      "marks": [
+                        "lnk26"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k5dca",
+                      "text": ". Your ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k5dcb",
+                      "text": "media library",
+                      "marks": [
+                        "lnk27"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k5dcc",
+                      "text": " keeps them.",
                       "marks": []
                     }
                   ]
@@ -2855,7 +3243,7 @@
           "num": "12",
           "label": "Hand it to editors and agents",
           "title": "Hand it to editors and agents",
-          "lede": "Editors get a button in the post editor. Agents get an MCP tool. Both call the same function through private routes.",
+          "lede": "Editors get [a button in the post editor](https://docs.emdashcms.com/plugins/creating-plugins/block-kit/#saved-entry-panels-and-actions). Agents get [an MCP tool](https://docs.emdashcms.com/plugins/creating-plugins/api-routes/#exposing-a-route-as-an-mcp-tool). Both call the same function through [private routes](https://docs.emdashcms.com/plugins/creating-plugins/api-routes/).",
           "body": [
             {
               "_type": "compare",
@@ -2884,11 +3272,11 @@
               "right_tone": "ink",
               "right_cells": [
                 {
-                  "text": "MCP tool → private route, input checked with `zod`",
+                  "text": "MCP tool → private route, input checked with [`zod`](https://zod.dev/)",
                   "mark": "note"
                 },
                 {
-                  "text": "Needs the scope `mcp:tools` (or the narrower `mcp:tools:{{pluginSlug}}`)",
+                  "text": "Needs the scope [`mcp:tools`](https://docs.emdashcms.com/reference/mcp-server/#plugin-tools) (or the narrower `mcp:tools:{{pluginSlug}}`)",
                   "mark": "yes"
                 },
                 {
@@ -2919,7 +3307,7 @@
           "num": "13",
           "label": "Enforce the publish rule",
           "title": "Enforce the publish rule",
-          "lede": "No cover, no publish. The rule runs on every path that publishes a post, whether that's a person, the scheduler or an agent.",
+          "lede": "No cover, no publish. The rule runs on [every path that publishes a post](https://docs.emdashcms.com/reference/content-lifecycle/), whether that's a person, the scheduler or an agent.",
           "body": [
             {
               "_type": "prompt",
@@ -2977,7 +3365,13 @@
                   "_type": "block",
                   "_key": "k5p",
                   "style": "normal",
-                  "markDefs": [],
+                  "markDefs": [
+                    {
+                      "_key": "lnk28",
+                      "_type": "link",
+                      "href": "https://docs.emdashcms.com/plugins/creating-plugins/hooks/"
+                    }
+                  ],
                   "children": [
                     {
                       "_type": "span",
@@ -2987,10 +3381,11 @@
                     },
                     {
                       "_type": "span",
-                      "_key": "k5n",
+                      "_key": "k5nb",
                       "text": "content:beforePublish",
                       "marks": [
-                        "code"
+                        "code",
+                        "lnk28"
                       ]
                     },
                     {
@@ -3024,7 +3419,7 @@
           "num": "14",
           "label": "Install and deploy",
           "title": "Install and deploy",
-          "lede": "Add the plugin to your live site. How it runs depends on your Cloudflare plan.",
+          "lede": "Add the plugin to your live site. How it runs depends on your [Cloudflare plan](https://developers.cloudflare.com/workers/platform/pricing/).",
           "body": [
             {
               "_type": "compare",
@@ -3053,7 +3448,7 @@
               "right_tone": "green",
               "right_cells": [
                 {
-                  "text": "Runs in its own Dynamic Worker via the `LOADER` binding",
+                  "text": "Runs in its own [Dynamic Worker](https://developers.cloudflare.com/dynamic-workers/) via the `LOADER` binding",
                   "mark": "note"
                 },
                 {
@@ -3087,7 +3482,13 @@
                   "style": "normal",
                   "listItem": "number",
                   "level": 1,
-                  "markDefs": [],
+                  "markDefs": [
+                    {
+                      "_key": "lnk29",
+                      "_type": "link",
+                      "href": "https://docs.emdashcms.com/plugins/installing/"
+                    }
+                  ],
                   "children": [
                     {
                       "_type": "span",
@@ -3097,10 +3498,11 @@
                     },
                     {
                       "_type": "span",
-                      "_key": "k5r",
+                      "_key": "k5rb",
                       "text": "Plugins",
                       "marks": [
-                        "strong"
+                        "strong",
+                        "lnk29"
                       ]
                     },
                     {
@@ -3249,7 +3651,13 @@
                   "_type": "block",
                   "_key": "k6h",
                   "style": "normal",
-                  "markDefs": [],
+                  "markDefs": [
+                    {
+                      "_key": "lnk30",
+                      "_type": "link",
+                      "href": "https://docs.emdashcms.com/deployment/secrets/"
+                    }
+                  ],
                   "children": [
                     {
                       "_type": "span",
@@ -3259,10 +3667,11 @@
                     },
                     {
                       "_type": "span",
-                      "_key": "k6b",
+                      "_key": "k6bb",
                       "text": "EMDASH_ENCRYPTION_KEY",
                       "marks": [
-                        "code"
+                        "code",
+                        "lnk30"
                       ]
                     },
                     {
@@ -3492,7 +3901,7 @@
           "num": "16",
           "label": "Ship it",
           "title": "Ship it",
-          "lede": "Bundle the plugin for the EmDash plugin registry, and see exactly what an operator will be asked to approve.",
+          "lede": "Bundle the plugin for the [EmDash plugin registry](https://docs.emdashcms.com/plugins/registry/), and see exactly what an operator will be asked to approve.",
           "body": [
             {
               "_type": "prompt",
@@ -3513,7 +3922,18 @@
                   "_type": "block",
                   "_key": "k71",
                   "style": "normal",
-                  "markDefs": [],
+                  "markDefs": [
+                    {
+                      "_key": "lnk31",
+                      "_type": "link",
+                      "href": "https://docs.emdashcms.com/plugins/creating-plugins/publishing/"
+                    },
+                    {
+                      "_key": "lnk32",
+                      "_type": "link",
+                      "href": "https://docs.emdashcms.com/guides/atmosphere-auth/"
+                    }
+                  ],
                   "children": [
                     {
                       "_type": "span",
@@ -3523,16 +3943,31 @@
                     },
                     {
                       "_type": "span",
-                      "_key": "k6z",
+                      "_key": "k6zb",
                       "text": "emdash-plugin publish",
                       "marks": [
-                        "code"
+                        "code",
+                        "lnk31"
                       ]
                     },
                     {
                       "_type": "span",
-                      "_key": "k70",
-                      "text": " live. Publishing signs the release with an Atmosphere account, so it's a demo, not a step. After review, anyone can install it from the registry, and the consent dialog lists the same four capabilities and two hosts you wrote.",
+                      "_key": "k70a",
+                      "text": " live. Publishing signs the release with an ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k70b",
+                      "text": "Atmosphere account",
+                      "marks": [
+                        "lnk32"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k70c",
+                      "text": ", so it's a demo, not a step. After review, anyone can install it from the registry, and the consent dialog lists the same four capabilities and two hosts you wrote.",
                       "marks": []
                     }
                   ]
@@ -3682,12 +4117,32 @@
                   "_type": "block",
                   "_key": "k7b",
                   "style": "normal",
-                  "markDefs": [],
+                  "markDefs": [
+                    {
+                      "_key": "lnk33",
+                      "_type": "link",
+                      "href": "https://replicate.com/account/api-tokens"
+                    }
+                  ],
                   "children": [
                     {
                       "_type": "span",
-                      "_key": "k7a",
-                      "text": "Your site keeps running on Cloudflare until you delete it. If you used the workshop Replicate token, remove it from the plugin's Settings: it stops working after today anyway.",
+                      "_key": "k7aa",
+                      "text": "Your site keeps running on Cloudflare until you delete it. If you used the ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k7ab",
+                      "text": "workshop Replicate token",
+                      "marks": [
+                        "lnk33"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k7ac",
+                      "text": ", remove it from the plugin's Settings: it stops working after today anyway.",
                       "marks": []
                     }
                   ]
@@ -3705,12 +4160,32 @@
                   "_type": "block",
                   "_key": "k7d",
                   "style": "normal",
-                  "markDefs": [],
+                  "markDefs": [
+                    {
+                      "_key": "lnk34",
+                      "_type": "link",
+                      "href": "https://dash.cloudflare.com/"
+                    }
+                  ],
                   "children": [
                     {
                       "_type": "span",
-                      "_key": "k7c",
-                      "text": "Paste this into your agent. You can also delete the Worker, the D1 database, the KV namespace and the R2 bucket from the Cloudflare dashboard.",
+                      "_key": "k7ca",
+                      "text": "Paste this into your agent. You can also delete the Worker, the D1 database, the KV namespace and the R2 bucket from the ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k7cb",
+                      "text": "Cloudflare dashboard",
+                      "marks": [
+                        "lnk34"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k7cc",
+                      "text": ".",
                       "marks": []
                     }
                   ]

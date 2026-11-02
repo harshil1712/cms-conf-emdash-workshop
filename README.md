@@ -53,13 +53,15 @@ pnpm deploy     # build + wrangler deploy
 ### Before the workshop: TODO
 
 - [ ] Deploy the guide and claim its admin (see **Deploying**), then invite Matt.
-- [ ] Create the public repo [`harshil1712/emdash-workshop`](https://github.com/harshil1712/emdash-workshop) (set as `repo` in `src/data/workshop.ts`) and push the `checkpoint-a`, `checkpoint-b` and `checkpoint-c` branches to it. The starter and catch-up prompts fetch `cover-images/` and the checkpoints from it with `giget`, which only works on public repos. Keep it separate from this guide repo, which has the talk plan and run-through notes in it.
-- [ ] Build `checkpoint-a` and `checkpoint-b` from the current Blog template (redesigned in the templates repo on 16 Oct 2026, EmDash 1.3.0+). The checkpoint prompts replace the attendee's whole `src/`, so an older template would bring back the old design. Checkpoint A's homepage change goes in `src/components/PostCard.astro` (`feature` variant) as well as `src/pages/index.astro`.
-- [ ] Build the `cover-images/` starter on `checkpoint-b` (scaffold, Block Kit settings page, editor-action wiring, test setup) so it matches the step 9 prompt. Use `emdash ^1.4.0` and `@emdash-cms/plugin-test ^0.2.11` as dev dependencies (`emdash-plugin init` 0.13.5 scaffolds `^1.0.0` and `^0.2.6`; older versions scaffolded EmDash 0.x), and don't list `emdash` under `dependencies`, so `pnpm add file:../cover-images` doesn't install a second copy in the site.
+- [x] The public repo [`harshil1712/emdash-workshop`](https://github.com/harshil1712/emdash-workshop) (set as `repo` in `src/data/workshop.ts`) has the three checkpoint branches. The starter and catch-up prompts fetch from it with `giget`, which only works on public repos, so it's separate from this guide repo (which has the talk plan and run-through notes in it). Each branch is the site at the root, scaffolded on EmDash 1.4.0 with the current Blog template:
+  - `checkpoint-a`: step 4's featured post card (`src/pages/index.astro`, `src/components/PostCard.astro`), and `featured`/`subtitle` in `emdash-env.d.ts`.
+  - `checkpoint-b`: plus step 8's Related posts (`src/pages/posts/[slug].astro`), and the `cover-images/` starter: `emdash-plugin init` 0.13.5, a Block Kit settings page, the editor-action wiring and a test. `emdash ^1.4.0` and `@emdash-cms/plugin-test ^0.2.11` are dev dependencies only, so `pnpm add file:../cover-images` doesn't install a second copy of EmDash.
+  - `checkpoint-c`: the finished plugin, with tests for the publish rule.
+  - Tested by running every catch-up prompt on a fresh site, then step 14 on both plans (Free in-process, Paid sandboxed): settings save encrypted, Generate cover reaches Replicate, and publishing and scheduling without a cover are rejected. Generation was tested against mocked Replicate responses in the plugin runtime test host. **Still to do: one real generation with a Replicate token.**
+  - To rebuild a checkpoint, change the code on its branch and push. Keep `src/` and `emdash-env.d.ts` self-contained: the catch-up prompts copy only those (and `cover-images/`).
 - [ ] Set `placeholderDid` to a real DID we control.
 - [ ] Dry-run every prompt with Claude Code, Codex, OpenCode and Cursor, on a brand-new free account and on a Paid account.
 - [ ] Check which scopes each agent's MCP client asks for on the consent screen. Claude Code should ask for `scopes_supported` (all 15). A client that asks for none gets "No valid scopes requested".
-- [ ] Include the `emdash-env.d.ts` change from step 4 in `checkpoint-a` and `checkpoint-b`.
 - [ ] Upstream (EmDash), all still open in 1.4.0:
   - [ ] `WhereValue` doesn't accept `boolean`, but the runtime does. Step 4 casts around it.
   - [ ] `emdash types --url` writes standalone types that don't augment `EmDashCollections`. Step 4 copies the fields into `emdash-env.d.ts` by hand.
@@ -74,4 +76,6 @@ pnpm deploy     # build + wrangler deploy
 - **Step 12** names the route permission, `content:edit_any`, instead of asking for "the narrowest edit permission". Since EmDash 1.3.0 the narrowest is `content:edit_own_drafts` (Contributor), and plugin routes check only the role, not ownership or status.
 - **Step 3** has no separate sign-in step: since EmDash 1.3.0 the setup wizard signs the new admin in after passkey registration.
 - **Step 3** has an "Admin in Polish?" aside: the admin follows the browser language, and EmDash 1.4.0 completed the Polish translation.
-- **`generateCover`** returns early when a post already has a cover. That makes the MCP tool safe to call twice and means it doesn't need `destructive: true`.
+- **`generateCover`** returns early when a post already has a cover. That makes the MCP tool safe to call twice and means it doesn't need `destructive: true`. Because `ctx.content.get` returns the saved post and not a pending draft, it also keeps a KV note (`cover:<postId>`) of a cover it staged, which step 11 asks for.
+- **Step 12** adds `zod` at the exact version EmDash uses (4.5.4 in EmDash 1.4.0). `pnpm add zod` installs a newer 4.x, and the MCP tool's `input` schema then fails typecheck.
+- **Step 14** doesn't ask attendees to switch the plugin on or check its hosts: a plugin registered in `astro.config.mjs` starts enabled on both plans, and the Plugins page lists capabilities but not allowed hosts (only the registry install dialog shows those).

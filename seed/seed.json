@@ -3492,7 +3492,7 @@
               "_version": 1,
               "_key": "prompt-42",
               "label": "Copy this prompt into your agent",
-              "text": "In `../{{pluginDir}}/src/plugin.ts`, write one function, `generateCover(ctx, postId)`, that every entry point will share. Use the `creating-plugins` skill, and check each `ctx` API with the EmDash docs MCP server. {{explain}}\n\nSteps:\n\n1. Read the post with `ctx.content.get(\"posts\", postId)`. If it already has a `featured_image`, return it without generating anything. Otherwise build an image prompt from its title and excerpt: an editorial illustration, with no text in the image.\n   Explain: why returning early makes the function safe to call twice.\n2. Read the token with `ctx.settings.get(\"replicateToken\")`. If it's missing, return an error that tells the editor to add it under the plugin's Settings.\n3. Call Replicate with `ctx.http.fetch`, never the global `fetch`: POST `https://api.replicate.com/v1/models/black-forest-labs/flux-schnell/predictions` with headers `Authorization: Bearer <token>`, `Content-Type: application/json`, `Prefer: wait=20` and `Cancel-After: 25s`, and body `{ \"input\": { \"prompt\": <prompt>, \"aspect_ratio\": \"16:9\", \"output_format\": \"webp\", \"num_outputs\": 1 } }`. If `status` isn't `succeeded`, return a clear error. Don't poll.\n   Explain: how `Prefer: wait` and `Cancel-After` keep us under the sandbox's 30-second wall time, and why polling would burn the 10-subrequest budget.\n4. Download `output[0]` straight away with `ctx.http.fetch`, and read the bytes with `arrayBuffer()`.\n   Explain: Replicate deletes API outputs after an hour, so the site keeps its own copy.\n5. Upload it: `ctx.media.upload(\"cover.webp\", \"image/webp\", bytes)`, which returns `{ mediaId, url }`.\n6. Set the cover with `ctx.content.update(\"posts\", postId, { featured_image: { id: mediaId, src: url, alt } })`, writing `alt` from the post's title.\n   Explain: on a published post this stages a draft, so the live page doesn't change until someone publishes.\n\nReturn `{ ok: true, mediaId, url }` or `{ ok: false, error }`. Don't connect it to any route or hook yet. Run `pnpm run typecheck` in `../{{pluginDir}}`, then show me the function.",
+              "text": "In `../{{pluginDir}}/src/plugin.ts`, write one function, `generateCover(ctx, postId)`, that every entry point will share. Use the `creating-plugins` skill, and check each `ctx` API with the EmDash docs MCP server. {{explain}}\n\nSteps:\n\n1. Read the post with `ctx.content.get(\"posts\", postId)`. If it already has a `featured_image`, return it without generating anything. `get` returns the saved post, not a pending draft, so also check `ctx.kv.get(`cover:${postId}`)`: if it's set and the post has a `draftRevisionId`, return that. Otherwise build an image prompt from its title and excerpt: an editorial illustration, with no text in the image.\n   Explain: why returning early makes the function safe to call twice, and why a cover we staged in a draft needs the KV note.\n2. Read the token with `ctx.settings.get(\"replicateToken\")`. If it's missing, return an error that tells the editor to add it under the plugin's Settings.\n3. Call Replicate with `ctx.http.fetch`, never the global `fetch`: POST `https://api.replicate.com/v1/models/black-forest-labs/flux-schnell/predictions` with headers `Authorization: Bearer <token>`, `Content-Type: application/json`, `Prefer: wait=20` and `Cancel-After: 25s`, and body `{ \"input\": { \"prompt\": <prompt>, \"aspect_ratio\": \"16:9\", \"output_format\": \"webp\", \"num_outputs\": 1 } }`. If `status` isn't `succeeded`, return a clear error. Don't poll.\n   Explain: how `Prefer: wait` and `Cancel-After` keep us under the sandbox's 30-second wall time, and why polling would burn the 10-subrequest budget.\n4. Download `output[0]` straight away with `ctx.http.fetch`, and read the bytes with `arrayBuffer()`.\n   Explain: Replicate deletes API outputs after an hour, so the site keeps its own copy.\n5. Upload it: `ctx.media.upload(\"cover.webp\", \"image/webp\", bytes)`, which returns `{ mediaId, url }`.\n6. Set the cover with `ctx.content.update(\"posts\", postId, { featured_image: { id: mediaId, src: url, alt } })`, writing `alt` from the post's title. Then note it with `ctx.kv.set(`cover:${postId}`, { mediaId, url })`.\n   Explain: posts keep revisions, so this stages a draft. The live page doesn't change until someone publishes.\n\nReturn `{ ok: true, mediaId, url }` or `{ ok: false, error }`. Don't connect it to any route or hook yet. Run `pnpm run typecheck` in `../{{pluginDir}}`, then show me the function.",
               "expanded": false,
               "editable": false
             },
@@ -3627,15 +3627,13 @@
                 },
                 {
                   "_type": "block",
-                  "_key": "k5h",
+                  "_key": "cpb5",
                   "style": "normal",
-                  "listItem": "bullet",
-                  "level": 1,
                   "markDefs": [],
                   "children": [
                     {
                       "_type": "span",
-                      "_key": "k5f",
+                      "_key": "cps1",
                       "text": "Return early if a cover exists.",
                       "marks": [
                         "strong"
@@ -3643,11 +3641,27 @@
                     },
                     {
                       "_type": "span",
-                      "_key": "k5g",
-                      "text": " That makes it safe for an agent to call twice.",
+                      "_key": "cps2",
+                      "text": " That makes it safe for an agent to call twice. The KV note covers a cover that's still waiting in a draft, which ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "cps3",
+                      "text": "ctx.content.get",
+                      "marks": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "cps4",
+                      "text": " doesn't show.",
                       "marks": []
                     }
-                  ]
+                  ],
+                  "listItem": "bullet",
+                  "level": 1
                 }
               ]
             }
@@ -3711,7 +3725,7 @@
               "_version": 1,
               "_key": "prompt-45",
               "label": "Copy this prompt into your agent",
-              "text": "Give `generateCover` two entry points in `../{{pluginDir}}/src/plugin.ts`, both backed by private routes. Use the `creating-plugins` skill (its API routes and MCP tools reference). {{explain}}\n\nSteps:\n\n1. Editors: implement the private route `covers/generate` behind the \"Generate cover\" editor action. Give it the permission `content:edit_any`. Read the post from `routeCtx.ui.entry`, call `generateCover`, and reply with a toast and a refresh, so the editor sees the new cover.\n   Explain: why the route reads the entry from `routeCtx.ui.entry` and not from the request body, and why we use `content:edit_any`: a plugin route checks only the user's role, not who owns the post or whether it's a draft, so `content:edit_own` or `content:edit_own_drafts` would let Authors or Contributors change anyone's post.\n2. Agents: add `zod` as a dependency. Add an MCP tool under `mcp.tools` named `generateCover`, with input `z.object({ postId: z.string() })`, pointing at a second private route with the same permission that reads `routeCtx.input`. Description: \"Generate an AI cover image for a post that has none. Use it when publishing fails because a post has no cover.\"\n   Explain: why the description matters to an agent, and why the tool doesn't need `destructive: true` (`generateCover` never replaces an existing cover).\n3. Run `pnpm run validate` and `pnpm run typecheck`.\n   Explain: the tool will show up as `{{pluginSlug}}__generateCover`, and calling it needs the token scope `mcp:tools` (or the narrower `mcp:tools:{{pluginSlug}}`), which your connection doesn't have yet.\n\nShow me only the routes and the `mcp` block.",
+              "text": "Give `generateCover` two entry points in `../{{pluginDir}}/src/plugin.ts`, both backed by private routes. Use the `creating-plugins` skill (its API routes and MCP tools reference). {{explain}}\n\nSteps:\n\n1. Editors: implement the private route `covers/generate` behind the \"Generate cover\" editor action. Give it the permission `content:edit_any`. Read the post from `routeCtx.ui.entry`, call `generateCover`, and reply with a toast and a refresh, so the editor sees the new cover.\n   Explain: why the route reads the entry from `routeCtx.ui.entry` and not from the request body, and why we use `content:edit_any`: a plugin route checks only the user's role, not who owns the post or whether it's a draft, so `content:edit_own` or `content:edit_own_drafts` would let Authors or Contributors change anyone's post.\n2. Agents: in `../{{pluginDir}}`, add `zod` at the exact version EmDash uses, or the tool's schema types won't match: `pnpm add -E \"zod@$(node -p \"require('./node_modules/emdash/package.json').dependencies.zod\")\"`. Add an MCP tool under `mcp.tools` named `generateCover`, with input `z.object({ postId: z.string() })`, pointing at a second private route with the same permission that reads `routeCtx.input`. Description: \"Generate an AI cover image for a post that has none. Use it when publishing fails because a post has no cover.\"\n   Explain: why the description matters to an agent, and why the tool doesn't need `destructive: true` (`generateCover` never replaces an existing cover).\n3. Run `pnpm run validate` and `pnpm run typecheck`.\n   Explain: the tool will show up as `{{pluginSlug}}__generateCover`, and calling it needs the token scope `mcp:tools` (or the narrower `mcp:tools:{{pluginSlug}}`), which your connection doesn't have yet.\n\nShow me only the routes and the `mcp` block.",
               "expanded": false,
               "editable": false
             }
@@ -3899,102 +3913,121 @@
               "body": [
                 {
                   "_type": "block",
-                  "_key": "k5v",
+                  "_key": "cpb13",
                   "style": "normal",
-                  "listItem": "number",
-                  "level": 1,
-                  "markDefs": [
-                    {
-                      "_key": "lnk29",
-                      "_type": "link",
-                      "href": "https://docs.emdashcms.com/plugins/installing/"
-                    }
-                  ],
+                  "markDefs": [],
                   "children": [
                     {
                       "_type": "span",
-                      "_key": "k5q",
+                      "_key": "cps6",
                       "text": "In the admin, open ",
                       "marks": []
                     },
                     {
                       "_type": "span",
-                      "_key": "k5rb",
+                      "_key": "cps7",
                       "text": "Plugins",
                       "marks": [
-                        "strong",
-                        "lnk29"
+                        "strong"
                       ]
                     },
                     {
                       "_type": "span",
-                      "_key": "k5s",
-                      "text": ". Check the capabilities and the two Replicate hosts, then enable ",
+                      "_key": "cps8",
+                      "text": " and click ",
                       "marks": []
                     },
                     {
                       "_type": "span",
-                      "_key": "k5t",
-                      "text": "Cover Images",
+                      "_key": "cps9",
+                      "text": "Expand details",
                       "marks": [
                         "strong"
                       ]
                     },
                     {
                       "_type": "span",
-                      "_key": "k5u",
-                      "text": ".",
-                      "marks": []
-                    }
-                  ]
-                },
-                {
-                  "_type": "block",
-                  "_key": "k5z",
-                  "style": "normal",
-                  "listItem": "number",
-                  "level": 1,
-                  "markDefs": [],
-                  "children": [
-                    {
-                      "_type": "span",
-                      "_key": "k5w",
-                      "text": "Turn on the plugin's ",
+                      "_key": "cps10",
+                      "text": " on ",
                       "marks": []
                     },
                     {
                       "_type": "span",
-                      "_key": "k5x",
-                      "text": "MCP tools",
+                      "_key": "cps11",
+                      "text": "cover-images",
+                      "marks": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "cps12",
+                      "text": ". Its capabilities are the trust contract you wrote. It's already switched on.",
+                      "marks": []
+                    }
+                  ],
+                  "listItem": "number",
+                  "level": 1
+                },
+                {
+                  "_type": "block",
+                  "_key": "cpb19",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_type": "span",
+                      "_key": "cps14",
+                      "text": "Switch on ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "cps15",
+                      "text": "Enable plugin MCP tools",
                       "marks": [
                         "strong"
                       ]
                     },
                     {
                       "_type": "span",
-                      "_key": "k5y",
-                      "text": ".",
-                      "marks": []
-                    }
-                  ]
-                },
-                {
-                  "_type": "block",
-                  "_key": "k63",
-                  "style": "normal",
-                  "listItem": "number",
-                  "level": 1,
-                  "markDefs": [],
-                  "children": [
-                    {
-                      "_type": "span",
-                      "_key": "k60",
-                      "text": "Open the plugin's ",
+                      "_key": "cps16",
+                      "text": ". You should see ",
                       "marks": []
                     },
                     {
                       "_type": "span",
-                      "_key": "k61",
+                      "_key": "cps17",
+                      "text": "cover-images__generateCover",
+                      "marks": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "cps18",
+                      "text": " listed.",
+                      "marks": []
+                    }
+                  ],
+                  "listItem": "number",
+                  "level": 1
+                },
+                {
+                  "_type": "block",
+                  "_key": "cpb27",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_type": "span",
+                      "_key": "cps20",
+                      "text": "In the sidebar, open ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "cps21",
                       "text": "Settings",
                       "marks": [
                         "strong"
@@ -4002,29 +4035,57 @@
                     },
                     {
                       "_type": "span",
-                      "_key": "k62",
-                      "text": ", paste your Replicate token (or the workshop one), and save.",
+                      "_key": "cps22",
+                      "text": " under ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "cps23",
+                      "text": "Plugins",
+                      "marks": [
+                        "strong"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "cps24",
+                      "text": ". Paste your Replicate token (or the workshop one) and click ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "cps25",
+                      "text": "Save",
+                      "marks": [
+                        "strong"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "cps26",
+                      "text": ".",
                       "marks": []
                     }
-                  ]
+                  ],
+                  "listItem": "number",
+                  "level": 1
                 },
                 {
                   "_type": "block",
-                  "_key": "k67",
+                  "_key": "cpb31",
                   "style": "normal",
-                  "listItem": "number",
-                  "level": 1,
                   "markDefs": [],
                   "children": [
                     {
                       "_type": "span",
-                      "_key": "k64",
+                      "_key": "cps28",
                       "text": "Open one of the agent's drafts and click ",
                       "marks": []
                     },
                     {
                       "_type": "span",
-                      "_key": "k65",
+                      "_key": "cps29",
                       "text": "Generate cover",
                       "marks": [
                         "strong"
@@ -4032,11 +4093,13 @@
                     },
                     {
                       "_type": "span",
-                      "_key": "k66",
-                      "text": ".",
+                      "_key": "cps30",
+                      "text": " in the toolbar.",
                       "marks": []
                     }
-                  ]
+                  ],
+                  "listItem": "number",
+                  "level": 1
                 }
               ]
             },
@@ -4536,34 +4599,28 @@
               "body": [
                 {
                   "_type": "block",
-                  "_key": "k7b",
+                  "_key": "cpb35",
                   "style": "normal",
-                  "markDefs": [
-                    {
-                      "_key": "lnk33",
-                      "_type": "link",
-                      "href": "https://replicate.com/account/api-tokens"
-                    }
-                  ],
+                  "markDefs": [],
                   "children": [
                     {
                       "_type": "span",
-                      "_key": "k7aa",
-                      "text": "Your site keeps running on Cloudflare until you delete it. If you used the ",
+                      "_key": "cps32",
+                      "text": "Your site keeps running on Cloudflare until you delete it. If you used the workshop Replicate token, click ",
                       "marks": []
                     },
                     {
                       "_type": "span",
-                      "_key": "k7ab",
-                      "text": "workshop Replicate token",
+                      "_key": "cps33",
+                      "text": "Remove token",
                       "marks": [
-                        "lnk33"
+                        "strong"
                       ]
                     },
                     {
                       "_type": "span",
-                      "_key": "k7ac",
-                      "text": ", remove it from the plugin's Settings: it stops working after today anyway.",
+                      "_key": "cps34",
+                      "text": " on the plugin's Settings page: it stops working after today anyway.",
                       "marks": []
                     }
                   ]

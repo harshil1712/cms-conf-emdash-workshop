@@ -1,0 +1,21 @@
+README.md
+  s_fc2d601dcd8e63::t_5dc185088edee1 56-61,79-81
+seed/seed.json
+  s_fc2d601dcd8e63::t_119ecee6c1b82c 3495,3630,3636,3644-3659,3662-3664,3728,3916,3918,3922,3928,3931,3936-3937,3942-3943,3950-3965,3968-3970,3974,3980-3981,3986-3987,3994-4009,4012-4014,4018,4024-4025,4030,4038-4067,4070-4072,4076,4082,4088,4096-4097,4100-4102,4602,4604,4608-4609,4614-4615,4617,4622-4623
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "a7dcbc04d1f703e58eca03ad623cf47869c4c1ac",
+  "prompts": {},
+  "sessions": {
+    "s_fc2d601dcd8e63": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "01a18d65-aac4-71af-8773-d3d8d7ae58bc",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Harshil Agrawal <harshil@cloudflare.com>"
+    }
+  }
+}

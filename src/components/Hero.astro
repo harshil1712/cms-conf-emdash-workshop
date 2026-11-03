@@ -13,7 +13,7 @@ const W = workshop;
         {"In two hours you'll deploy an "}<a href={W.links.docs}>EmDash</a>{" blog to "}<a href="https://developers.cloudflare.com/workers/">Cloudflare Workers</a>{", hand it to an AI agent with permissions you choose, and write a plugin that generates cover images, holds an API key, and can't leak it. Your coding agent does the typing. You make the calls."}
       </p>
       <p class="hero-meta">
-        {`With ${W.speakers.join(" & ")} · ${W.duration} · `}<a href="https://astro.build/">Astro</a>{", "}<a href="https://developers.cloudflare.com/workers/">Workers</a>{", "}<a href="https://developers.cloudflare.com/d1/">D1</a>{" and "}<a href="https://developers.cloudflare.com/r2/">R2</a>
+        {`With ${W.speakers.slice(0, -1).join(", ")} & ${W.speakers.at(-1)} · ${W.duration} · `}<a href="https://astro.build/">Astro</a>{", "}<a href="https://developers.cloudflare.com/workers/">Workers</a>{", "}<a href="https://developers.cloudflare.com/d1/">D1</a>{" and "}<a href="https://developers.cloudflare.com/r2/">R2</a>
       </p>
     </div>
     <aside class="program" aria-label="Run of show">

@@ -10,7 +10,7 @@ export const workshop = {
   place: "Poland",
   dates: "12–14 Nov 2026",
   duration: "120 min",
-  speakers: ["Matt Kane", "Harshil Agrawal"],
+  speakers: ["Matt Kane", "Harshil Agrawal", "Noah Pham"],
 
   /**
    * Public repo with the checkpoint-a/b/c branches, and the `cover-images/`

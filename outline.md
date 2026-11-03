@@ -97,7 +97,7 @@ The checkpoint-b branch includes a `cover-images/` starter with boilerplate that
 1. Scaffold it, or open the starter: `pnpm dlx @emdash-cms/plugin-cli init cover-images`. The command asks for a publisher (Atmosphere handle or DID; required), author, security contact and repo.
 2. Manifest (`emdash-plugin.jsonc`), the trust contract:
    ```jsonc
-   "capabilities": ["network:request", "content:write", "media:write", "hooks.content-policy:register"],
+   "capabilities": ["network:request", "content:write", "content:revisions:read", "media:write", "hooks.content-policy:register"],
    "allowedHosts": ["api.replicate.com", "*.replicate.delivery"],
    "admin": {
      "pages": [{ "path": "/settings", "label": "Settings" }],
@@ -197,6 +197,8 @@ The Node `workerd` runner applies only to the Node.js track. Cloudflare-template
 | Sandbox subrequest limit (10 per invocation on Cloudflare) | Medium | Replicate needs 2 calls (create and download), plus the plugin's calls back to EmDash for settings, content and media, if those count toward the limit. Keep it to one prediction and no polling, and measure in prep |
 | Replicate token handling (shared token, billing, rate limits) | Medium | Dedicated workshop account with prepaid credit; revoke the token after the session; check rate limits for about 60 concurrent users; attendees with their own billing-enabled token can use it |
 | Generation slow or failing live | Medium | FLUX Schnell usually takes a few seconds; `Prefer: wait=20` with `Cancel-After: 25s`; the plugin returns a clear error; checkpoint C has pre-generated covers; fallback video of the payoff |
+| Image download from Replicate hangs (sandboxed) | Medium | Seen in the 3 Nov dry run: 3 of about 7 `generateCover` calls had the second `ctx.http.fetch` (downloading `output[0]` from `replicate.delivery`) hang until the runtime cancelled the request; the plugin returns "Something went wrong", and a retry always worked. Step 15 tells the agent to retry once. Root cause not found yet |
+| Redeploying a changed sandboxed plugin keeps the old code | Medium | EmDash caches sandboxed plugins by ID and version, and pnpm copies `file:` packages. Step 14 tells attendees to bump `version`, rebuild and re-run `pnpm add file:` after every plugin change |
 | Missing `EMDASH_ENCRYPTION_KEY` on the deployed Worker | Medium | The guide step sets it with `wrangler secret put` before the token is saved; without it, secret settings won't save |
 | Attendees without an MCP-capable agent or paid AI plan | High | Decide on a supported client list ahead of time (Claude, ChatGPT dev mode, Codex, Cursor, VS Code). Fallback: the same tasks with the `emdash` CLI. Pair people up |
 | Agent output varies on stage | Medium | Pre-recorded video of the Part 2 and payoff demos. If it misbehaves, say: "This is exactly why Part 3 exists: you don't rely on the agent behaving, you enforce it." |

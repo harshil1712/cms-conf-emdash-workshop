@@ -1,0 +1,19 @@
+pnpm-lock.yaml
+  s_0ee6afcb06c853::t_d73e42c106263a 3572,3576,3698,3703,3971,3976,4651,5287,5290,6701
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "ea719463eb89c066468a8f786818ae04ca371f92",
+  "prompts": {},
+  "sessions": {
+    "s_0ee6afcb06c853": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "01a1a0df-ec76-71af-8773-d3decfc35ba7",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Harshil Agrawal <harshil@cloudflare.com>"
+    }
+  }
+}

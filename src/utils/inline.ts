@@ -21,7 +21,8 @@ export function inline(text: string | null | undefined): string {
     .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
     .replace(/(^|[^*\w])\*(?!\s)(.+?)\*(?!\w)/g, "$1<em>$2</em>")
     .replace(/(^|[^\w])_(?!\s)(.+?)_(?!\w)/g, "$1<em>$2</em>")
-    .replace(/\[([^\]]+)\]\(([^)\s]+)\)/g, (m, label: string, href: string) =>
+    // Link text may hold one level of brackets, as in "FLUX.2 [klein] 4B".
+    .replace(/\[((?:[^[\]]|\[[^\]]*\])+)\]\(([^)\s]+)\)/g, (m, label: string, href: string) =>
       SAFE_HREF.test(href) ? `<a href="${href}">${label}</a>` : m,
     );
   return out.replace(/\u0000(\d+)\u0000/g, (_, i: string) => codes[Number(i)]!);

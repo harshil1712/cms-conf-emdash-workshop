@@ -43,7 +43,7 @@ export const workshop = {
     wordpress: "https://docs.emdashcms.com/migration/from-wordpress/",
     cloudflareDeploy: "https://docs.emdashcms.com/deployment/cloudflare/",
     nodeDeploy: "https://docs.emdashcms.com/deployment/nodejs/",
-    replicate: "https://replicate.com/black-forest-labs/flux-schnell",
+    replicate: "https://replicate.com/black-forest-labs/flux-2-klein-4b",
     replicateTokens: "https://replicate.com/account/api-tokens",
     r2: "https://dash.cloudflare.com/?to=/:account/r2/overview",
     bluesky: "https://bsky.app/",

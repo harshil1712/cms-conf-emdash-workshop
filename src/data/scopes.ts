@@ -16,9 +16,9 @@ export const baseScopes: Scope[] = [
   { name: "settings:read", note: "View site settings" },
   { name: "settings:manage", note: "Modify site settings" },
   { name: "mcp:tools", note: "Use MCP tools from all enabled plugins" },
-  { name: "transfer:export", note: "Export a copy of the entire site" },
-  { name: "transfer:analyze", note: "Upload site packages and check whether they can be imported" },
-  { name: "transfer:execute", note: "Import a site package into this empty site" },
+  { name: "transfer:export", note: "Export a copy of the entire site: all content, drafts, media, settings, and author names and emails" },
+  { name: "transfer:analyze", note: "Upload site packages and check whether they can be imported into this site" },
+  { name: "transfer:execute", note: "Import a site package into this empty site, overwriting its initial setup" },
   { name: "admin", note: "Full administrative access", danger: true },
 ];
 

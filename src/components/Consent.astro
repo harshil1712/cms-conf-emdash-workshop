@@ -4,7 +4,7 @@ interface Props {
   scopes: Scope[];
   title?: string;
 }
-const { scopes, title = "Authorize this client" } = Astro.props;
+const { scopes, title = "Authorize Application" } = Astro.props;
 ---
 
 <figure class="consent" aria-label="What to tick on your site's consent screen">
@@ -12,6 +12,7 @@ const { scopes, title = "Authorize this client" } = Astro.props;
   <div class="consent-body">
     <h4>{title}</h4>
     <p>Every box starts ticked. Keep the green ones and untick the rest. Your screen shows the wording, not the scope names.</p>
+    <p class="consent-kicker">Permissions requested</p>
     <ul class="scopes">
       {
         scopes.map((s) => (

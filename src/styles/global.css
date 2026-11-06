@@ -633,6 +633,13 @@ strong {
   font-size: 14px;
   color: var(--muted);
 }
+.consent-body > .consent-kicker {
+  margin: 0 0 6px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
 .scopes {
   list-style: none;
   margin: 0;

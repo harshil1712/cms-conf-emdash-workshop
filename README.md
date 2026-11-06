@@ -33,7 +33,7 @@ pnpm deploy     # build + wrangler deploy
 | --- | --- |
 | Admin → **Parts** | The four part headers: label, time, lede, concepts, and a `body` of blocks (the Part 3 comparison and stage callout). `break_before` puts the break separator above a part |
 | Admin → **Steps** | Every step card: number, rail label, part, lede, tag, and a `body` of blocks. `position` sets the order. A step with no part (the finale) goes at the end, outside the rail |
-| `seed/seed.json` | The schema (collections and block types) and the starting content. Applied once, by the setup wizard. Refresh it from a live site with `npx emdash export-seed --with-content` |
+| `seed/seed.json` | The schema (collections and block types) and the starting content. Applied once, by the setup wizard. `npx emdash export-seed --with-content` only reads a local database, so to refresh it from the live site, copy each part's and step's `data` from `npx emdash content get <collection> <slug> --raw --json -u <site URL>`, then check it with `npx emdash seed seed/seed.json --validate` |
 | `src/data/workshop.ts` | Event details, the public checkpoints repo, placeholder DID, folder names, links, the run of show, and the `{{explain}}`, `{{narrate}}` and `{{mcpOnly}}` prompt snippets |
 | `src/data/scopes.ts` | The consent-screen scopes, worded exactly as EmDash shows them |
 | `src/pages/index.astro` | Loads parts and steps and lays out the page |
@@ -41,6 +41,7 @@ pnpm deploy     # build + wrangler deploy
 | `src/components/` | `StepCard`, `Prompt`, `Callout`, `Compare`, `Consent` (scope checklist), `Checkpoint`, `StepNav`, … |
 | `src/styles/global.css` | The whole design system |
 | `outline.md` | The talk outline this guide is built from |
+| `slides/` | The Slidev deck for the concept blocks (see `slides/README.md`) |
 
 ### Editing content
 

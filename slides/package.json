@@ -1,0 +1,20 @@
+{
+  "name": "cms-conf-emdash-workshop-slides",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "slidev --open",
+    "build": "slidev build",
+    "export": "slidev export",
+    "deploy": "slidev build && rm -f dist/_redirects && wrangler deploy --config wrangler.jsonc"
+  },
+  "dependencies": {
+    "@slidev/cli": "^53.0.0",
+    "@slidev/theme-default": "^0.25.0",
+    "vue": "^3.5.0"
+  },
+  "devDependencies": {
+    "playwright-chromium": "^1.64.1",
+    "wrangler": "^4.156.1"
+  }
+}

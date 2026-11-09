@@ -12,7 +12,7 @@ The promise, part one. Say it plainly.
 layout: statement
 ---
 
-# …and an AI plugin you wrote that holds an API key and can't leak it
+# …and an AI plugin you wrote, in a sandbox that blocks HTTP requests to unapproved hosts
 
 <!--
 The promise, part two.
@@ -162,7 +162,7 @@ A typed tree instead of markup, which is why an agent can write a post without p
 
 1. **Ship**: deploy a blog and change its content model
 2. **Automate**: hand it to an AI agent, with limits you choose
-3. **Extend**: write an AI plugin that can't leak its key
+3. **Extend**: write an AI plugin, in a sandbox that blocks HTTP requests to unapproved hosts
 
 </v-clicks>
 

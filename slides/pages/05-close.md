@@ -8,7 +8,7 @@ layout: center
 
 - A live blog you deployed and modelled
 - An agent running it, with scopes you chose
-- An AI plugin that editors and agents use, that enforces a publish rule, and that can't leak its key
+- An AI plugin that editors and agents use and that enforces a publish rule, in a sandbox that blocks HTTP requests to unapproved hosts
 
 </v-clicks>
 

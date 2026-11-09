@@ -9,7 +9,7 @@
 
 ## The idea in one line
 
-Attendees build one blog during the session. They deploy it, hand it to an AI agent, and then write a plugin that generates cover images with an AI model and holds an API key it can't leak.
+Attendees build one blog during the session. They deploy it, hand it to an AI agent, and then write a plugin that generates cover images with an AI model and holds an API key, in a sandbox that blocks HTTP requests to unapproved hosts.
 
 ## What attendees leave with
 
@@ -22,7 +22,7 @@ Attendees build one blog during the session. They deploy it, hand it to an AI ag
 ## Run of show
 
 ### 0:00–0:05 · Opening (Matt and Harshil)
-- **Promise:** "In two hours you'll have a live CMS that an AI agent can run for you, plus an AI plugin you wrote that holds an API key and can't leak it."
+- **Promise:** "In two hours you'll have a live CMS that an AI agent can run for you, plus an AI plugin you wrote, in a sandbox that blocks HTTP requests to unapproved hosts."
 - Show the finished site and the payoff moment up front: the agent tries to publish a draft, the plugin rejects it for having no cover, the agent calls the plugin's tool to generate one, and the post goes live with an AI-generated cover.
 - Short intros (under 30 seconds each), then the three-part map: **Ship → Automate → Extend**.
 - *Type: concept*
@@ -140,7 +140,7 @@ The checkpoint-b branch includes a `cover-images/` starter with boilerplate that
 - **Contributions slide** (stays up during Q&A), matching the promise:
   - A live blog you deployed and modelled
   - An agent running it with scopes you chose
-  - An AI plugin you wrote that editors and agents both use, enforces a publish rule, and can't leak its API key
+  - An AI plugin you wrote that editors and agents both use, enforces a publish rule, and runs in a sandbox that blocks HTTP requests to unapproved hosts
 - Next steps: WordPress import, publishing to the plugin registry, the docs MCP, and the community channel.
 - No "Thank you" or "Questions?" slide at the end.
 

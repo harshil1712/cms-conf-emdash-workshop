@@ -10,7 +10,7 @@ const W = workshop;
       <h1 class="hero-title">{W.title}</h1>
       <p class="hero-sub">{W.subtitle}, from zero to an agent-run site.</p>
       <p class="hero-copy">
-        {"In two hours you'll deploy an "}<a href={W.links.docs}>EmDash</a>{" blog to "}<a href="https://developers.cloudflare.com/workers/">Cloudflare Workers</a>{", hand it to an AI agent with permissions you choose, and write a plugin that generates cover images and holds an API key it can't leak once it runs sandboxed. Your coding agent does the typing. You make the calls."}
+        {"In two hours you'll deploy an "}<a href={W.links.docs}>EmDash</a>{" blog to "}<a href="https://developers.cloudflare.com/workers/">Cloudflare Workers</a>{", hand it to an AI agent with permissions you choose, and write a plugin that generates cover images with an API key, in a sandbox that blocks HTTP requests to unapproved hosts. Your coding agent does the typing. You make the calls."}
       </p>
       <p class="hero-meta">
         {`With ${W.speakers.slice(0, -1).join(", ")} & ${W.speakers.at(-1)} · ${W.duration} · `}<a href="https://astro.build/">Astro</a>{", "}<a href="https://developers.cloudflare.com/workers/">Workers</a>{", "}<a href="https://developers.cloudflare.com/d1/">D1</a>{" and "}<a href="https://developers.cloudflare.com/r2/">R2</a>

@@ -3530,7 +3530,7 @@
                     {
                       "_type": "span",
                       "_key": "nn5bk3ldp",
-                      "text": " it can only reach Replicate. When sandboxed, that's all it can reach. The token is "
+                      "text": " it can only reach Replicate. When it runs sandboxed, the sandbox blocks HTTP requests to unapproved hosts. The token is "
                     },
                     {
                       "_type": "span",
@@ -4839,7 +4839,7 @@
                     {
                       "_type": "span",
                       "_key": "k76",
-                      "text": "An AI plugin that editors and agents both use, that enforces a publish rule, and that, sandboxed, can't leak its API key.",
+                      "text": "An AI plugin that editors and agents both use and that enforces a publish rule, in a sandbox that blocks HTTP requests to unapproved hosts.",
                       "marks": []
                     }
                   ]

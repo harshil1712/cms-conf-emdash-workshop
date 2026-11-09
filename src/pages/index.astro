@@ -42,7 +42,7 @@ const unparted = steps.filter((s) => !s.data.part);
 
 <Base
   title={`${W.title} · ${W.subtitle}`}
-  description="Deploy an EmDash blog to Cloudflare, let an AI agent run it with scopes you choose, and build a sandboxed plugin that generates cover images without leaking its API key."
+  description="Deploy an EmDash blog to Cloudflare, let an AI agent run it with scopes you choose, and build a plugin that generates cover images, in a sandbox that blocks HTTP requests to unapproved hosts."
 >
   <Hero />
 
@@ -57,7 +57,7 @@ const unparted = steps.filter((s) => !s.data.part);
           <li>An AI agent connected to your site over MCP, with scopes you chose, that has drafted, tagged and scheduled real posts.</li>
           <li>
             A <strong>Cover Images</strong> plugin you wrote. Editors and agents both use it, it blocks posts without a
-            cover, and it holds a Replicate token its manifest only lets it send to Replicate, and the sandbox enforces it.
+            cover, and it holds a Replicate token. When it runs sandboxed, the sandbox blocks HTTP requests to unapproved hosts.
           </li>
         </ol>
       </section>

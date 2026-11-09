@@ -1208,98 +1208,6 @@
                   "mark": "no"
                 }
               ]
-            },
-            {
-              "_type": "callout",
-              "_version": 1,
-              "_key": "callout-2",
-              "variant": "stage",
-              "body": [
-                {
-                  "_type": "block",
-                  "_key": "kb",
-                  "style": "normal",
-                  "markDefs": [],
-                  "children": [
-                    {
-                      "_type": "span",
-                      "_key": "k0",
-                      "text": "Matt takes the finished plugin, running sandboxed, and adds one line that POSTs the Replicate token to ",
-                      "marks": []
-                    },
-                    {
-                      "_type": "span",
-                      "_key": "k1",
-                      "text": "evil.example",
-                      "marks": [
-                        "code"
-                      ]
-                    },
-                    {
-                      "_type": "span",
-                      "_key": "k2",
-                      "text": ". ",
-                      "marks": []
-                    },
-                    {
-                      "_type": "span",
-                      "_key": "k3",
-                      "text": "ctx.http.fetch()",
-                      "marks": [
-                        "code"
-                      ]
-                    },
-                    {
-                      "_type": "span",
-                      "_key": "k4",
-                      "text": " throws, because the host isn't in ",
-                      "marks": []
-                    },
-                    {
-                      "_type": "span",
-                      "_key": "k5",
-                      "text": "allowedHosts",
-                      "marks": [
-                        "code"
-                      ]
-                    },
-                    {
-                      "_type": "span",
-                      "_key": "k6",
-                      "text": ". A direct ",
-                      "marks": []
-                    },
-                    {
-                      "_type": "span",
-                      "_key": "k7",
-                      "text": "fetch()",
-                      "marks": [
-                        "code"
-                      ]
-                    },
-                    {
-                      "_type": "span",
-                      "_key": "k8",
-                      "text": " fails too, and so does reading ",
-                      "marks": []
-                    },
-                    {
-                      "_type": "span",
-                      "_key": "k9",
-                      "text": "process.env",
-                      "marks": [
-                        "code"
-                      ]
-                    },
-                    {
-                      "_type": "span",
-                      "_key": "ka",
-                      "text": ". Cover generation keeps working.",
-                      "marks": []
-                    }
-                  ]
-                }
-              ]
             }
           ]
         }
@@ -2971,7 +2879,7 @@
                     {
                       "_type": "span",
                       "_key": "0yq9fs2ip",
-                      "text": "Write alt text for the featured images of the sample posts"
+                      "text": "Write alt text for the cover images of the sample posts"
                     }
                   ]
                 },
@@ -2998,7 +2906,7 @@
               "_version": 1,
               "_key": "prompt-27",
               "label": "Edit the topic, then copy",
-              "text": "Topic: what a CMS conference in Poland taught me about content teams.\n\nDo some editorial work on my site with this topic. {{mcpOnly}} Before each tool call, tell me in one line what it does.\n\n1. Read the Posts schema first, so you know the fields before you write anything.\n2. Draft three posts on the topic: title, subtitle, excerpt, and a few short paragraphs of content each. Leave them as drafts. No images: we'll generate covers in Part 3.\n3. Create tags that fit, and assign them to the three drafts.\n4. Write alt text for the featured images of the sample posts. Set it on each post's `featured_image` with `content_update`, not only on the media library item: the post keeps its own copy of `alt`, and that copy is what the site renders. Leave the SEO image (`seo.image`) alone: it only overrides the image used when the post is shared, and the site already falls back to `featured_image`.\n5. Schedule one of the drafts for tomorrow at 9:00 my time.\n\nEnd with a short table: post title, status, tags. Then tell me to open my admin (URL on its own line) and look at Posts.",
+              "text": "Topic: what a CMS conference in Poland taught me about content teams.\n\nDo some editorial work on my site with this topic. {{mcpOnly}} Before each tool call, tell me in one line what it does.\n\n1. Read the Posts schema first, so you know the fields before you write anything.\n2. Draft three posts on the topic: title, subtitle, excerpt, and a few short paragraphs of content each. Leave them as drafts. No images: we'll generate covers in Part 3.\n3. Create tags that fit, and assign them to the three drafts.\n4. Write alt text for the sample posts' cover images. Set it on each post's `featured_image` field with `content_update`, not only on the media library item: the post keeps its own copy of `alt`, and that copy is what the site renders. Leave the SEO image (`seo.image`) alone: it only overrides the image used when the post is shared, and the site already falls back to `featured_image`.\n5. Schedule one of the drafts for tomorrow at 9:00 my time.\n\nEnd with a short table: post title, status, tags. Then tell me to open my admin (URL on its own line) and look at Posts.",
               "expanded": false,
               "editable": true,
               "hint": "Click into the prompt to change the first line to a topic you care about."
@@ -3033,7 +2941,21 @@
                     {
                       "_type": "span",
                       "_key": "k4d",
-                      "text": ": three drafts with tags, one marked as scheduled. Open a sample post and check the image's alt text.",
+                      "text": ": three drafts with tags, one marked as scheduled. Open a sample post and check the alt text on its cover image. In the post editor, that's the ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k4d2",
+                      "text": "Featured Image",
+                      "marks": [
+                        "strong"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k4d3",
+                      "text": " field.",
                       "marks": []
                     }
                   ]
@@ -3053,7 +2975,7 @@
                     {
                       "_type": "span",
                       "_key": "k4f",
-                      "text": "The post's image field keeps its own copy of ",
+                      "text": "The post's cover image keeps its own copy of ",
                       "marks": []
                     },
                     {
@@ -3430,12 +3352,12 @@
         "slug": "starter",
         "status": "published",
         "data": {
-          "title": "Open the plugin starter",
+          "title": "Getting started with the plugin",
           "label": "Open the plugin starter",
           "num": "9",
           "position": 9,
           "part": "extend",
-          "lede": "The starter has the parts that aren't worth typing in a workshop. You'll write the parts that teach you something.",
+          "lede": "You will use a starter template to scaffold the plugin. You'll modify this template and write the parts that are relevant for the workshop.",
           "body": [
             {
               "_type": "facts",
@@ -3453,6 +3375,26 @@
                 {
                   "label": "Folder",
                   "text": "`{{workspaceDir}}/{{pluginDir}}`, next to your site."
+                }
+              ]
+            },
+            {
+              "_type": "aside",
+              "_version": 1,
+              "_key": "8a6292a7-405c-4fd5-a839-f40637010698",
+              "summary": "What the prompt does",
+              "body": [
+                {
+                  "_type": "block",
+                  "_key": "ve98bj4y0",
+                  "style": "normal",
+                  "children": [
+                    {
+                      "_type": "span",
+                      "_key": "08j6fat0k",
+                      "text": "The prompt below instructs the agent to download the starter template, install its dependencies, and set it up for the next steps."
+                    }
+                  ]
                 }
               ]
             },
@@ -3521,7 +3463,7 @@
           "num": "10",
           "position": 10,
           "part": "extend",
-          "lede": "[The manifest](https://docs.emdashcms.com/plugins/creating-plugins/manifest/) says what the plugin may touch. An operator sees it before installing, and the runtime enforces it.",
+          "lede": "[The manifest](https://docs.emdashcms.com/plugins/creating-plugins/manifest/) says what the plugin may touch. A user sees it before installing, and the runtime enforces it.",
           "body": [
             {
               "_type": "code",
@@ -3530,6 +3472,26 @@
               "label": "emdash-plugin.jsonc (excerpt)",
               "code": "\"capabilities\": [\n  \"network:request\",              // ctx.http, only to allowedHosts\n  \"content:write\",                // ctx.content (implies read)\n  \"content:revisions:read\",       // ctx.content.getRevision: read drafts\n  \"media:write\",                  // ctx.media.upload (implies read)\n  \"hooks.content-policy:register\"  // may veto a publish\n],\n\"allowedHosts\": [\"api.replicate.com\", \"*.replicate.delivery\"],\n\"admin\": {\n  \"pages\": [{ \"path\": \"/settings\", \"label\": \"Settings\" }],\n  \"settingsSchema\": {\n    // \"secret\": stored encrypted, never sent back to a browser\n    \"replicateToken\": { \"type\": \"secret\", \"label\": \"Replicate API token\" }\n  },\n  \"editorActions\": [{\n    \"id\": \"generate-cover\",\n    \"label\": \"Generate cover\",     // a button in the post editor\n    \"placement\": \"toolbar\",        // required: toolbar or overflow\n    \"collections\": [\"posts\"],      // only on posts\n    \"route\": \"covers/generate\"     // a private plugin route\n  }]\n}",
               "language": "jsonc"
+            },
+            {
+              "_type": "aside",
+              "_version": 1,
+              "_key": "1215b72e-81f0-4569-9cf3-496170410adc",
+              "summary": "What the prompt does",
+              "body": [
+                {
+                  "_type": "block",
+                  "_key": "khlveevlm",
+                  "style": "normal",
+                  "children": [
+                    {
+                      "_type": "span",
+                      "_key": "11k6bdbcl",
+                      "text": "The prompt below instructs the agent to use the skills and the EmDash docs MCP server to configure the emdash-plugin.jsonc file."
+                    }
+                  ]
+                }
+              ]
             },
             {
               "_type": "prompt",
@@ -3545,42 +3507,21 @@
               "_version": 1,
               "_key": "callout-40",
               "variant": "look",
-              "title": "Read it like an operator",
+              "title": "Limiting access",
               "body": [
                 {
                   "_type": "block",
                   "_key": "k54",
                   "style": "normal",
-                  "markDefs": [
-                    {
-                      "_key": "lnk23",
-                      "_type": "link",
-                      "href": "https://docs.emdashcms.com/plugins/creating-plugins/capabilities/"
-                    },
-                    {
-                      "_key": "lnk24",
-                      "_type": "link",
-                      "href": "https://docs.emdashcms.com/plugins/creating-plugins/settings/#secret-values"
-                    }
-                  ],
                   "children": [
                     {
                       "_type": "span",
-                      "_key": "k53b",
-                      "text": "Five capabilities",
-                      "marks": [
-                        "lnk23"
-                      ]
+                      "_key": "uiuh1xzu0",
+                      "text": "The plugin can't read users, can't send email, and through "
                     },
                     {
                       "_type": "span",
-                      "_key": "k53ca",
-                      "text": ", two hosts. That's the plugin's whole reach. It can't read users, can't send email, and through ",
-                      "marks": []
-                    },
-                    {
-                      "_type": "span",
-                      "_key": "k53ca2",
+                      "_key": "59vnvv7k1",
                       "text": "ctx.http",
                       "marks": [
                         "code"
@@ -3588,9 +3529,8 @@
                     },
                     {
                       "_type": "span",
-                      "_key": "k53ca3",
-                      "text": " it can only reach Replicate. Run it sandboxed, and that's all it can reach. The token is ",
-                      "marks": []
+                      "_key": "nn5bk3ldp",
+                      "text": " it can only reach Replicate. When sandboxed, that's all it can reach. The token is "
                     },
                     {
                       "_type": "span",
@@ -3602,9 +3542,15 @@
                     },
                     {
                       "_type": "span",
-                      "_key": "k53cc",
-                      "text": ", and the admin never sends it back to a browser.",
-                      "marks": []
+                      "_key": "at8yyvvso",
+                      "text": ", and the admin never sends it back to a browser."
+                    }
+                  ],
+                  "markDefs": [
+                    {
+                      "_key": "lnk24",
+                      "_type": "link",
+                      "href": "https://docs.emdashcms.com/plugins/creating-plugins/settings/#secret-values"
                     }
                   ]
                 }
@@ -3623,7 +3569,8 @@
           "num": "11",
           "position": 11,
           "part": "extend",
-          "lede": "One function, used by every entry point: read the post, ask [FLUX.2 [klein] 4B](https://replicate.com/black-forest-labs/flux-2-klein-4b) for an image, store it, and set it as the cover.",
+          "lede": "In this step, you will add a function that reads the post, asks [FLUX.2 [klein] 4B](https://replicate.com/black-forest-labs/flux-2-klein-4b) for an image, stores it, and sets it as the post's cover image.",
+          "optional": 0,
           "body": [
             {
               "_type": "facts",
@@ -3641,6 +3588,26 @@
                 {
                   "label": "Budget",
                   "text": "[Under 30 s wall time and 10 subrequests](https://docs.emdashcms.com/deployment/plugin-sandbox/#resource-limits)."
+                }
+              ]
+            },
+            {
+              "_type": "aside",
+              "_version": 1,
+              "_key": "fd648de3-fb14-4bf8-b7d3-80b9c78b1fb1",
+              "summary": "What the prompt does",
+              "body": [
+                {
+                  "_type": "block",
+                  "_key": "wbn0ew5z2",
+                  "style": "normal",
+                  "children": [
+                    {
+                      "_type": "span",
+                      "_key": "ctuxzcddk",
+                      "text": "The prompt instructs the agent to write a function that reads the post, checks whether it already has a cover image, and calls Replicate with the API key from the plugin's settings. Once the image is generated, the function uploads it to EmDash and sets it as the cover image."
+                    }
+                  ]
                 }
               ]
             },
@@ -3830,12 +3797,12 @@
         "slug": "expose",
         "status": "published",
         "data": {
-          "title": "Hand it to editors and agents",
+          "title": "Hand the plugin to editors and agents",
           "label": "Hand it to editors and agents",
           "num": "12",
           "position": 12,
           "part": "extend",
-          "lede": "Editors get [a button in the post editor](https://docs.emdashcms.com/plugins/creating-plugins/block-kit/#saved-entry-panels-and-actions). Agents get [an MCP tool](https://docs.emdashcms.com/plugins/creating-plugins/api-routes/#exposing-a-route-as-an-mcp-tool). Both call the same function through [private routes](https://docs.emdashcms.com/plugins/creating-plugins/api-routes/).",
+          "lede": "To use the plugin, editors can use [a button in the post editor](https://docs.emdashcms.com/plugins/creating-plugins/block-kit/#saved-entry-panels-and-actions). Agents get [an MCP tool](https://docs.emdashcms.com/plugins/creating-plugins/api-routes/#exposing-a-route-as-an-mcp-tool). Both call the same function through [private routes](https://docs.emdashcms.com/plugins/creating-plugins/api-routes/).",
           "body": [
             {
               "_type": "compare",
@@ -3878,6 +3845,26 @@
               ]
             },
             {
+              "_type": "aside",
+              "_version": 1,
+              "_key": "50ab0a9b-2b62-40dc-9a5b-d7057fcb3e31",
+              "summary": "What the prompt does",
+              "body": [
+                {
+                  "_type": "block",
+                  "_key": "desh4nrhj",
+                  "style": "normal",
+                  "children": [
+                    {
+                      "_type": "span",
+                      "_key": "2i3oz71an",
+                      "text": "The prompt instructs the agent to give the plugin two entry points: a button in the post editor, and an MCP tool."
+                    }
+                  ]
+                }
+              ]
+            },
+            {
               "_type": "prompt",
               "_version": 1,
               "_key": "prompt-45",
@@ -3899,8 +3886,28 @@
           "num": "13",
           "position": 13,
           "part": "extend",
-          "lede": "No cover, no publish. The rule runs on [every path that publishes a post](https://docs.emdashcms.com/reference/content-lifecycle/), whether that's a person, the scheduler or an agent.",
+          "lede": "In this step, you enforce a publish rule: a post without a cover image can't be published. This rule runs on [every path that publishes a post](https://docs.emdashcms.com/reference/content-lifecycle/), whether that's a person, the scheduler or an agent.",
           "body": [
+            {
+              "_type": "aside",
+              "_version": 1,
+              "_key": "7f37edff-4986-4903-8008-a52302273bad",
+              "summary": "What the prompt does",
+              "body": [
+                {
+                  "_type": "block",
+                  "_key": "76hhfkuvu",
+                  "style": "normal",
+                  "children": [
+                    {
+                      "_type": "span",
+                      "_key": "oi3eqzqnh",
+                      "text": "In the prompt below, the agent is instructed to update the code to make sure a cover image is present before a post is published."
+                    }
+                  ]
+                }
+              ]
+            },
             {
               "_type": "prompt",
               "_version": 1,
@@ -4006,12 +4013,12 @@
         "slug": "install",
         "status": "published",
         "data": {
-          "title": "Install and deploy",
+          "title": "Install and deploy the plugin",
           "label": "Install and deploy",
           "num": "14",
           "position": 14,
           "part": "extend",
-          "lede": "Add the plugin to your live site. How it runs depends on your [Cloudflare plan](https://developers.cloudflare.com/workers/platform/pricing/).",
+          "lede": "In this step, you will add the plugin to your live site. On Workers Paid, it runs sandboxed in its own Dynamic Worker. On Workers Free, it runs inside your site's Worker.",
           "body": [
             {
               "_type": "compare",
@@ -4054,11 +4061,31 @@
               ]
             },
             {
+              "_type": "aside",
+              "_version": 1,
+              "_key": "114b3f1f-d4be-4146-8032-9bcace8f603d",
+              "summary": "What the prompt does",
+              "body": [
+                {
+                  "_type": "block",
+                  "_key": "b5tb8pfvp",
+                  "style": "normal",
+                  "children": [
+                    {
+                      "_type": "span",
+                      "_key": "soqizxzrd",
+                      "text": "With the prompt below you are instructing the agent to install and deploy the plugin you created earlier. The instructions tell the agent to check your Workers plan and based on that decide the runtime."
+                    }
+                  ]
+                }
+              ]
+            },
+            {
               "_type": "prompt",
               "_version": 1,
               "_key": "prompt-51",
               "label": "Copy this prompt into your agent",
-              "text": "Install the Cover Images plugin in my site, and deploy it. {{explain}}\n\nSteps:\n\n1. In `{{siteDir}}`, run `pnpm add file:../{{pluginDir}}`.\n   Explain: the site now imports the built plugin like any other package.\n   Also tell me: whenever we change the plugin after this, bump `version` in `../{{pluginDir}}/package.json`, run `pnpm run build` there, and run `pnpm add file:../{{pluginDir}}` again before deploying. pnpm copies the package instead of linking it, and EmDash caches a sandboxed plugin by ID and version, so with the same version the site keeps running the old code.\n2. Ask me which plan this account is on: Workers Free, or Workers Paid (the workshop's enterprise account counts as Paid). Then register the plugin in `astro.config.mjs`:\n   - Free: import it and add it to `plugins: []` inside `emdash({ … })`.\n   - Paid: uncomment the `LOADER` binding under `worker_loaders` in `wrangler.jsonc`, add `sandboxRunner: sandbox()` (imported from `@emdash-cms/cloudflare`), add the plugin to `sandboxed: []`, and check that `src/worker.ts` exports `PluginBridge`.\n   Explain, honestly: on Free the plugin runs in-process, so the capability gates on `ctx` still apply, but its code could call `fetch()` directly. On Paid it runs in its own isolate, where it can't.\n3. Check that the Worker has `EMDASH_ENCRYPTION_KEY`: `pnpm wrangler secret list`. If it's missing, set it from `.env` without printing it: `grep '^EMDASH_ENCRYPTION_KEY=' .env | cut -d= -f2- | pnpm wrangler secret put EMDASH_ENCRYPTION_KEY`.\n   Explain: without this key, the site refuses to save secret settings.\n4. Run `pnpm run typecheck`, commit, and deploy with `pnpm run deploy`.\n\nThen stop. End by telling me to finish the setup in my admin (admin URL on its own line), and that the steps are on the workshop page.",
+              "text": "Install the Cover Images plugin in my site, and deploy it. {{explain}}\n\nSteps:\n\n1. In `{{siteDir}}`, run `pnpm add file:../{{pluginDir}}`.\nExplain: the site now imports the built plugin like any other package.\nAlso tell me: whenever we change the plugin after this, bump `version` in `../{{pluginDir}}/package.json`, run `pnpm run build` there, and run `pnpm add file:../{{pluginDir}}` again before deploying. pnpm copies the package instead of linking it, and EmDash caches a sandboxed plugin by ID and version, so with the same version the site keeps running the old code.\n2. Ask me which plan this account is on: Workers Free, or Workers Paid (the workshop's enterprise account counts as Paid). Then register the plugin in `astro.config.mjs`:\n   - Free: import it and add it to `plugins: []` inside `emdash({ … })`.\n   - Paid: uncomment the `LOADER` binding under `worker_loaders` in `wrangler.jsonc`, add `sandboxRunner: sandbox()` (imported from `@emdash-cms/cloudflare`), add the plugin to `sandboxed: []`, and check that `src/worker.ts` exports `PluginBridge`.\nExplain, honestly: on Free the plugin runs in-process, so the capability gates on `ctx` still apply, but its code could call `fetch()` directly. On Paid it runs in its own isolate, where it can't.\n3. Check that the Worker has `EMDASH_ENCRYPTION_KEY`: `pnpm wrangler secret list`. If it's missing, set it from `.env` without printing it: `grep '^EMDASH_ENCRYPTION_KEY=' .env | cut -d= -f2- | pnpm wrangler secret put EMDASH_ENCRYPTION_KEY`.\nExplain: without this key, the site refuses to save secret settings.\n4. Run `pnpm run typecheck`, commit, and deploy with `pnpm run deploy`.\n\nThen stop. End by telling me to finish the setup in my admin (admin URL on its own line), and that the steps are on the workshop page.",
               "expanded": false,
               "editable": false
             },
@@ -4072,13 +4099,135 @@
                   "_type": "block",
                   "_key": "cpb13",
                   "style": "normal",
-                  "markDefs": [],
+                  "children": [
+                    {
+                      "_type": "span",
+                      "_key": "wsvs16ac8",
+                      "text": "On Replicate:",
+                      "marks": [
+                        "underline"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "_type": "block",
+                  "_key": "g0ilax9bj",
+                  "style": "normal",
+                  "listItem": "number",
+                  "level": 1,
+                  "listId": "legacy:pm:15:0:root",
+                  "listStart": 1,
+                  "children": [
+                    {
+                      "_type": "span",
+                      "_key": "vitv7gn4t",
+                      "text": "Sing-in to your Replicate account (or singn-up with the invite link)."
+                    }
+                  ]
+                },
+                {
+                  "_type": "block",
+                  "_key": "ktra89ali",
+                  "style": "normal",
+                  "listItem": "number",
+                  "level": 1,
+                  "listId": "legacy:pm:15:0:root",
+                  "listStart": 1,
+                  "children": [
+                    {
+                      "_type": "span",
+                      "_key": "nycisjzi1",
+                      "text": "Click on your avatar and select "
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "vi0uk5umm",
+                      "text": "API tokens",
+                      "marks": [
+                        "strong"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "2t2imru6q",
+                      "text": "."
+                    }
+                  ]
+                },
+                {
+                  "_type": "block",
+                  "_key": "6wwx851qk",
+                  "style": "normal",
+                  "listItem": "number",
+                  "level": 1,
+                  "listId": "legacy:pm:15:0:root",
+                  "listStart": 1,
+                  "children": [
+                    {
+                      "_type": "span",
+                      "_key": "67drb12jk",
+                      "text": "Enter name for your token, and click on "
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "11el9l3vo",
+                      "text": "Create token",
+                      "marks": [
+                        "strong"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "0o8s1fjs0",
+                      "text": "."
+                    }
+                  ]
+                },
+                {
+                  "_type": "block",
+                  "_key": "zy8j924sy",
+                  "style": "normal",
+                  "listItem": "number",
+                  "level": 1,
+                  "listId": "legacy:pm:15:0:root",
+                  "listStart": 1,
+                  "children": [
+                    {
+                      "_type": "span",
+                      "_key": "5fnicqgv5",
+                      "text": "Copy the generated token."
+                    }
+                  ]
+                },
+                {
+                  "_type": "block",
+                  "_key": "w3dyy45b3",
+                  "style": "normal",
+                  "children": [
+                    {
+                      "_type": "span",
+                      "_key": "10yxmpkep",
+                      "text": "In EmDash:",
+                      "marks": [
+                        "underline"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "_type": "block",
+                  "_key": "ez0l2qwz0",
+                  "style": "normal",
+                  "listItem": "number",
+                  "level": 1,
+                  "listId": "legacy:root:0:cpb13",
+                  "listStart": 1,
                   "children": [
                     {
                       "_type": "span",
                       "_key": "cps6",
-                      "text": "In the admin, open ",
-                      "marks": []
+                      "text": "In the admin, open "
                     },
                     {
                       "_type": "span",
@@ -4090,23 +4239,13 @@
                     },
                     {
                       "_type": "span",
-                      "_key": "cps8",
-                      "text": " and click ",
-                      "marks": []
-                    },
-                    {
-                      "_type": "span",
-                      "_key": "cps9",
-                      "text": "Expand details",
-                      "marks": [
-                        "strong"
-                      ]
+                      "_key": "biwx6cepc",
+                      "text": " and click expand details"
                     },
                     {
                       "_type": "span",
                       "_key": "cps10",
-                      "text": " on ",
-                      "marks": []
+                      "text": " on "
                     },
                     {
                       "_type": "span",
@@ -4119,38 +4258,68 @@
                     {
                       "_type": "span",
                       "_key": "cps12",
-                      "text": ". Its capabilities are the trust contract you wrote. It's already switched on.",
-                      "marks": []
+                      "text": ". Its capabilities are the trust contract you wrote."
                     }
-                  ],
-                  "listItem": "number",
-                  "level": 1
+                  ]
                 },
                 {
                   "_type": "block",
-                  "_key": "cpb19",
+                  "_key": "zhui5r1c1",
                   "style": "normal",
-                  "markDefs": [],
+                  "listItem": "number",
+                  "level": 1,
+                  "listId": "legacy:root:0:cpb13",
+                  "listStart": 1,
                   "children": [
                     {
                       "_type": "span",
-                      "_key": "cps14",
-                      "text": "Switch on ",
-                      "marks": []
-                    },
-                    {
-                      "_type": "span",
-                      "_key": "cps15",
-                      "text": "Enable plugin MCP tools",
+                      "_key": "hsibfav5f",
+                      "text": "Enable ",
                       "marks": [
                         "strong"
                       ]
                     },
                     {
                       "_type": "span",
-                      "_key": "cps16",
-                      "text": ". You should see ",
-                      "marks": []
+                      "_key": "r38y63ztl",
+                      "text": "the plugin."
+                    }
+                  ]
+                },
+                {
+                  "_type": "block",
+                  "_key": "cpb19",
+                  "style": "normal",
+                  "listItem": "number",
+                  "level": 1,
+                  "listId": "legacy:root:0:cpb13",
+                  "listStart": 1,
+                  "children": [
+                    {
+                      "_type": "span",
+                      "_key": "cps14",
+                      "text": "Switch on "
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "mzuehcnlt",
+                      "text": "A",
+                      "marks": [
+                        "strong"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "pv1tn74fm",
+                      "text": "gent access.",
+                      "marks": [
+                        "strong"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "0p6ls95g1",
+                      "text": " You should see "
                     },
                     {
                       "_type": "span",
@@ -4163,24 +4332,23 @@
                     {
                       "_type": "span",
                       "_key": "cps18",
-                      "text": " listed.",
-                      "marks": []
+                      "text": " listed."
                     }
-                  ],
-                  "listItem": "number",
-                  "level": 1
+                  ]
                 },
                 {
                   "_type": "block",
                   "_key": "cpb27",
                   "style": "normal",
-                  "markDefs": [],
+                  "listItem": "number",
+                  "level": 1,
+                  "listId": "legacy:root:0:cpb13",
+                  "listStart": 1,
                   "children": [
                     {
                       "_type": "span",
                       "_key": "cps20",
-                      "text": "In the sidebar, open ",
-                      "marks": []
+                      "text": "Click on "
                     },
                     {
                       "_type": "span",
@@ -4192,23 +4360,8 @@
                     },
                     {
                       "_type": "span",
-                      "_key": "cps22",
-                      "text": " under ",
-                      "marks": []
-                    },
-                    {
-                      "_type": "span",
-                      "_key": "cps23",
-                      "text": "Plugins",
-                      "marks": [
-                        "strong"
-                      ]
-                    },
-                    {
-                      "_type": "span",
-                      "_key": "cps24",
-                      "text": ". Paste your Replicate token (or the workshop one) and click ",
-                      "marks": []
+                      "_key": "sqckpmu0u",
+                      "text": " and paste your Replicate token and click "
                     },
                     {
                       "_type": "span",
@@ -4221,24 +4374,23 @@
                     {
                       "_type": "span",
                       "_key": "cps26",
-                      "text": ".",
-                      "marks": []
+                      "text": "."
                     }
-                  ],
-                  "listItem": "number",
-                  "level": 1
+                  ]
                 },
                 {
                   "_type": "block",
                   "_key": "cpb31",
                   "style": "normal",
-                  "markDefs": [],
+                  "listItem": "number",
+                  "level": 1,
+                  "listId": "legacy:root:0:cpb13",
+                  "listStart": 1,
                   "children": [
                     {
                       "_type": "span",
                       "_key": "cps28",
-                      "text": "Open one of the agent's drafts and click ",
-                      "marks": []
+                      "text": "Open one of the agent's drafts and click "
                     },
                     {
                       "_type": "span",
@@ -4251,12 +4403,9 @@
                     {
                       "_type": "span",
                       "_key": "cps30",
-                      "text": " in the toolbar.",
-                      "marks": []
+                      "text": " in the toolbar."
                     }
-                  ],
-                  "listItem": "number",
-                  "level": 1
+                  ]
                 }
               ]
             },
@@ -4275,7 +4424,21 @@
                     {
                       "_type": "span",
                       "_key": "k68",
-                      "text": "After a few seconds you should see a toast, and the draft has an AI-generated cover image.",
+                      "text": "After a few seconds you should see a toast, and the draft has an AI-generated cover image in its ",
+                      "marks": []
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k68b",
+                      "text": "Featured Image",
+                      "marks": [
+                        "strong"
+                      ]
+                    },
+                    {
+                      "_type": "span",
+                      "_key": "k68c",
+                      "text": " field.",
                       "marks": []
                     }
                   ]
@@ -4361,13 +4524,33 @@
         "slug": "payoff",
         "status": "published",
         "data": {
-          "title": "The payoff",
-          "label": "The payoff",
+          "title": "Let the agent generate image",
+          "label": "Let the agent generate image",
           "num": "15",
           "position": 15,
           "part": "extend",
-          "lede": "Give your agent one more scope and ask it to publish its drafts. Your plugin says no. Then your agent fixes it with your plugin's own tool.",
+          "lede": "In this final step, you will give your agent one more scope and ask it to publish its drafts. Your plugin rejects them, and your agent fixes that with your plugin's own tool.",
           "body": [
+            {
+              "_type": "aside",
+              "_version": 1,
+              "_key": "d0f9167b-6f25-41e5-a78e-7291668f3c9e",
+              "summary": "What the prompt does",
+              "body": [
+                {
+                  "_type": "block",
+                  "_key": "9bu4rk9fu",
+                  "style": "normal",
+                  "children": [
+                    {
+                      "_type": "span",
+                      "_key": "rien49j8q",
+                      "text": "You instruct the agent to reconnect to the MCP server. This lets you select one more scope, so the agent can use your plugin's MCP tool."
+                    }
+                  ]
+                }
+              ]
+            },
             {
               "_type": "prompt",
               "_version": 1,
@@ -4383,6 +4566,26 @@
               "_key": "consent-56",
               "variant": "reconnect",
               "title": "Authorize Application"
+            },
+            {
+              "_type": "aside",
+              "_version": 1,
+              "_key": "1d42ea9d-cfc7-444b-b3ec-e4c0110dae8f",
+              "summary": "What the prompt does",
+              "body": [
+                {
+                  "_type": "block",
+                  "_key": "9bu4rk9fu",
+                  "style": "normal",
+                  "children": [
+                    {
+                      "_type": "span",
+                      "_key": "478yrtlp5",
+                      "text": "Now that your agent has access to the MCP tool, you ask it to publish the drafts it wrote earlier. When a publish is rejected, it generates a cover image with the tool and publishes again."
+                    }
+                  ]
+                }
+              ]
             },
             {
               "_type": "prompt",
@@ -4537,83 +4740,41 @@
         "slug": "ship-it",
         "status": "published",
         "data": {
-          "title": "Ship it",
-          "label": "Ship it",
+          "title": "Bundle the plugin (optional)",
+          "label": "Bundle the plugin (optional)",
           "num": "16",
           "position": 16,
           "part": "extend",
-          "lede": "Bundle the plugin for the [EmDash plugin registry](https://docs.emdashcms.com/plugins/registry/), and see exactly what an operator will be asked to approve.",
+          "lede": "Now that you have the plugin, bundle it for the [EmDash plugin registry](https://docs.emdashcms.com/plugins/registry/), ready for others to use.",
           "body": [
+            {
+              "_type": "aside",
+              "_version": 1,
+              "_key": "bc1acfa1-5ae8-40c3-a0cc-c13cb93f4c8d",
+              "summary": "What the prompt does",
+              "body": [
+                {
+                  "_type": "block",
+                  "_key": "uxdyyefig",
+                  "style": "normal",
+                  "children": [
+                    {
+                      "_type": "span",
+                      "_key": "yicbbcaw9",
+                      "text": "In the prompt below, you ask the agent to bundle the plugin, ready for EmDash’s plugin registry. Publishing it is a demo on stage."
+                    }
+                  ]
+                }
+              ]
+            },
             {
               "_type": "prompt",
               "_version": 1,
               "_key": "prompt-60",
               "label": "Copy this prompt into your agent",
-              "text": "Package the Cover Images plugin for the EmDash plugin registry, without publishing it. {{narrate}}\n\n1. In `../{{pluginDir}}`, run `pnpm exec emdash-plugin validate`, then `pnpm exec emdash-plugin bundle`.\n2. Tell me where the tarball is and how big it is.\n3. In a short table, list what a site operator will be asked to approve before installing this plugin: each capability and each allowed host, with one plain line on what it allows.\n\nDon't run `emdash-plugin publish`: we'll watch that on stage.",
+              "text": "Package the Cover Images plugin for the EmDash plugin registry, without publishing it. {{narrate}}\n\n1. In `../{{pluginDir}}`, run `pnpm exec emdash-plugin validate`, then `pnpm exec emdash-plugin bundle`.\n2. Tell me where the tarball is and how big it is.\n3. In a short table, list what a site operator will be asked to approve before installing this plugin: each capability and each allowed host, with one plain line on what it allows.\n\nDon't run `emdash-plugin publish`.",
               "expanded": false,
               "editable": false
-            },
-            {
-              "_type": "callout",
-              "_version": 1,
-              "_key": "callout-61",
-              "variant": "stage",
-              "body": [
-                {
-                  "_type": "block",
-                  "_key": "k71",
-                  "style": "normal",
-                  "markDefs": [
-                    {
-                      "_key": "lnk31",
-                      "_type": "link",
-                      "href": "https://docs.emdashcms.com/plugins/creating-plugins/publishing/"
-                    },
-                    {
-                      "_key": "lnk32",
-                      "_type": "link",
-                      "href": "https://docs.emdashcms.com/guides/atmosphere-auth/"
-                    }
-                  ],
-                  "children": [
-                    {
-                      "_type": "span",
-                      "_key": "k6y",
-                      "text": "Matt runs ",
-                      "marks": []
-                    },
-                    {
-                      "_type": "span",
-                      "_key": "k6zb",
-                      "text": "emdash-plugin publish",
-                      "marks": [
-                        "code",
-                        "lnk31"
-                      ]
-                    },
-                    {
-                      "_type": "span",
-                      "_key": "k70a",
-                      "text": " live. Publishing signs the release with an ",
-                      "marks": []
-                    },
-                    {
-                      "_type": "span",
-                      "_key": "k70b",
-                      "text": "Atmosphere account",
-                      "marks": [
-                        "lnk32"
-                      ]
-                    },
-                    {
-                      "_type": "span",
-                      "_key": "k70c",
-                      "text": ", so it's a demo, not a step. After review, anyone can install it from the registry, and the consent dialog lists the same five capabilities and two hosts you wrote.",
-                      "marks": []
-                    }
-                  ]
-                }
-              ]
             }
           ]
         }
@@ -4627,7 +4788,7 @@
           "label": "What you just built",
           "num": "✓",
           "position": 17,
-          "lede": "Ship, automate, extend. You made every call; your agent did the typing.",
+          "lede": "You built, automated, and shipped an EmDash site, and a plugin!",
           "final": 1,
           "body": [
             {
@@ -4697,13 +4858,11 @@
                   "_type": "block",
                   "_key": "k79",
                   "style": "normal",
-                  "markDefs": [],
                   "children": [
                     {
                       "_type": "span",
-                      "_key": "k78",
-                      "text": "Keep the habits, not just the code: connect agents with the narrowest scopes that work, put rules in hooks rather than prompts, and give plugins a manifest you'd be happy to read as an operator.",
-                      "marks": []
+                      "_key": "0qu4plhh7",
+                      "text": "You can extend the plugin; change the model, add a field to provide custom prompt, etc. Make the plugin yours. You can also update the content model as well as the design of the site."
                     }
                   ]
                 }
@@ -4746,7 +4905,7 @@
               "_type": "heading",
               "_version": 1,
               "_key": "heading-66",
-              "text": "Clean up"
+              "text": "Clean up (optional)"
             },
             {
               "_type": "prose",

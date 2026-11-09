@@ -24,4 +24,4 @@ pnpm deploy    # build + wrangler deploy
 
 Built-in Slidev layouts and the default theme only, no custom CSS. One idea per slide; lists reveal one item per click. Speaker notes are in the `<!-- -->` comment at the end of each slide.
 
-Before the day: confirm the guide URL on "The guide is your workshop" (Access is still on), and the placeholder DID on "Which track are you on?".
+The guide URL on "The guide is your workshop" is public, and the placeholder DID is final.

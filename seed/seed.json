@@ -3448,7 +3448,7 @@
                   ]
                 }
               ],
-              "code": "cd {{workspaceDir}}\npnpm dlx @emdash-cms/plugin-cli init {{pluginDir}}"
+              "code": "cd {{workspaceDir}}\npnpm dlx @emdash-cms/plugin-cli@0.13.5 init {{pluginDir}}"
             }
           ]
         }
@@ -4592,7 +4592,7 @@
               "_version": 1,
               "_key": "prompt-57",
               "label": "Then: ask it to publish",
-              "text": "Publish the three drafts you wrote earlier. {{mcpOnly}}\n\nIf a publish is rejected, read the reason. For a missing cover, call `{{pluginSlug}}__generateCover` with the post's ID, then publish again. If it fails with \"Something went wrong generating the cover\", call it once more: the image download from Replicate sometimes hangs. If you don't have that tool, or it fails again, stop and tell me why, quoting the error: don't attach an existing image or find another way around the rule. Before each tool call, tell me in one line what it does.\n\nEnd with a short table: post, what happened on the first attempt, what you did about it, final status. Then tell me to open my homepage (URL on its own line).",
+              "text": "Publish the three drafts you wrote earlier. {{mcpOnly}}\n\nIf a publish is rejected, read the reason. For a missing cover, call `{{pluginSlug}}__generateCover` with the post's ID, then publish again. If the tool fails with an error that isn't about a missing Replicate token, for example an internal error or a timeout, call it once more: the image download from Replicate sometimes hangs. If you don't have that tool, or it fails again, stop and tell me why, quoting the error: don't attach an existing image or find another way around the rule. Before each tool call, tell me in one line what it does.\n\nEnd with a short table: post, what happened on the first attempt, what you did about it, final status. Then tell me to open my homepage (URL on its own line).",
               "expanded": true,
               "editable": false
             },
@@ -4921,7 +4921,7 @@
                     {
                       "_type": "span",
                       "_key": "cps32",
-                      "text": "Your site keeps running on Cloudflare until you delete it. If you used the workshop Replicate token, click ",
+                      "text": "Your site keeps running on Cloudflare until you delete it. If you're done with your Replicate token, click ",
                       "marks": []
                     },
                     {
@@ -4935,7 +4935,7 @@
                     {
                       "_type": "span",
                       "_key": "cps34",
-                      "text": " on the plugin's Settings page: it stops working after today anyway.",
+                      "text": " on the plugin's Settings page, then revoke the token in your Replicate account.",
                       "marks": []
                     }
                   ]
@@ -4984,7 +4984,7 @@
                   ]
                 }
               ],
-              "prompt": "Delete everything this workshop created on Cloudflare. {{narrate}}\n\n1. Find the real names: the Worker, the D1 database and the R2 bucket from `{{siteDir}}/wrangler.jsonc`. They may differ from the defaults. The first deploy also created a KV namespace for sessions, named after the Worker with `-session` on the end: find its ID with `pnpm wrangler kv namespace list`.\n2. List exactly what you'll delete, and wait for my yes.\n3. Empty and delete the R2 bucket (`pnpm wrangler r2 bucket delete <name>`; if it isn't empty, tell me to empty it in the dashboard first), then delete the D1 database (`pnpm wrangler d1 delete <name>`), the KV namespace (`pnpm wrangler kv namespace delete --namespace-id <id>`) and the Worker (`pnpm wrangler delete <name>`).\n4. Remove the `emdash-site` MCP server from your config.\n\nDon't touch any other Workers, databases, namespaces or buckets. End with a short list of what's gone, and remind me that the local `{{workspaceDir}}` folder is still on my machine, and that a shared Replicate token from the workshop stops working after today."
+              "prompt": "Delete everything this workshop created on Cloudflare. {{narrate}}\n\n1. Find the real names: the Worker, the D1 database and the R2 bucket from `{{siteDir}}/wrangler.jsonc`. They may differ from the defaults. The first deploy also created a KV namespace for sessions, named after the Worker with `-session` on the end: find its ID with `pnpm wrangler kv namespace list`.\n2. List exactly what you'll delete, and wait for my yes.\n3. Empty and delete the R2 bucket (`pnpm wrangler r2 bucket delete <name>`; if it isn't empty, tell me to empty it in the dashboard first), then delete the D1 database (`pnpm wrangler d1 delete <name>`), the KV namespace (`pnpm wrangler kv namespace delete --namespace-id <id>`) and the Worker (`pnpm wrangler delete <name>`).\n4. Remove the `emdash-site` MCP server from your config.\n\nDon't touch any other Workers, databases, namespaces or buckets. End with a short list of what's gone, and remind me that the local `{{workspaceDir}}` folder is still on my machine, and that my Replicate token keeps working until I revoke it in my Replicate account."
             }
           ]
         }

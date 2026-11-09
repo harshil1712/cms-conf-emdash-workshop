@@ -35,8 +35,6 @@ layout: center
 Every step is on this page. Keep it open next to your agent.
 
 <!--
-TODO before the day: turn Cloudflare Access off for this hostname, or swap in the final URL.
-
 Fun fact: the guide is an EmDash site too. If a prompt is wrong, we fix it in the admin and you refresh.
 -->
 
@@ -103,15 +101,15 @@ Free plan is the default. The only difference is in Part 3: Free runs the plugin
 
 <v-clicks>
 
-- **A Replicate API token**: bring your own, or use the workshop token we hand out
+- **A Replicate API token**: bring your own, or sign up with the link we share in the room (it comes with free credits)
 - **An Atmosphere handle** (a Bluesky handle works), or our placeholder DID
 
 </v-clicks>
 
 <!--
-The workshop token comes from a prepaid account and we revoke it after the session.
+The sign-up link gives each attendee their own Replicate account with free credits. We share it live in the room.
 
-Placeholder DID: did:plc:cmsconf2026workshop (TODO: swap for a real one we control).
+Placeholder DID: did:plc:cmsconf2026workshop. It's fine for validate and bundle; only publishing needs a real account.
 -->
 
 ---

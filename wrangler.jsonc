@@ -1,6 +1,8 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "emdash-workshop",
+  // Employee Account. Pinned so a deploy never asks which account to use.
+  "account_id": "d4137232cefc8f440da4a535615a3add",
   "main": "./src/worker.ts",
   "compatibility_date": "2026-10-01",
   "compatibility_flags": ["nodejs_compat"],

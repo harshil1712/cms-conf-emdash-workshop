@@ -23,7 +23,7 @@ pnpm deploy     # build + wrangler deploy
 
 ### Deploying
 
-1. `pnpm deploy`. The first deploy creates the D1 database `emdash-workshop`, the R2 bucket `emdash-workshop-media`, a KV namespace for sessions, and the Worker. With more than one Cloudflare account, add `account_id` to `wrangler.jsonc` first.
+1. `pnpm deploy`. The first deploy creates the D1 database `emdash-workshop`, the R2 bucket `emdash-workshop-media`, a KV namespace for sessions, and the Worker. `wrangler.jsonc` pins the Employee Account with `account_id`: change it to deploy somewhere else.
 2. **Straight away**, open `/_emdash/admin` on the deployed URL and run the setup wizard. The first person to finish it becomes the admin. Keep **Sample content** on: that's what loads the guide from the seed. Until then, the page shows an empty state.
 
 ### Where things live
@@ -59,7 +59,8 @@ pnpm deploy     # build + wrangler deploy
   - `checkpoint-c`: the finished plugin, with tests for the publish rule.
   - Tested by running every catch-up prompt on a fresh site, then step 14 on both plans (Free in-process, Paid sandboxed): settings save encrypted, Generate cover reaches Replicate, and publishing and scheduling without a cover are rejected. Generation was tested against mocked Replicate responses in the plugin runtime test host. Real generation with a Replicate token worked in the 3 Nov dry run (sandboxed, Workers Free account): three covers generated and published over MCP. The download from Replicate sometimes hangs; see the risks table in `outline.md`.
   - To rebuild a checkpoint, change the code on its branch and push. Keep `src/` and `emdash-env.d.ts` self-contained: the catch-up prompts copy only those (and `cover-images/`).
-- [ ] Set `placeholderDid` to a real DID we control.
+- [x] `placeholderDid`: keep `did:plc:cmsconf2026workshop`. Validate, bundle and the tests pass with it on `checkpoint-c`; only `emdash-plugin publish` needs a real account, and that is the stage demo.
+- [ ] The morning of the workshop, check `npm view emdash version`. The Blog template asks for `emdash ^1.3.0`, so a new 1.x release reaches attendees straight away, whatever version of `create-emdash` they run. If it isn't 1.4.0, run step 1 and the Part 3 steps on it before the session.
 - [ ] Dry-run every prompt with Claude Code, Codex, OpenCode and Cursor, on a brand-new free account and on a Paid account.
 - [ ] Check which scopes each agent's MCP client asks for on the consent screen. Claude Code should ask for `scopes_supported` (all 15). A client that asks for none gets "No valid scopes requested".
 - [ ] Upstream (EmDash), all still open in 1.4.0:

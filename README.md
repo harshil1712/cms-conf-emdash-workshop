@@ -25,7 +25,6 @@ pnpm deploy     # build + wrangler deploy
 
 1. `pnpm deploy`. The first deploy creates the D1 database `emdash-workshop`, the R2 bucket `emdash-workshop-media`, a KV namespace for sessions, and the Worker. With more than one Cloudflare account, add `account_id` to `wrangler.jsonc` first.
 2. **Straight away**, open `/_emdash/admin` on the deployed URL and run the setup wizard. The first person to finish it becomes the admin. Keep **Sample content** on: that's what loads the guide from the seed. Until then, the page shows an empty state.
-3. Invite the other speaker from **Users**.
 
 ### Where things live
 
@@ -53,7 +52,7 @@ pnpm deploy     # build + wrangler deploy
 
 ### Before the workshop: TODO
 
-- [ ] Deploy the guide and claim its admin (see **Deploying**), then invite Matt. Deployed 3 Nov to the Employee Account (`d4137232cefc8f440da4a535615a3add`) at https://emdash-workshop.h-demo.workers.dev, behind Cloudflare Access. Still to do: claim the admin, invite Matt, and turn Access off for that hostname before the workshop so attendees can open it.
+- [x] Deploy the guide and claim its admin (see **Deploying**). Deployed to the Employee Account (`d4137232cefc8f440da4a535615a3add`) at https://emdash-workshop.h-demo.workers.dev. The admin is claimed, and the page is public, so attendees can open it.
 - [x] The public repo [`harshil1712/emdash-workshop`](https://github.com/harshil1712/emdash-workshop) (set as `repo` in `src/data/workshop.ts`) has the three checkpoint branches. The starter and catch-up prompts fetch from it with `giget`, which only works on public repos, so it's separate from this guide repo (which has the talk plan and run-through notes in it). Each branch is the site at the root, scaffolded on EmDash 1.4.0 with the current Blog template:
   - `checkpoint-a`: step 4's featured post card (`src/pages/index.astro`, `src/components/PostCard.astro`), and `featured`/`subtitle` in `emdash-env.d.ts`.
   - `checkpoint-b`: plus step 8's Related posts (`src/pages/posts/[slug].astro`), and the `cover-images/` starter: `emdash-plugin init` 0.13.5, a Block Kit settings page, the editor-action wiring and a test. `emdash ^1.4.0` and `@emdash-cms/plugin-test ^0.2.11` are dev dependencies only, so `pnpm add file:../cover-images` doesn't install a second copy of EmDash.

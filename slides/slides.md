@@ -14,6 +14,7 @@ mdc: true
 favicon: /favicon.svg
 fonts:
   sans: Inter
+  provider: none
   mono: ui-monospace,SF Mono,SFMono-Regular,Menlo,Consolas,Liberation Mono
   local: ui-monospace,SF Mono,SFMono-Regular,Menlo,Consolas,Liberation Mono
   weights: '400,500,600,700'

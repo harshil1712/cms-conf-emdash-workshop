@@ -9,6 +9,7 @@
     "deploy": "slidev build && rm -f dist/_redirects && wrangler deploy --config wrangler.jsonc"
   },
   "dependencies": {
+    "@fontsource/inter": "^5.3.0",
     "@slidev/cli": "^53.0.0",
     "@slidev/theme-default": "^0.25.0",
     "vue": "^3.5.0"

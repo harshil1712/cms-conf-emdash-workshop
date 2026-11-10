@@ -25,7 +25,7 @@ Switch to the finished site (or the fallback video): the agent tries to publish 
 
 ---
 layout: section
-class: art-lines
+class: art-dash
 ---
 
 # Introduction to EmDash

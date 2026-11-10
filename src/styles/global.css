@@ -344,18 +344,22 @@ html.ready .topbar:not([data-instant]) { transition: background-color var(--d-sh
   top: 80px;
   align-self: start;
   /* never taller than the space above the footer, so at the end of the page the rail isn't pushed
-     up under the glass top bar; a short window scrolls it instead (with a fade, see [data-more]) */
+     up under the glass top bar; a short window scrolls it instead (with edge fades) */
   max-height: calc(100vh - 80px - var(--footer-h));
   overflow-y: auto;
   overscroll-behavior: contain;
-  scrollbar-width: thin;
+  scrollbar-width: none;   /* still scrolls (wheel, touch, keyboard); edge fades ([data-less], [data-more]) say there's more */
   padding: 2px 4px 8px;
   margin: -2px -4px 0;
 }
+.rail::-webkit-scrollbar { display: none; }
 @media (min-width: 961px) {
-  .rail[data-more] {
-    -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 40px), transparent);
-    mask-image: linear-gradient(to bottom, #000 calc(100% - 40px), transparent);
+  .rail { --fade-top: 0px; --fade-bottom: 0px; }
+  .rail[data-less] { --fade-top: 32px; }
+  .rail[data-more] { --fade-bottom: 40px; }
+  .rail:is([data-less], [data-more]) {
+    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 var(--fade-top), #000 calc(100% - var(--fade-bottom)), transparent);
+    mask-image: linear-gradient(to bottom, transparent, #000 var(--fade-top), #000 calc(100% - var(--fade-bottom)), transparent);
   }
 }
 .rail-sheet-title { display: none; }

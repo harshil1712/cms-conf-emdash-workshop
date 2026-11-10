@@ -10,6 +10,7 @@ The promise, part one. Say it plainly.
 
 ---
 layout: statement
+class: is-long
 ---
 
 # …and an AI plugin you wrote, in a sandbox that blocks HTTP requests to unapproved hosts
@@ -24,6 +25,7 @@ Switch to the finished site (or the fallback video): the agent tries to publish 
 
 ---
 layout: section
+class: art-lines
 ---
 
 # Introduction to EmDash

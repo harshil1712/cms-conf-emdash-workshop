@@ -1,5 +1,6 @@
 ---
 layout: section
+class: part art-braid
 ---
 
 # How EmDash works with agents

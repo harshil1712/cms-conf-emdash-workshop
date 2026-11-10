@@ -1,44 +1,54 @@
 ---
+import Icon from "./Icon.astro";
+
 type Scope = { name: string; note: string; on?: boolean; isNew?: boolean; danger?: boolean };
 interface Props {
   scopes: Scope[];
   title?: string;
 }
 const { scopes, title = "Authorize Application" } = Astro.props;
+// Drawn after EmDash's real, always-dark authorize screen (emdash/src/astro/routes/api/oauth/authorize.ts).
 ---
 
 <figure class="consent" aria-label="What to tick on your site's consent screen">
-  <p class="consent-url" aria-hidden="true">your-site.workers.dev/_emdash/oauth/authorize</p>
-  <div class="consent-body">
-    <h4>{title}</h4>
+  <figcaption class="consent-caption">
+    <Icon name="info" size="sm" />
     <p>Every box starts ticked. Keep the green ones and untick the rest. Your screen shows the wording, not the scope names.</p>
-    <p class="consent-kicker">Permissions requested</p>
-    <ul class="scopes">
-      {
-        scopes.map((s) => (
-          <li
-            class="scope"
-            data-on={s.on || s.isNew ? "" : undefined}
-            data-new={s.isNew ? "" : undefined}
-            data-danger={s.danger ? "" : undefined}
-          >
-            <span class="scope-box" aria-hidden="true">
-              {
-                (s.on || s.isNew) && (
+  </figcaption>
+  <div class="consent-window">
+    <div class="consent-chrome" aria-hidden="true">
+      <span class="consent-dots"><i></i><i></i><i></i></span>
+      <span class="consent-url"><Icon name="lock" size="xs" /><span>your-site.workers.dev/_emdash/oauth/authorize</span></span>
+    </div>
+    <div class="consent-card">
+      <h4 class="consent-title">{title}</h4>
+      <p class="consent-kicker">Permissions requested</p>
+      <ul class="scopes">
+        {
+          scopes.map((s) => (
+            <li
+              class="scope"
+              data-on={s.on || s.isNew ? "" : undefined}
+              data-new={s.isNew ? "" : undefined}
+              data-danger={s.danger ? "" : undefined}
+            >
+              <span class="scope-box" aria-hidden="true">
+                {(s.on || s.isNew) && (
                   <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M2.5 6.2 5 8.6l4.5-5" />
                   </svg>
-                )
-              }
-            </span>
-            <div>
-              <code>{s.name}</code>
-              <span class="sr-only">{s.on || s.isNew ? "(keep)" : "(clear)"}</span>
-              <span>{s.note}</span>
-            </div>
-          </li>
-        ))
-      }
-    </ul>
+                )}
+              </span>
+              <span class="scope-text">
+                <span class="scope-note">{s.note}</span>
+                <span class="sr-only">{s.on || s.isNew ? "(keep)" : "(clear)"}</span>
+              </span>
+              <code class="scope-name">{s.name}</code>
+              {s.danger ? <Icon name="warning" size="sm" class="scope-flag" /> : <span class="scope-flag" aria-hidden="true" />}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
   </div>
 </figure>

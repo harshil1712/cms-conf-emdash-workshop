@@ -2,19 +2,36 @@
 import type { BlockComponentProps } from "emdash/ui";
 import type { StepBodyAsideBlock } from "../../../emdash-env";
 import Code from "../Code.astro";
+import Icon from "../Icon.astro";
 import Prompt from "../Prompt.astro";
 import Rich from "../Rich.astro";
 import { fill } from "../../data/workshop";
 
 type Props = BlockComponentProps<StepBodyAsideBlock>;
 const { value } = Astro.props;
+// GuideBlocks marks an aside that sits directly before a prompt; it docks onto that window.
+const attached = Boolean((value as typeof value & { _attached?: boolean })._attached);
 ---
 
-<details class="aside">
-  <summary>{value.note ? <span>{value.summary} <small>{value.note}</small></span> : value.summary}</summary>
-  <div class="aside-body">
-    {value.body && value.body.length > 0 && <Rich value={value.body} />}
-    {value.code && <Code code={fill(value.code)} label={value.code_label || undefined} />}
-    {value.prompt && <Prompt text={value.prompt} />}
+<details class:list={["aside", attached && "aside--attached"]} data-disclosure>
+  <summary>
+    <span class="aside-sum"
+      ><b>{value.summary}</b>{
+        value.note && (
+          <>
+            {" "}
+            <small class="aside-note">{value.note}</small>
+          </>
+        )
+      }</span
+    >
+    <Icon name="chevron-down" class="aside-chev" />
+  </summary>
+  <div class="aside-panel" data-panel>
+    <div class="aside-body">
+      {value.body && value.body.length > 0 && <Rich value={value.body} />}
+      {value.code && <Code code={fill(value.code)} label={value.code_label || undefined} />}
+      {value.prompt && <Prompt text={value.prompt} />}
+    </div>
   </div>
 </details>

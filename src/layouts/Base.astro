@@ -1,11 +1,17 @@
 ---
+import { Font } from "astro:assets";
 import "../styles/global.css";
+import Icons from "../components/Icons.astro";
+import TopBar from "../components/TopBar.astro";
+import type { NavStep } from "../components/StepNav.astro";
 
 interface Props {
   title: string;
   description: string;
+  /** The top bar needs the first step and the last step number; omitted in the empty state. */
+  topbar?: { first: NavStep; lastNum: string };
 }
-const { title, description } = Astro.props;
+const { title, description, topbar } = Astro.props;
 ---
 
 <!doctype html>
@@ -13,72 +19,25 @@ const { title, description } = Astro.props;
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script is:inline>document.documentElement.classList.add("js")</script>
     <title>{title}</title>
     <meta name="description" content={description} />
+    <meta name="color-scheme" content="light" />
     <meta name="theme-color" content="#ffffff" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="any" href="/brand/favicon.png" />
+    <link rel="apple-touch-icon" href="/brand/favicon.png" />
+    <Font cssVariable="--font-sans" preload={[{ style: "normal" }]} />
   </head>
   <body>
+    <Icons />
+    {topbar && <TopBar first={topbar.first} lastNum={topbar.lastNum} />}
     <slot />
     <script>
-      // Copy buttons: prompt blocks copy their (possibly edited) <pre>; code blocks copy data-copy-text.
-      async function copy(text: string) {
-        try {
-          await navigator.clipboard.writeText(text);
-        } catch {
-          const ta = document.createElement("textarea");
-          ta.value = text;
-          ta.style.position = "fixed";
-          ta.style.left = "-9999px";
-          document.body.appendChild(ta);
-          ta.select();
-          document.execCommand("copy");
-          ta.remove();
-        }
-      }
-
-      document.addEventListener("click", async (e) => {
-        const target = e.target as HTMLElement;
-
-        const btn = target.closest<HTMLButtonElement>("[data-copy]");
-        if (btn) {
-          const text =
-            btn.dataset.copyText ??
-            btn.closest(".prompt")?.querySelector<HTMLElement>("[data-copy-source]")?.innerText ??
-            "";
-          await copy(text.trim());
-          const original = btn.textContent;
-          btn.dataset.copied = "true";
-          btn.textContent = "Copied";
-          window.setTimeout(() => {
-            btn.dataset.copied = "false";
-            btn.textContent = original;
-          }, 1800);
-          return;
-        }
-
-        const toggle = target.closest<HTMLButtonElement>("[data-toggle]");
-        if (toggle) {
-          const block = toggle.closest<HTMLElement>(".prompt");
-          if (!block) return;
-          const open = block.dataset.expanded !== "true";
-          block.dataset.expanded = String(open);
-          toggle.setAttribute("aria-expanded", String(open));
-          toggle.textContent = open ? "Show less" : "Show full prompt";
-        }
-      });
-
-      // Editing a collapsed prompt expands it.
-      document.addEventListener("focusin", (e) => {
-        const pre = (e.target as HTMLElement).closest?.<HTMLElement>('pre[contenteditable="true"]');
-        const block = pre?.closest<HTMLElement>(".prompt");
-        if (block && block.dataset.expanded === "false") {
-          block.querySelector<HTMLButtonElement>("[data-toggle]")?.click();
-        }
-      });
+      import "../scripts/guide";
     </script>
   </body>
 </html>

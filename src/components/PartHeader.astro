@@ -1,4 +1,7 @@
 ---
+import Halftone from "./Halftone.astro";
+import Icon from "./Icon.astro";
+import type { ArtMotif } from "../lib/halftone";
 import { inline } from "../utils/inline";
 
 interface Props {
@@ -12,24 +15,48 @@ interface Props {
   editUrl?: string;
 }
 const { id, label, name, time, lede, concepts = [], editUrl } = Astro.props;
+
+// Each part opens with the halftone motif (and seed) of the slide section that introduces it,
+// so the art on the projector matches the part attendees are reading.
+const MOTIF: Record<string, ArtMotif> = {
+  "part-start": "calendar", // slide 12 "How this workshop runs"
+  "part-ship": "lines", // slide 4 "Introduction to EmDash": editor lines
+  "part-automate": "braid", // slide 21: three strands
+  "part-extend": "stack", // slide 37: a layer slotted into a stack
+};
+const motif = MOTIF[id];
 ---
 
 <section id={id} class="part" aria-labelledby={`${id}-title`}>
-  <p class="part-label">{label} <time>{time}</time></p>
-  <h2 id={`${id}-title`} class="part-title">{name}</h2>
-  <p class="part-lede" set:html={inline(lede)} />
-  {editUrl && <a class="edit-link" href={editUrl}>Edit in admin</a>}
-  {
-    concepts.length > 0 && (
-      <div class="concepts">
-        {concepts.map((c) => (
-          <div class="concept">
-            <h3 set:html={inline(c.title)} />
-            <p set:html={inline(c.text)} />
-          </div>
-        ))}
-      </div>
-    )
-  }
-  <slot />
+  <div class="part-head">
+    {motif && <Halftone class="part-art" seed={`part-${motif}`} motif={motif} columns={20} rows={20} />}
+    <p class="part-label">
+      <span class="part-kicker">{label}</span>{" "}
+      <time class="part-time"><Icon name="clock" size="xs" />{time}</time>
+    </p>
+    <h2 id={`${id}-title`} class="part-title">{name}</h2>
+    <p class="part-lede" set:html={inline(lede)} />
+    {
+      editUrl && (
+        <a class="edit-link" href={editUrl}>
+          <Icon name="pencil" size="xs" />
+          Edit in admin
+        </a>
+      )
+    }
+    {
+      concepts.length > 0 && (
+        <div class="concepts" data-count={concepts.length}>
+          {concepts.map((c) => (
+            <div class="concept">
+              <h3 set:html={inline(c.title)} />
+              <p set:html={inline(c.text)} />
+            </div>
+          ))}
+        </div>
+      )
+    }
+    <div class="part-body"><slot /></div>
+  </div>
+  <slot name="steps" />
 </section>

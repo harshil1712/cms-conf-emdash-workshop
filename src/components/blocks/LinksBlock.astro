@@ -1,6 +1,7 @@
 ---
 import type { BlockComponentProps } from "emdash/ui";
 import type { StepBodyLinksBlock } from "../../../emdash-env";
+import Icon from "../Icon.astro";
 import { fill } from "../../data/workshop";
 
 type Props = BlockComponentProps<StepBodyLinksBlock>;
@@ -11,8 +12,9 @@ const { value } = Astro.props;
   {
     (value.items ?? []).map((l) => (
       <a class="link-card" href={fill(l.url)}>
-        <b>{l.title}</b>
-        {l.text && <span>{l.text}</span>}
+        <b class="link-title">{l.title}</b>
+        {l.text && <span class="link-text">{l.text}</span>}
+        <Icon name="arrow-up-right" size="sm" class="link-arrow" />
       </a>
     ))
   }

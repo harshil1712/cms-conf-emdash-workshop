@@ -6,6 +6,7 @@ import StepNav, { type NavPart, type NavStep } from "../components/StepNav.astro
 import PartHeader from "../components/PartHeader.astro";
 import StepCard from "../components/StepCard.astro";
 import GuideBlocks from "../components/GuideBlocks.astro";
+import Icon from "../components/Icon.astro";
 import { workshop as W, repoUrl, fill } from "../data/workshop";
 
 // The guide's content lives in EmDash: `parts` and `steps`, ordered by `position`.
@@ -43,13 +44,14 @@ const unparted = steps.filter((s) => !s.data.part);
 <Base
   title={`${W.title} · ${W.subtitle}`}
   description="Deploy an EmDash blog to Cloudflare, let an AI agent run it with scopes you choose, and build a plugin that generates cover images, in a sandbox that blocks HTTP requests to unapproved hosts."
+  topbar={navSteps.length ? { first: navSteps[0]!, lastNum: navSteps.at(-1)!.num } : undefined}
 >
   <Hero />
 
-  <div class="page-shell">
+  <div class="shell">
     <StepNav parts={navParts} steps={navSteps} />
 
-    <main class="page-main" id="main">
+    <main class="main" id="main">
       <section class="intro" aria-labelledby="leave-title">
         <h2 class="kicker" id="leave-title">What you'll leave with</h2>
         <ol class="leave-list">
@@ -75,11 +77,12 @@ const unparted = steps.filter((s) => !s.data.part);
         parts.map((part) => (
           <>
             {part.data.break_before && (
-              <div class="break" role="separator">
-                <span>
+              <div class="break">
+                <p class="break-pill">
+                  <Icon name="coffee" size="sm" />
                   <b>Break</b>
                   {fill(part.data.break_before)}
-                </span>
+                </p>
               </div>
             )}
             <PartHeader
@@ -92,21 +95,23 @@ const unparted = steps.filter((s) => !s.data.part);
               editUrl={editUrl("parts", part.data.id)}
             >
               <GuideBlocks value={part.data.body} />
+              <Fragment slot="steps">
+                {stepsIn(part.id).map((s) => (
+                  <StepCard
+                    id={s.id}
+                    num={s.data.num}
+                    title={fill(s.data.title)}
+                    lede={s.data.lede}
+                    optional={s.data.optional}
+                    tags={s.data.tag ? [{ text: s.data.tag, tone: "accent" }] : []}
+                    final={s.data.final}
+                    editUrl={editUrl("steps", s.data.id)}
+                  >
+                    <GuideBlocks value={s.data.body} />
+                  </StepCard>
+                ))}
+              </Fragment>
             </PartHeader>
-            {stepsIn(part.id).map((s) => (
-              <StepCard
-                id={s.id}
-                num={s.data.num}
-                title={fill(s.data.title)}
-                lede={s.data.lede}
-                optional={s.data.optional}
-                tags={s.data.tag ? [{ text: s.data.tag, tone: "blue" }] : []}
-                final={s.data.final}
-                editUrl={editUrl("steps", s.data.id)}
-              >
-                <GuideBlocks value={s.data.body} />
-              </StepCard>
-            ))}
           </>
         ))
       }
@@ -119,7 +124,7 @@ const unparted = steps.filter((s) => !s.data.part);
             title={fill(s.data.title)}
             lede={s.data.lede}
             optional={s.data.optional}
-            tags={s.data.tag ? [{ text: s.data.tag, tone: "blue" }] : []}
+            tags={s.data.tag ? [{ text: s.data.tag, tone: "accent" }] : []}
             final={s.data.final}
             editUrl={editUrl("steps", s.data.id)}
           >
@@ -131,11 +136,14 @@ const unparted = steps.filter((s) => !s.data.part);
   </div>
 
   <footer class="footer">
-    <span>{W.title}</span><span class="sep">·</span><span>{W.event}</span><span class="sep">·</span>
-    <a href={W.links.docs}>EmDash docs</a>
-    <span class="sep">·</span>
-    <a href={repoUrl}>Workshop repo</a>
-    <span class="sep">·</span>
-    <a href={W.links.announcement}>EmDash 1.0</a>
+    <div class="footer-shell">
+      <span class="footer-brand">
+        <img class="footer-logo" src="/brand/logo-dark-text.svg" alt="" width="88" height="22" />
+        <span class="footer-line"><span>{W.title}</span><span class="sep">·</span><span>{W.event}</span></span>
+      </span>
+      <span class="footer-links">
+        <a href={W.links.docs}>EmDash docs</a><span class="sep">·</span><a href={repoUrl}>Workshop repo</a><span class="sep">·</span><a href={W.links.announcement}>EmDash 1.0</a>
+      </span>
+    </div>
   </footer>
 </Base>

@@ -1,4 +1,5 @@
 ---
+import Icon from "./Icon.astro";
 import { inline } from "../utils/inline";
 
 interface Props {
@@ -15,27 +16,45 @@ interface Props {
 }
 const { id, num, title, lede, optional, tags = [], final, editUrl } = Astro.props;
 const allTags = optional ? [{ text: "Optional · first to cut", tone: undefined }, ...tags] : tags;
+// Steps nest under their part's h2; the final card sits outside the parts.
+const Heading = final ? "h2" : "h3";
 ---
 
-<article id={id} class="stepcard" data-step={id}>
-  <header class="stepcard-head">
-    <p class="stepcard-eyebrow">
-      <span aria-hidden="true">{final ? "Wrap-up" : `Step ${num}`}</span>
-      {
-        allTags.map((t) => (
-          <span class="tag" data-tone={t.tone}>
-            {t.text}
+<article id={id} class:list={["step", final && "step--final"]} data-step={id} tabindex="-1">
+  <header class="step-head">
+    <span class="step-num"
+      ><span class="step-word" aria-hidden="true">{final ? "Wrap-up" : "Step"}</span>{" "}{
+        final ? (
+          <Icon name="check-circle" class="step-n step-check" />
+        ) : (
+          <span class="step-n" aria-hidden="true">
+            {num}
           </span>
-        ))
-      }
-    </p>
-    <h2 class="stepcard-title">
-      <span class="sr-only">{final ? "" : `Step ${num}: `}</span>{title}
-    </h2>
-    {lede && <p class="stepcard-lede" set:html={inline(lede)} />}
-    {editUrl && <a class="edit-link" href={editUrl}>Edit in admin</a>}
+        )
+      }</span
+    >
+    {
+      allTags.length > 0 && (
+        <p class="step-tags">
+          {allTags.map((t) => (
+            <span class="tag" data-tone={t.tone}>
+              {t.tone && <Icon name="cursor" size="xs" />}
+              {t.text}
+            </span>
+          ))}
+        </p>
+      )
+    }
+    <Heading class="step-title"><span class="sr-only">{final ? "" : `Step ${num}: `}</span>{title}</Heading>
+    {lede && <p class="step-lede" set:html={inline(lede)} />}
   </header>
-  <div class="stepcard-body">
-    <slot />
-  </div>
+  <div class="step-body"><slot /></div>
+  {
+    editUrl && (
+      <a class="edit-link" href={editUrl}>
+        <Icon name="pencil" size="xs" />
+        Edit in admin
+      </a>
+    )
+  }
 </article>

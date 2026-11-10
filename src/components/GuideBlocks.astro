@@ -30,7 +30,9 @@ const components = {
   heading: HeadingBlock,
   prose: ProseBlock,
 };
-const value = Array.isArray(Astro.props.value) ? Astro.props.value : [];
+const raw = Array.isArray(Astro.props.value) ? Astro.props.value : [];
+// Render-time annotation only: an aside directly before a prompt ("What the prompt does") docks onto it.
+const value = raw.map((b, i) => (b?._type === "aside" && raw[i + 1]?._type === "prompt" ? { ...b, _attached: true } : b));
 ---
 
 <Blocks value={value} components={components} />

@@ -1,4 +1,6 @@
 ---
+import Icon from "./Icon.astro";
+
 interface Props {
   code: string;
   /** Shown in the bar, e.g. a file name or "terminal". */
@@ -7,12 +9,25 @@ interface Props {
   html?: string;
 }
 const { code, label = "terminal", html } = Astro.props;
+const labelId = `code-${crypto.randomUUID().slice(0, 8)}`;
 ---
 
-<div class="code">
+<div class="code" data-copied="false">
   <div class="code-bar">
-    <span>{label}</span>
-    <button type="button" class="btn-copy" data-copy data-copy-text={code}>Copy</button>
+    <span class="code-label" id={labelId}>{label}</span>
+    <button type="button" class="btn-copy btn-copy--ghost" data-copy data-copy-text={code} data-copied="false">
+      <span class="btn-copy-icons" aria-hidden="true"><Icon name="copy" class="i-copy" /><Icon name="check" class="i-check" /></span>
+      <span class="btn-copy-labels" data-labels
+        ><span class="btn-copy-label is-on" data-label-idle>Copy</span><span class="btn-copy-label" data-label-done aria-hidden="true">Copied</span></span
+      >
+    </button>
   </div>
-  {html ? <pre set:html={html} /> : <pre>{code}</pre>}
+  {
+    html ? (
+      <pre class="code-pane" role="group" aria-labelledby={labelId} data-scroller set:html={html} />
+    ) : (
+      <pre class="code-pane" role="group" aria-labelledby={labelId} data-scroller>{code}</pre>
+    )
+  }
+  <span class="sr-only" role="status" data-copy-status></span>
 </div>

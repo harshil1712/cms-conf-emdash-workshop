@@ -1,0 +1,31 @@
+---
+import Icon from "./Icon.astro";
+import type { NavStep } from "./StepNav.astro";
+import { workshop as W, repoUrl } from "../data/workshop";
+
+interface Props {
+  first: NavStep;
+  lastNum: string;
+}
+const { first, lastNum } = Astro.props;
+---
+
+<header class="topbar" data-topbar data-scrolled="false">
+  <div class="topbar-shell">
+    <a class="brand" href="/">
+      <img class="brand-logo" src="/brand/logo-dark-text.svg" alt="EmDash" width="104" height="26" />
+      <!-- one image renders at any width (the other is display: none), so the link always has one name -->
+      <img class="brand-mark" src="/favicon.svg" alt="EmDash" width="26" height="26" />
+    </a>
+    <span class="brand-sep" aria-hidden="true"></span>
+    <span class="brand-event">{W.event}</span>
+    <div class="topbar-links"><a href={W.links.docs}>EmDash docs</a><a href={repoUrl}>Workshop repo</a></div>
+    <button type="button" class="topbar-menu" aria-expanded="false" aria-controls="rail" data-rail-toggle>
+      <span class="topbar-menu-num" data-topbar-num>Step {first.num}</span>
+      <span class="topbar-menu-label" data-topbar-label>{first.label}</span>
+      <span class="topbar-menu-count" data-topbar-count>{first.num} / {lastNum}</span>
+      <Icon name="chevron-down" size="sm" />
+    </button>
+    <span class="topbar-progress" aria-hidden="true"><span data-topbar-progress></span></span>
+  </div>
+</header>

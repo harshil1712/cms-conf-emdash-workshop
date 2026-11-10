@@ -1,0 +1,14 @@
+---
+export type IconName =
+  | "terminal" | "copy" | "check" | "chevron-down" | "check-circle" | "info" | "cursor" | "eye" | "warning"
+  | "restart" | "presentation" | "flag" | "clock" | "lock" | "arrow-up-right" | "coffee" | "pencil";
+
+interface Props {
+  name: IconName;
+  size?: "sm" | "xs";
+  class?: string;
+}
+const { name, size, class: cls } = Astro.props;
+---
+
+<svg class:list={["i", size && `i-${size}`, cls]} aria-hidden="true" focusable="false"><use href={`#i-${name}`} /></svg>

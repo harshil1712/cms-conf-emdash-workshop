@@ -1,4 +1,5 @@
 ---
+import Icon from "./Icon.astro";
 import { fill } from "../data/workshop";
 import { inline } from "../utils/inline";
 
@@ -14,24 +15,42 @@ interface Props {
 }
 const { label, collapsed = true, editable = false, hint } = Astro.props;
 const text = fill(Astro.props.text);
+const paneId = `prompt-${crypto.randomUUID().slice(0, 8)}`;
+// Editable prompts: the first line is the topic the hint asks attendees to change.
+const nl = text.indexOf("\n");
+const topic = editable && nl > 0 ? text.slice(0, nl) : null;
+const rest = topic === null ? text : text.slice(nl);
 ---
 
-<div class="prompt" data-expanded={collapsed ? "false" : "true"}>
+<div class:list={["prompt", editable && "prompt--editable"]} data-expanded={collapsed ? "false" : "true"} data-copied="false">
   <div class="prompt-bar">
+    <Icon name={editable ? "pencil" : "terminal"} size="sm" class="prompt-glyph" />
     <span class="prompt-label">{label || "Copy this prompt into your agent"}</span>
-    <button type="button" class="btn-copy" data-copy>Copy prompt</button>
+    <button type="button" class="btn-copy" data-copy data-copied="false">
+      <span class="btn-copy-icons" aria-hidden="true"><Icon name="copy" class="i-copy" /><Icon name="check" class="i-check" /></span>
+      <span class="btn-copy-labels" data-labels
+        ><span class="btn-copy-label is-on" data-label-idle>Copy prompt</span><span class="btn-copy-label" data-label-done aria-hidden="true">Copied</span></span
+      >
+    </button>
   </div>
-  <pre
-    data-copy-source
-    contenteditable={editable ? "true" : undefined}
-    spellcheck="false"
-    aria-label={editable ? "Editable prompt" : undefined}>{text}</pre>
+  {
+    hint && (
+      <p class="prompt-hint">
+        <Icon name="pencil" size="xs" />
+        <span set:html={inline(hint)} />
+      </p>
+    )
+  }
+  <div class="prompt-pane" id={paneId} data-pane>
+    <pre data-copy-source contenteditable={editable ? "true" : undefined} spellcheck="false" role={editable ? "textbox" : undefined} aria-multiline={editable ? "true" : undefined} aria-label={editable ? "Editable prompt" : undefined}>{topic !== null && <span class="prompt-topic">{topic}</span>}{rest}</pre>
+  </div>
   {
     collapsed && (
-      <button type="button" class="prompt-toggle" aria-expanded="false" data-toggle>
-        Show full prompt
+      <button type="button" class="prompt-toggle" aria-expanded="false" aria-controls={paneId} data-toggle>
+        <Icon name="chevron-down" size="sm" class="prompt-chev" />
+        <span data-toggle-label>Show full prompt</span>
       </button>
     )
   }
+  <span class="sr-only" role="status" data-copy-status></span>
 </div>
-{hint && <p class="prompt-hint" set:html={inline(hint)} />}

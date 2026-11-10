@@ -9,21 +9,39 @@ interface Props {
 const { parts, steps } = Astro.props;
 ---
 
-<nav class="rail" aria-label="Workshop steps" data-rail>
-  <button type="button" class="rail-toggle" aria-expanded="false" data-rail-toggle>
-    <span>Workshop steps</span><span aria-hidden="true">▾</span>
-  </button>
-  <div class="rail-list-wrap">
-    <div class="rail-progress" aria-hidden="true">
-      <div class="rail-progress-bar"><span data-rail-progress></span></div>
-      <span data-rail-count>0 / {steps.length}</span>
-    </div>
+<nav class="rail" id="rail" aria-label="Workshop steps" data-rail data-open="false">
+  <p class="rail-sheet-title" aria-hidden="true">Workshop steps</p>
+  {
+    steps.length > 0 && (
+      <div class="rail-progress" aria-hidden="true">
+        <span class="rail-segs" data-rail-progress>
+          {parts.map((p) => {
+            const n = steps.filter((s) => s.part === p.id).length;
+            return (
+              n > 0 && (
+                <span class="rail-seg-group" style={`flex:${n}`}>
+                  {Array.from({ length: n }, () => (
+                    <i data-seg />
+                  ))}
+                </span>
+              )
+            );
+          })}
+        </span>
+        <span class="rail-count" data-rail-count>
+          {steps[0]!.num} / {steps.at(-1)!.num}
+        </span>
+      </div>
+    )
+  }
+  <div class="rail-groups">
+    <span class="rail-indicator" aria-hidden="true" data-rail-indicator></span>
     {
       parts.map((part) => (
-        <>
+        <div class="rail-group">
           <p class="rail-part">
             <a href={`#part-${part.id}`}>
-              {part.label}
+              <span>{part.label}</span>
               {part.showName && <b>{part.name}</b>}
             </a>
             <time>{part.time}</time>
@@ -32,70 +50,24 @@ const { parts, steps } = Astro.props;
             {steps
               .filter((s) => s.part === part.id)
               .map((s) => (
-                <li class="rail-item" data-rail-item={s.id}>
+                <li class="rail-item" data-rail-item={s.id} data-rail-num={s.num}>
                   <a href={`#${s.id}`}>
                     <span class="rail-num" aria-hidden="true">
                       {s.num}
                     </span>
-                    <span>{s.label}</span>
+                    <span class="rail-label">{s.label}</span>
                     {s.optional && <span class="rail-opt">opt</span>}
                   </a>
                 </li>
               ))}
           </ol>
-        </>
+        </div>
       ))
     }
   </div>
 </nav>
+<div class="rail-scrim" data-rail-scrim></div>
 
 <script>
-  const items = [...document.querySelectorAll<HTMLElement>("[data-rail-item]")];
-  const ids = items.map((el) => el.dataset.railItem!);
-  const cards = ids
-    .map((id) => document.getElementById(id))
-    .filter((el): el is HTMLElement => !!el);
-  const bar = document.querySelector<HTMLElement>("[data-rail-progress]");
-  const count = document.querySelector<HTMLElement>("[data-rail-count]");
-
-  function setActive(id: string) {
-    const idx = ids.indexOf(id);
-    items.forEach((el, i) => {
-      el.dataset.state = i < idx ? "done" : i === idx ? "active" : "";
-      el.querySelector("a")?.toggleAttribute("aria-current", i === idx);
-    });
-    const pct = idx < 0 ? 0 : ((idx + 1) / ids.length) * 100;
-    if (bar) bar.style.width = `${pct}%`;
-    if (count) count.textContent = `${Math.max(idx + 1, 0)} / ${ids.length}`;
-  }
-
-  const visible = new Map<string, number>();
-  const io = new IntersectionObserver(
-    (entries) => {
-      for (const e of entries) {
-        if (e.isIntersecting) visible.set(e.target.id, e.boundingClientRect.top);
-        else visible.delete(e.target.id);
-      }
-      // The topmost card in the reading band wins.
-      const first = ids.find((id) => visible.has(id));
-      if (first) setActive(first);
-    },
-    { rootMargin: "-20% 0px -55% 0px", threshold: 0 },
-  );
-  cards.forEach((c) => io.observe(c));
-
-  // Mobile: collapsible rail.
-  const rail = document.querySelector<HTMLElement>("[data-rail]");
-  const toggle = document.querySelector<HTMLButtonElement>("[data-rail-toggle]");
-  toggle?.addEventListener("click", () => {
-    const open = rail?.dataset.open === "true";
-    rail!.dataset.open = String(!open);
-    toggle.setAttribute("aria-expanded", String(!open));
-  });
-  rail?.addEventListener("click", (e) => {
-    if ((e.target as HTMLElement).closest("a") && window.matchMedia("(max-width: 960px)").matches) {
-      rail.dataset.open = "false";
-      toggle?.setAttribute("aria-expanded", "false");
-    }
-  });
+  import "../scripts/rail";
 </script>

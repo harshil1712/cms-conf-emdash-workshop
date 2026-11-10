@@ -1,0 +1,28 @@
+---
+// The emdashcms.com PostCover art (src/components/blog/PostCover.astro) without the cover box:
+// the same generator, seeded to match the slide section that introduces each part.
+import { halftoneArt, type ArtMotif } from "../lib/halftone";
+
+interface Props {
+  seed: string;
+  motif: ArtMotif;
+  columns: number;
+  rows: number;
+  class?: string;
+}
+const { seed, motif, columns, rows, class: cls } = Astro.props;
+const art = halftoneArt(seed, columns, rows, motif);
+const paperId = `ht-paper-${motif}-${art.key}`;
+---
+
+<div class:list={["halftone", cls]} aria-hidden="true">
+  <svg viewBox={`0 0 ${art.width} ${art.height}`} preserveAspectRatio="xMidYMid slice" focusable="false">
+    <defs>
+      <pattern id={paperId} width="10" height="10" patternUnits="userSpaceOnUse">
+        <circle class="halftone-grain" cx="5" cy="5" r="0.75" />
+      </pattern>
+    </defs>
+    <rect width="100%" height="100%" fill={`url(#${paperId})`} />
+    {art.layers.map((l) => <path class:list={["halftone-dots", l.accent && "halftone-dots--accent"]} d={l.d} stroke-width={l.width} />)}
+  </svg>
+</div>

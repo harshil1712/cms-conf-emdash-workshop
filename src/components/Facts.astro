@@ -13,7 +13,7 @@ const { items, label = "What happens in this step" } = Astro.props;
     items.map((f) => (
       <li>
         <span class="facts-label">{f.label}</span>
-        <span set:html={inline(f.text)} />
+        <span class="facts-value" set:html={inline(f.text)} />
       </li>
     ))
   }

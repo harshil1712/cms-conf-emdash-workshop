@@ -1,4 +1,5 @@
 ---
+import Icon from "./Icon.astro";
 import Prompt from "./Prompt.astro";
 import { inline } from "../utils/inline";
 
@@ -11,10 +12,16 @@ interface Props {
 const { letter, summary, prompt } = Astro.props;
 ---
 
-<details class="aside checkpoint">
-  <summary><span><b>checkpoint-{letter.toLowerCase()}</b>Fell behind? Catch up to Checkpoint {letter}</span></summary>
-  <div class="aside-body">
-    <p set:html={inline(summary)} />
-    <Prompt text={prompt} label="Catch-up prompt" />
+<details class="aside checkpoint" data-disclosure>
+  <summary>
+    <Icon name="flag" class="cp-flag" />
+    <span class="aside-sum"><code class="cp-chip">checkpoint-{letter.toLowerCase()}</code><b>Fell behind? Catch up to Checkpoint {letter}</b></span>
+    <Icon name="chevron-down" class="aside-chev" />
+  </summary>
+  <div class="aside-panel" data-panel>
+    <div class="aside-body">
+      <p set:html={inline(summary)} />
+      <Prompt text={prompt} label="Catch-up prompt" />
+    </div>
   </div>
 </details>

@@ -38,7 +38,9 @@ pnpm deploy     # build + wrangler deploy
 | `src/pages/index.astro` | Loads parts and steps and lays out the page |
 | `src/components/GuideBlocks.astro`, `src/components/blocks/` | One renderer per block type |
 | `src/components/` | `StepCard`, `Prompt`, `Callout`, `Compare`, `Consent` (scope checklist), `Checkpoint`, `StepNav`, … |
-| `src/styles/global.css` | The whole design system |
+| `src/styles/global.css` | The whole design system: light-only, Inter, EmDash's orange accent |
+| `src/scripts/` | `guide.ts` (copy buttons, prompt expand, disclosures, the top bar) and `rail.ts` (scrollspy, progress, the mobile step menu) |
+| `src/lib/halftone.ts`, `public/brand/` | The part headers' halftone art (the same generator and seeds as the slides) and the EmDash logos |
 | `outline.md` | The talk outline this guide is built from |
 | `slides/` | The Slidev deck for the concept blocks (see `slides/README.md`) |
 

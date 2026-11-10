@@ -8,15 +8,17 @@ interface Props {
   label?: string;
 }
 const { cols, label } = Astro.props;
+// Both columns share one row grid (subgrid), so a row lines up across the two.
+const rows = Math.max(cols[0].cells.length, cols[1].cells.length);
 ---
 
-<div class="compare" role="group" aria-label={label}>
+<div class="compare" role="group" aria-label={label} style={`--rows:${rows}`}>
   {
     cols.map((col) => (
       <div class="compare-col" data-tone={col.tone}>
         <div class="compare-head">
-          <span set:html={inline(col.title)} />
-          {col.sub && <small set:html={inline(col.sub)} />}
+          <span class="compare-title" set:html={inline(col.title)} />
+          {col.sub && <small class="compare-sub" set:html={inline(col.sub)} />}
         </div>
         {col.cells.map((c) => (
           <div class="compare-cell" data-mark={c.mark} set:html={inline(c.text)} />

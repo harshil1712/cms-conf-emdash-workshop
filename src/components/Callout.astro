@@ -1,4 +1,6 @@
 ---
+import Icon, { type IconName } from "./Icon.astro";
+
 interface Props {
   variant: "success" | "look" | "you" | "warn" | "restart" | "stage";
   title?: string;
@@ -9,9 +11,21 @@ const defaultTitle: Record<string, string> = {
   stage: "Watch the stage",
 };
 const label = title ?? defaultTitle[variant];
+// Each variant has its own icon shape, so meaning never rests on colour alone.
+const ICON: Record<Props["variant"], IconName> = {
+  success: "check-circle",
+  look: "eye",
+  you: "cursor",
+  warn: "warning",
+  restart: "restart",
+  stage: "presentation",
+};
 ---
 
 <div class="callout" data-variant={variant} role={variant === "success" ? "note" : undefined}>
-  {label && <p class="callout-title">{label}</p>}
-  <slot />
+  <span class="callout-icon" aria-hidden="true"><Icon name={ICON[variant]} size={variant === "you" ? "sm" : undefined} /></span>
+  <div class="callout-body">
+    {label && <p class="callout-title">{label}</p>}
+    <slot />
+  </div>
 </div>

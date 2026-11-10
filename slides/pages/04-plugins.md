@@ -1,5 +1,6 @@
 ---
 layout: section
+class: part art-stack
 ---
 
 # Plugins in EmDash
@@ -44,6 +45,7 @@ Even if you update the moment a fix ships, almost half the time there's nothing 
 
 ---
 layout: statement
+class: is-long
 ---
 
 # Any plugin can read every key in the site, and send it anywhere

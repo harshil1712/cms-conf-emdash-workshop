@@ -1,0 +1,551 @@
+/* Inter, self-hosted (no Google Fonts request at the venue); slides.md sets fonts.provider: none */
+@import "@fontsource/inter/400.css";
+@import "@fontsource/inter/500.css";
+@import "@fontsource/inter/600.css";
+@import "@fontsource/inter/700.css";
+
+/* ==========================================================================
+   EmDash workshop deck theme
+   Canvas is 1920×1080, so 1 CSS px is 1 px at 1080p.
+   Light first, like the guide: every layout sits on the same light stage, and
+   one left edge (120px) holds titles, text, cards and diagrams.
+   `colorSchema: dark` in the headmatter is the room switch: it turns the whole
+   deck dark for a dim hall.
+   ========================================================================== */
+
+:root {
+  --slidev-slide-container-background: #f9f9f9;
+  --slidev-code-padding: 28px 44px;
+  --slidev-code-font-size: 32px;
+  --slidev-code-line-height: 48px;
+  --slidev-code-radius: 24px;
+  --slidev-code-margin: 0;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  --slidev-code-font-family: var(--font-mono);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  /* a damped spring (ζ 0.68): settles with a 5% overshoot, so things land instead of sliding */
+  --spring: linear(0, 0.0302, 0.1067, 0.2114, 0.3297, 0.4509, 0.5673, 0.6735, 0.7666, 0.8452, 0.9092, 0.9592, 0.9966, 1.023, 1.0402, 1.05, 1.054, 1.0537, 1.0504, 1.0453, 1.0391, 1.0325, 1.026, 1.02, 1.0146, 1.0101, 1.0063, 1.0032, 1.0009, 0.9993, 0.9981, 0.9975, 0.9971, 0.9971, 0.9972, 0.9974, 1);
+  --d-spring: 760ms;
+  --pad-t: 96px;
+  --pad-x: 120px;
+  --pad-b: 160px;
+
+  /* Icon masks: the guide's 24px stroke icons , stroke 2 for the projector */
+  --mk-check: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='m8.5 12.25 2.5 2.5 4.5-5'/%3E%3C/svg%3E");
+  --mk-x: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M9.25 9.25l5.5 5.5m0-5.5-5.5 5.5'/%3E%3C/svg%3E");
+  --mk-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7.5 16.5 16.5 7.5M9 7.5h7.5V15'/%3E%3C/svg%3E");
+  --mk-copy: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='8.5' y='8.5' width='11.5' height='11.5' rx='2.5'/%3E%3Cpath d='M15.5 8.5V6.5a2.5 2.5 0 0 0-2.5-2.5H6.5A2.5 2.5 0 0 0 4 6.5V13a2.5 2.5 0 0 0 2.5 2.5h2'/%3E%3C/svg%3E");
+  --mk-cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m9.5 9.5 10 3.6-4.3 1.6-1.6 4.3z'/%3E%3Cpath d='M5.2 3.6 6 6M3.6 8.4 6 9M9 3.2 8.6 5.6'/%3E%3C/svg%3E");
+  --mk-eye: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2.75 12S6.25 5.75 12 5.75 21.25 12 21.25 12 17.75 18.25 12 18.25 2.75 12 2.75 12z'/%3E%3Ccircle cx='12' cy='12' r='2.75'/%3E%3C/svg%3E");
+  --mk-caret: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.25' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m9 6 6 6-6 6'/%3E%3C/svg%3E");
+}
+html.dark {
+  --slidev-slide-container-background: #0a0a0a;
+}
+
+/* ---------- stage tokens ---------- */
+
+.slidev-layout {
+  /* light stage: projector-weighted lines (one step darker than the guide) */
+  --stage: #f9f9f9; --panel: #ffffff; --sunken: #fafafa;
+  --line: #d6d6d6; --line-soft: #ececec; --line-strong: #c2c2c2;
+  --th-bg: #f3f3f3; --row-line: #e3e3e3; --chip: #efefef;
+  --ink-strong: #0a0a0a; --ink: #262626; --ink-2: #4d4d4d; --muted: #6b6b6b; --subtle: #8f8f8f;
+  --accent: #ff5e1f; --accent-ink: #b84416; --accent-display: #f0541a;
+  --accent-soft: rgb(255 94 31 / 8%); --accent-edge: rgb(255 94 31 / 24%);
+  --success-ink: #1e7d43; --danger: #c42b1c;
+  --code-dim: #949494; --code-band: rgb(255 94 31 / 11%);
+  --hub-fill: #fff3ee; --node-line: #8f8f8f; --edge: #6b6b6b;
+  --ring: 0 0 0 8px #ececec;
+  --lift: 0 2px 4px rgb(0 0 0 / 6%), 0 36px 64px -40px rgb(0 0 0 / 28%);
+  --slidev-code-background: var(--panel);
+  --slidev-code-foreground: var(--ink);
+
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  height: 100%;
+  padding: var(--pad-t) var(--pad-x) var(--pad-b);
+  background: var(--stage);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 40px;
+  line-height: 1.4;
+  font-synthesis: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+/* room switch: the whole deck follows `colorSchema: dark` */
+html.dark .slidev-layout {
+  --stage: #0a0a0a; --panel: #141414; --sunken: #101010;
+  --line: #333333; --line-soft: rgb(255 255 255 / 5%); --line-strong: #404040;
+  --th-bg: #1b1b1b; --row-line: #262626; --chip: #1f1f1f;
+  --ink-strong: #ffffff; --ink: #f5f5f5; --ink-2: #c9c9c9; --muted: #a3a3a3; --subtle: #737373;
+  --accent-ink: #ff7a45; --accent-display: #ff5e1f;
+  --accent-soft: rgb(255 94 31 / 12%); --accent-edge: rgb(255 94 31 / 32%);
+  --success-ink: #4cc777; --danger: #ff7b6b;
+  --code-dim: #737373; --code-band: rgb(255 94 31 / 13%);
+  --hub-fill: rgb(255 94 31 / 12%); --node-line: #6b6b6b; --edge: #a3a3a3;
+  --ring: 0 0 0 8px rgb(255 255 255 / 5%);
+  --lift: 0 2px 4px rgb(0 0 0 / 50%), 0 36px 64px -40px rgb(0 0 0 / 80%);
+  color-scheme: dark;
+}
+
+/* ---------- base type: reset theme-default (it zeroes weights, dims h1 + p, fixes p at 24px) ---------- */
+
+.slidev-layout :is(h1, h2, h3, h4, p, ul, ol, blockquote, table) { margin: 0; }
+.slidev-layout h1 {
+  font-size: 80px; font-weight: 700; line-height: 1.06; letter-spacing: -0.03em;
+  color: var(--ink-strong); text-wrap: balance; max-width: 1500px;
+  margin-inline-start: 0;
+}
+.slidev-layout h3 {
+  font-size: 44px; font-weight: 600; line-height: 1.15; letter-spacing: -0.03em; color: var(--ink-strong);
+  text-wrap: balance;
+}
+.slidev-layout p { max-width: 1400px; line-height: inherit; text-wrap: pretty; }
+.slidev-layout :is(strong, b) { font-weight: 600; color: var(--ink-strong); }
+
+/* claim: the line under a content title */
+.slidev-layout h1 + p {
+  opacity: 1; font-size: 40px; line-height: 1.35; color: var(--ink-2); max-width: 1400px;
+  margin-bottom: 0;      /* theme-default's `h1 + p { mb-4 }` is (0,1,2) and beats the reset */
+  text-wrap: balance;    /* short display text: no three-word tail under a full line */
+}
+
+/* ---------- vertical rhythm: margin-top only (flex columns don't collapse margins) ---------- */
+
+.slidev-layout :where(p, ul, ol, table, blockquote, .slidev-code-wrapper, .mermaid, h3) + p,
+.slidev-layout :where(p, ul, ol, table, blockquote, .slidev-code-wrapper, .mermaid, h3) + ul,
+.slidev-layout :where(p, ul, ol, table, blockquote, .slidev-code-wrapper, .mermaid, h3) + ol,
+.slidev-layout :where(p, ul, ol, table, blockquote, .slidev-code-wrapper, .mermaid, h3) + table,
+.slidev-layout :where(p, ul, ol, table, blockquote, .slidev-code-wrapper, .mermaid, h3) + blockquote { margin-top: 40px; }
+.slidev-layout h1 + :is(p, ul, ol, table, blockquote) { margin-top: 56px; }
+.slidev-layout h1 + p { margin-top: 24px; }                                         /* title → claim */
+.slidev-layout h1 + p + :is(p, ul, ol, table, blockquote) { margin-top: 48px; }     /* claim → next */
+/* code cards: Slidev forces `margin: var(--slidev-code-margin) !important` on the wrapper */
+.slidev-layout :where(p, ul, ol, table, blockquote, .slidev-code-wrapper, .mermaid) + .slidev-code-wrapper { --slidev-code-margin: 40px 0 0; }
+.slidev-layout h1 + .slidev-code-wrapper { --slidev-code-margin: 56px 0 0; }
+.slidev-layout h1 + p + .slidev-code-wrapper { --slidev-code-margin: 48px 0 0; }
+
+/* ---------- inline code: a visible chip, regular weight ---------- */
+
+.slidev-layout :not(pre) > code {
+  font-family: var(--font-mono); font-size: 0.86em; font-weight: 400; letter-spacing: 0;
+  padding: 0.06em 0.32em; border-radius: 10px;
+  color: var(--ink-strong); background: var(--chip); box-shadow: inset 0 0 0 2px var(--line);
+  font-variant-ligatures: none; white-space: nowrap;
+  -webkit-box-decoration-break: clone; box-decoration-break: clone;
+}
+.slidev-layout :not(pre) > code::before { margin-right: 0; }
+.slidev-layout h1 code {
+  font-size: 0.82em; font-weight: 500; letter-spacing: -0.01em; border-radius: 14px;
+  padding: 0.04em 0.24em;
+  color: var(--accent-ink); background: var(--accent-soft); box-shadow: inset 0 0 0 2px var(--accent-edge);
+}
+
+/* ---------- links (slides 38 and 39 only) ---------- */
+
+.slidev-layout a {
+  color: inherit; border-bottom: 0;
+  text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 0.22em;
+  text-decoration-color: rgb(255 94 31 / 55%);
+}
+
+/* ---------- lists and v-clicks ---------- */
+
+.slidev-layout :is(ul, ol) { padding: 0; display: grid; gap: 28px; }
+.slidev-layout ul { list-style: none; }
+.slidev-layout li {
+  position: relative; margin: 0; padding: 0;
+  font-size: 48px; line-height: 1.3; letter-spacing: -0.01em; text-wrap: balance;
+}
+.slidev-layout ul > li { padding-inline-start: 64px; }
+/* one 7:1 dash everywhere (brand eyebrow proportion): list bullet 35×5 */
+.slidev-layout ul > li::before {
+  content: ""; position: absolute; inset-inline-start: 0; top: calc(0.65em - 2.5px);
+  width: 35px; height: 5px; border-radius: 5px; background: var(--subtle);
+  transition: background-color 240ms ease;
+}
+.slidev-layout ol { list-style: decimal; padding-inline-start: 76px; }
+.slidev-layout ol > li { padding-inline-start: 12px; }
+.slidev-layout ol > li::marker {
+  color: var(--muted); font-weight: 600; font-variant-numeric: tabular-nums; letter-spacing: 0;
+}
+.slidev-layout :is(ul, ol):has(> li:nth-child(5)) { gap: 22px; }
+.slidev-layout :is(ul, ol):has(> li:nth-child(5)) > li { font-size: 44px; }
+
+/* reveal states: colour, not opacity */
+.slidev-layout li.slidev-vclick-current::before { background: var(--accent); }
+.slidev-layout li.slidev-vclick-current::marker { color: var(--accent-ink); }
+/* earlier items dim only while something on the slide is still hidden */
+.slidev-layout:has(.slidev-vclick-hidden) li.slidev-vclick-prior { color: var(--muted); }
+.slidev-layout:has(.slidev-vclick-hidden) li.slidev-vclick-prior :is(strong, b) { color: var(--muted); }
+.slidev-layout:has(.slidev-vclick-hidden) li.slidev-vclick-prior code { color: var(--muted); }
+
+/* ---------- tables (slides 13, 16, 17, 18, 45) ---------- */
+
+.slidev-layout table {
+  width: 100%; border-collapse: separate; border-spacing: 0;
+  background: var(--panel); border: 2px solid var(--line); border-radius: 28px;
+  box-shadow: var(--ring), var(--lift);
+}
+.slidev-layout tr { border: 0; }
+.slidev-layout th {
+  padding: 24px 44px 20px; text-align: start; vertical-align: bottom;
+  font-size: 28px; font-weight: 600; line-height: 1.3; letter-spacing: 0; color: var(--muted);
+  background: var(--th-bg); border-bottom: 2px solid var(--line);
+}
+.slidev-layout th:first-child { border-top-left-radius: 26px; }
+.slidev-layout th:last-child { border-top-right-radius: 26px; }
+.slidev-layout th code { font-size: 0.9em; color: var(--ink); }
+.slidev-layout td {
+  padding: 18px 44px; font-size: 36px; line-height: 1.3; letter-spacing: -0.005em;
+  color: var(--ink); vertical-align: middle;
+}
+.slidev-layout tbody tr + tr td { border-top: 2px solid var(--row-line); }
+.slidev-layout td:first-child { font-weight: 600; color: var(--ink-strong); }
+
+/* ✅ / ❌ → brand marks. The transformer wraps the emoji; it stays in the DOM for copy and screen readers */
+.slidev-layout .mk {
+  display: inline-block; width: 40px; height: 40px; margin-inline-end: 14px; vertical-align: -0.22em;
+  overflow: hidden; white-space: nowrap; text-indent: 200%; line-height: 40px; color: transparent;
+}
+.slidev-layout .mk-yes { background: var(--success-ink); -webkit-mask: var(--mk-check) center / contain no-repeat; mask: var(--mk-check) center / contain no-repeat; }
+.slidev-layout .mk-no { background: var(--danger); -webkit-mask: var(--mk-x) center / contain no-repeat; mask: var(--mk-x) center / contain no-repeat; }
+.slidev-layout td:has(> .mk:only-child) { line-height: 0; }
+
+/* slide 13 (class: run-of-show): part rows carry the orange dot, like the guide's run-of-show window */
+.slidev-layout.run-of-show table { width: 1120px; }
+.slidev-layout.run-of-show td { padding-block: 14px; }
+.slidev-layout.run-of-show td:first-child { width: 220px; font-weight: 500; color: var(--muted); font-variant-numeric: tabular-nums; }
+.slidev-layout.run-of-show tr:has(td > strong) td { background: rgb(0 0 0 / 3.5%); }
+.slidev-layout.run-of-show tr:has(td > strong) td:first-child { color: var(--ink-strong); font-weight: 600; }
+.slidev-layout.run-of-show tr:last-child td:first-child { border-bottom-left-radius: 26px; }
+.slidev-layout.run-of-show tr:last-child td:last-child { border-bottom-right-radius: 26px; }
+.slidev-layout.run-of-show td:first-child::before {
+  content: ""; display: inline-block; width: 14px; height: 14px; margin-inline-end: 22px;
+  border-radius: 50%; vertical-align: 0.06em; box-shadow: inset 0 0 0 2.5px var(--line-strong);
+}
+.slidev-layout.run-of-show tr:has(td > strong) td:first-child::before {
+  background: var(--accent); box-shadow: 0 0 0 5px rgb(255 94 31 / 18%);
+}
+html.dark .slidev-layout.run-of-show tr:has(td > strong) td { background: rgb(255 255 255 / 3%); }
+
+/* slide 16 (class: legend): each box name shows the guide's own icon for it */
+.slidev-layout.legend td:first-child { white-space: nowrap; }
+.slidev-layout.legend td:first-child strong::before {
+  content: ""; display: inline-block; width: 36px; height: 36px; margin-inline-end: 20px; vertical-align: -0.16em;
+}
+.slidev-layout.legend tr:nth-child(1) td:first-child strong::before { background: var(--ink-strong); -webkit-mask: var(--mk-copy) center / contain no-repeat; mask: var(--mk-copy) center / contain no-repeat; }
+.slidev-layout.legend tr:nth-child(2) td:first-child strong::before { background: var(--accent); -webkit-mask: var(--mk-cursor) center / contain no-repeat; mask: var(--mk-cursor) center / contain no-repeat; }
+.slidev-layout.legend tr:nth-child(3) td:first-child strong::before { background: var(--success-ink); -webkit-mask: var(--mk-check) center / contain no-repeat; mask: var(--mk-check) center / contain no-repeat; }
+.slidev-layout.legend tr:nth-child(4) td:first-child strong::before { background: var(--ink-2); -webkit-mask: var(--mk-eye) center / contain no-repeat; mask: var(--mk-eye) center / contain no-repeat; }
+
+/* ---------- code cards (slides 5, 43, 47, 51, 53, and every other fence) ---------- */
+
+.slidev-layout .slidev-code {
+  border: 2px solid var(--line); box-shadow: var(--ring), var(--lift);
+  color: var(--ink);
+}
+.slidev-layout .slidev-code code { font-family: var(--font-mono); font-variant-ligatures: none; }
+/* a card is as wide as its code (never under 960px), so a two-line snippet isn't a 1680px empty bar.
+   Stacked cards (slide 54) and the output under a prompt (slide 33) keep the full measure, so their edges line up */
+.slidev-layout.default > .slidev-code-wrapper:not(blockquote + *):not(.slidev-code-wrapper + *):not(:has(+ .slidev-code-wrapper)) {
+  width: fit-content; min-width: min(100%, 960px); max-width: 100%;
+}
+.slidev-layout .slidev-code .line {
+  display: inline-block; min-width: calc(100% + 88px); margin-inline: -44px; padding-inline: 44px;
+  transition: background-color 240ms var(--ease-out), box-shadow 240ms var(--ease-out);
+}
+.slidev-layout .slidev-code .line span { transition: color 240ms var(--ease-out); }
+.slidev-code-line-numbers .slidev-code code .line::before {
+  width: 2ch; margin-right: 32px; text-align: end;
+  font-size: 26px; color: var(--subtle); font-variant-numeric: tabular-nums;
+  transition: color 240ms var(--ease-out);
+}
+/* no numbers on short shell, txt, sql and json snippets (class added in setup/shiki.ts) */
+.slidev-code-line-numbers .slidev-code:is(.lang-bash, .lang-sh, .lang-shell, .lang-txt, .lang-text, .lang-sql, .lang-json) code .line::before { display: none; }
+/* highlight = colour + band + 6px orange bar, only while a range is active (at "all" every line is "highlighted") */
+.slidev-layout .slidev-code .line.slidev-code-dishonored { opacity: 1; }
+.slidev-layout .slidev-code .line.slidev-code-dishonored span { color: var(--code-dim); }
+.slidev-layout .slidev-code:has(.slidev-code-dishonored) .line.slidev-code-highlighted {
+  background: var(--code-band); box-shadow: inset 6px 0 0 var(--accent);
+}
+.slidev-layout .slidev-code:has(.slidev-code-dishonored) .line.slidev-code-highlighted::before { color: var(--accent-ink); }
+/* export / print: full-strength code, no band */
+html.print .slidev-layout .slidev-code .line.slidev-code-dishonored span { color: var(--shiki-light); }
+html.print.dark .slidev-layout .slidev-code .line.slidev-code-dishonored span { color: var(--shiki-dark); }
+html.print .slidev-layout .slidev-code .line { background: none !important; box-shadow: none !important; }
+html.print .slidev-layout .slidev-code .line::before { color: var(--subtle) !important; }
+
+/* ---------- prompt blockquotes (slides 33 and 34; the guide's prompt window) ---------- */
+
+.slidev-layout blockquote {
+  position: relative; padding: 30px 44px 30px 92px;
+  border: 2px solid var(--line); border-radius: 24px;
+  background: var(--panel); box-shadow: var(--ring), var(--lift);
+  color: var(--ink); font: 400 34px/1.45 var(--font-mono); font-variant-ligatures: none; letter-spacing: 0;
+}
+.slidev-layout blockquote::before {
+  content: ""; position: absolute; left: 44px; top: 39px; width: 30px; height: 30px;
+  background: var(--accent); -webkit-mask: var(--mk-caret) center / contain no-repeat; mask: var(--mk-caret) center / contain no-repeat;
+}
+.slidev-layout blockquote p { max-width: none; }
+.slidev-layout blockquote code { font-size: 1em; padding: 0 0.2em; }
+
+/* ---------- mermaid (slides 8, 30, 49): on the left edge, centred in the height under the title ---------- */
+
+.slidev-layout .mermaid {
+  flex: 1 1 auto; min-height: 0; display: flex; align-items: center; justify-content: flex-start;
+  margin-top: 24px;
+}
+
+/* ==========================================================================
+   Layouts 
+   ========================================================================== */
+
+/* ---------- cover: light stage, halftone em dash ---------- */
+
+.slidev-layout.cover { display: grid; grid-template-rows: auto 1fr; padding: 96px 120px 112px; }
+.cover-logo { position: relative; z-index: 1; display: block; height: 52px; width: auto; }
+.cover-logo--light { display: none; }
+html.dark .cover-logo--dark { display: none; }
+html.dark .cover-logo--light { display: block; }
+.cover-copy { position: relative; z-index: 1; align-self: end; max-width: 1000px; }
+.slidev-layout.cover h1 {
+  width: min-content; max-width: none; margin: 0 0 0 -0.04em;
+  font-size: 168px; line-height: 1.0; letter-spacing: -0.045em; text-wrap: wrap;
+}
+.slidev-layout.cover h1 + p {
+  margin: 56px 0 0; font-size: 44px; line-height: 1.3; letter-spacing: -0.015em; color: var(--ink-2);
+}
+.slidev-layout.cover h1 + p + p {
+  margin: 16px 0 0; font-size: 30px; font-weight: 500; line-height: 1.3; letter-spacing: -0.005em; color: var(--muted);
+}
+.cover-art {
+  position: absolute; inset: 0 0 0 auto; width: 1040px; height: 100%; z-index: 0;
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 40%); mask-image: linear-gradient(to right, transparent, #000 40%);
+}
+.cover-glow {
+  position: absolute; right: 120px; top: 300px; width: 820px; height: 480px; z-index: 0; border-radius: 50%;
+  background: radial-gradient(closest-side, rgb(255 94 31 / 12%), transparent); filter: blur(48px);
+  pointer-events: none;
+}
+
+/* ---------- section: one halftone motif per chapter ---------- */
+
+.slidev-layout.section { display: flex; flex-direction: column; justify-content: flex-end; padding: 96px 120px 176px; }
+.section-copy { position: relative; z-index: 1; display: flex; flex-direction: column; max-width: 1040px; }
+.slidev-layout.section h1 {
+  margin: 0 0 0 -0.04em; max-width: none;
+  font-size: 160px; font-weight: 700; line-height: 1.0; letter-spacing: -0.045em; color: var(--ink-strong);
+}
+.slidev-layout.section h1 + p {
+  margin: 40px 0 0; font-size: 44px; line-height: 1.35; letter-spacing: -0.015em; color: var(--ink-2); max-width: 1000px;
+}
+/* class: part. The "Part N · Name" line becomes an eyebrow above the title (DOM order unchanged) */
+.slidev-layout.section.part h1 + p {
+  order: -1; align-self: flex-start; margin: 0 0 44px; display: inline-flex; align-items: center; gap: 22px;
+  font-size: 40px; font-weight: 600; line-height: 1.2; letter-spacing: -0.01em; color: var(--ink);
+}
+.slidev-layout.section.part h1 + p::before {
+  content: ""; flex: none; width: 42px; height: 6px; border-radius: 6px; background: var(--accent);
+}
+/* a landscape plate in the upper right, so wide motifs (stack, braid, calendar) are never cropped,
+   fading out toward the title on the left and the rule below */
+.section-art {
+  position: absolute; top: -24px; right: 0; width: 960px; height: 760px; z-index: 0;
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 42%), linear-gradient(to top, transparent, #000 32%);
+  -webkit-mask-composite: source-in;
+  mask-image: linear-gradient(to right, transparent, #000 42%), linear-gradient(to top, transparent, #000 32%);
+  mask-composite: intersect;
+}
+.slidev-layout.section.art-braid .section-art { top: -80px; right: -60px; }
+/* the chapter art is texture behind a 160px title: its grey dots sit lighter than the cover's */
+.section-art.halftone--light { --ht-ink: rgb(38 38 38 / 42%); --ht-paper: rgb(38 38 38 / 7%); }
+html.dark .section-art.halftone--light { --ht-ink: rgb(245 245 245 / 40%); --ht-paper: rgb(245 245 245 / 7%); }   /* the strands run down-left toward the title: lift them clear */
+.section-glow {
+  position: absolute; right: 200px; top: 140px; width: 760px; height: 520px; z-index: 0; border-radius: 50%;
+  background: radial-gradient(closest-side, rgb(255 94 31 / 12%), transparent); filter: blur(60px);
+  pointer-events: none;
+}
+.section-rule { position: absolute; left: 120px; right: 120px; bottom: 112px; height: 2px; background: var(--line); z-index: 1; }
+
+/* ---------- statement: left, balanced, the orange dash above ---------- */
+
+.slidev-layout.statement { display: flex; flex-direction: column; justify-content: center; text-align: start; padding: 96px 120px 160px; }
+.statement-copy { position: relative; z-index: 1; }
+.statement-copy::before {
+  content: ""; display: block; width: 70px; height: 10px; border-radius: 10px; background: var(--accent); margin-bottom: 64px;
+}
+.slidev-layout.statement h1 {
+  margin: 0 0 0 -0.04em; max-width: 1560px;
+  font-size: 112px; font-weight: 700; line-height: 1.06; letter-spacing: -0.04em; color: var(--ink-strong);
+}
+.slidev-layout.statement.is-long h1 { font-size: 96px; max-width: 1500px; }
+.slidev-layout.statement h1 + p {
+  margin: 48px 0 0; font-size: 44px; line-height: 1.35; letter-spacing: -0.015em; color: var(--ink-2); max-width: 1300px;
+}
+
+/* ---------- fact: numeral plus a 10×10 disc matrix that fills in order ---------- */
+
+.slidev-layout.fact {
+  display: grid; grid-template-columns: minmax(0, 1fr) 584px; column-gap: 120px; align-items: center;
+  text-align: start; padding: 96px 120px;
+}
+.fact-copy { position: relative; z-index: 1; }
+.slidev-layout.fact h1 {
+  margin: 0 0 0 -0.04em; max-width: none;
+  font-size: 360px; font-weight: 700; line-height: 0.9; letter-spacing: -0.04em; color: var(--ink-strong);
+  font-variant-numeric: proportional-nums;
+}
+.slidev-layout.fact h1 + p {
+  margin: 48px 0 0; max-width: 880px;
+  font-size: 56px; font-weight: 500; line-height: 1.2; letter-spacing: -0.03em; color: var(--ink); text-wrap: balance;
+}
+.slidev-layout.fact h1 + p + p { margin-top: 44px; font-size: 28px; line-height: 1.4; letter-spacing: 0; color: var(--muted); }
+.slidev-layout.fact a { color: inherit; text-decoration-color: rgb(255 94 31 / 55%); }
+.slidev-layout.fact a::after {
+  content: ""; display: inline-block; width: 0.8em; height: 0.8em; margin-inline-start: 0.3em; vertical-align: -0.06em;
+  background: var(--subtle); -webkit-mask: var(--mk-arrow) center / contain no-repeat; mask: var(--mk-arrow) center / contain no-repeat;
+}
+.fact-matrix { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(10, 44px); gap: 16px; }
+.fact-matrix i { position: relative; display: block; width: 44px; height: 44px; border-radius: 50%; box-shadow: inset 0 0 0 3px var(--subtle); }
+.fact-matrix i.on::after { content: ""; position: absolute; inset: 0; border-radius: 50%; background: var(--accent); }
+/* on screen, the filled discs pop in one after another over their rings (fact.vue sets is-live and --n) */
+.fact-matrix.is-live i.on::after { animation: disc-pop 560ms var(--spring) both; animation-delay: calc(360ms + var(--n) * 7ms); }
+@keyframes disc-pop { from { scale: 0; } }
+html.print .fact-matrix i.on::after { animation: none; }
+
+/* ---------- center: light, vertically centred, left-aligned (slides 14 and 62) ---------- */
+
+.slidev-layout.center { display: flex; flex-direction: column; justify-content: center; padding: 96px 120px 160px; }
+.center-copy { position: relative; z-index: 1; }
+.slidev-layout.center h1 { margin-inline-start: -0.04em; font-size: 96px; line-height: 1.06; letter-spacing: -0.04em; }
+.slidev-layout.center h1 + :is(p, ul, ol) { margin-top: 56px; }
+.slidev-layout.center p { font-size: 44px; line-height: 1.3; color: var(--ink-2); }
+.slidev-layout.center h1 + p:has(> strong:only-child) {
+  margin-top: 48px; font-size: 72px; font-weight: 600; line-height: 1.15; letter-spacing: -0.02em; color: var(--ink-strong);
+}
+.slidev-layout.center p:has(> strong:only-child) strong {
+  font-weight: 600;
+  text-decoration: underline; text-decoration-thickness: 6px; text-decoration-color: var(--accent);
+  text-underline-offset: 0.3em; text-decoration-skip-ink: none;
+}
+.slidev-layout.center h1 + p:has(> strong:only-child) + p { margin-top: 56px; }
+
+/* ---------- default: a flex column, so a diagram centres under the title ---------- */
+
+.slidev-layout.default { display: flex; flex-direction: column; }
+.slidev-layout.default > * { flex: none; }
+.slidev-layout.default > .mermaid { flex: 1 1 auto; }
+
+/* ---------- two-cols-header: two cards of equal height ---------- */
+
+.slidev-layout.two-cols-header {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: auto auto 1fr;
+  column-gap: 48px;
+}
+.slidev-layout.two-cols-header .col-header { grid-column: 1 / -1; }
+.slidev-layout.two-cols-header .col-header h1 { margin-bottom: 56px; }
+.slidev-layout.two-cols-header .col-bottom { grid-column: 1 / -1; align-self: end; }
+.slidev-layout .col-card {
+  min-width: 0; padding: 44px 44px 48px; background: var(--panel);
+  border: 2px solid var(--line); border-radius: 28px; box-shadow: var(--ring), var(--lift);
+}
+.slidev-layout .col-card h3 { margin-bottom: 32px; }
+.slidev-layout .col-card h3 + :is(p, ul, ol) { margin-top: 0; }
+.slidev-layout .col-card :is(ul, ol) { gap: 20px; }
+.slidev-layout .col-card :is(ul, ol) > li { font-size: 38px; line-height: 1.35; letter-spacing: -0.005em; }
+.slidev-layout .col-card ul > li { padding-inline-start: 48px; }
+.slidev-layout .col-card ul > li::before { width: 28px; height: 4px; border-radius: 4px; top: calc(0.675em - 2px); }
+.slidev-layout .col-card p { font-size: 38px; line-height: 1.35; color: var(--ink); }
+.slidev-layout .col-card :is(ul, ol) + p {
+  margin-top: 36px; padding-top: 28px; border-top: 2px dashed var(--line-strong);
+  font-size: 32px; color: var(--muted);
+}
+.slidev-layout .col-card h3 + .slidev-code-wrapper { --slidev-code-margin: 0; }
+.slidev-layout .col-card .slidev-code {
+  border: 0; box-shadow: none; background: var(--th-bg); border-radius: 18px !important;
+}
+.slidev-layout .col-card .slidev-code code .line::before { display: none; }
+
+/* ==========================================================================
+   Motion. Springs for things that move, ease-out for opacity. No blur, no loops.
+   ========================================================================== */
+
+/* slide transition "rise": the old slide fades out; the new one's blocks land one after another.
+   The page's own transform transition is a timer: Vue keeps the enter classes for its full
+   duration, so the staggered children finish before the classes come off. */
+.rise-enter-active { transition: opacity 240ms var(--ease-out) 80ms, transform 1200ms linear; }
+.rise-enter-from { opacity: 0; }
+.rise-leave-active { transition: opacity 180ms var(--ease-in); }
+.rise-leave-to { opacity: 0; }
+
+.rise-enter-active :is(
+  .slidev-layout.default > *, .col-header > *, .col-card, .col-bottom,
+  .cover-copy > *, .section-copy > *, .section-art, .statement-copy > *,
+  .fact-copy > *, .fact-matrix, .center-copy > *
+) {
+  transition:
+    translate var(--d-spring) var(--spring) calc(80ms + var(--d, 0ms)),
+    opacity 420ms var(--ease-out) calc(80ms + var(--d, 0ms));
+}
+.rise-enter-from :is(
+  .slidev-layout.default > *, .col-header > *, .col-card, .col-bottom,
+  .cover-copy > *, .section-copy > *, .section-art, .statement-copy > *,
+  .fact-copy > *, .fact-matrix, .center-copy > *
+) { translate: 0 32px; opacity: 0; }
+/* going back, the blocks come down from above */
+.slidev-nav-go-backward .rise-enter-from :is(
+  .slidev-layout.default > *, .col-header > *, .col-card, .col-bottom,
+  .cover-copy > *, .section-copy > *, .section-art, .statement-copy > *,
+  .fact-copy > *, .fact-matrix, .center-copy > *
+) { translate: 0 -32px; }
+/* stagger: 70ms per block, in reading order */
+.slidev-layout :is(*:nth-child(1)) { --d: 0ms; }
+.slidev-layout :is(*:nth-child(2)) { --d: 70ms; }
+.slidev-layout :is(*:nth-child(3)) { --d: 140ms; }
+.slidev-layout :is(*:nth-child(4)) { --d: 210ms; }
+.slidev-layout :is(*:nth-child(n + 5)) { --d: 280ms; }
+.slidev-layout :is(.col-right) { --d: 140ms; }
+.slidev-layout :is(.section-art, .fact-matrix) { --d: 140ms; }
+.slidev-layout.section.part .section-copy > p { --d: 0ms; }     /* the eyebrow sits above the title, so it lands first */
+.slidev-layout.section.part .section-copy > h1 { --d: 70ms; }
+/* the statement's orange dash draws from the left as the line lands */
+.statement-copy::before { transform-origin: left center; }
+.rise-enter-active .statement-copy::before { transition: scale 640ms var(--spring) 80ms; }
+.rise-enter-from .statement-copy::before { scale: 0 1; }
+
+/* click preset "rise" (clickAnimation: rise): each revealed item springs up into place */
+.slidev-vclick-target.slidev-vclick-anim-rise {
+  transition: opacity 360ms var(--ease-out), translate 680ms var(--spring), color 240ms ease;
+}
+.slidev-vclick-hidden.slidev-vclick-anim-rise { translate: 0 24px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .rise-enter-active { transition: opacity 160ms linear, transform 200ms linear; }
+  .rise-leave-active { transition: opacity 120ms linear; }
+  .rise-enter-active :is(
+    .slidev-layout.default > *, .col-header > *, .col-card, .col-bottom,
+    .cover-copy > *, .section-copy > *, .section-art, .statement-copy > *,
+    .fact-copy > *, .fact-matrix, .center-copy > *
+  ) { transition: none; }
+  .rise-enter-from :is(
+    .slidev-layout.default > *, .col-header > *, .col-card, .col-bottom,
+    .cover-copy > *, .section-copy > *, .section-art, .statement-copy > *,
+    .fact-copy > *, .fact-matrix, .center-copy > *
+  ) { translate: none; opacity: 1; }
+  .rise-enter-active .statement-copy::before { transition: none; }
+  .rise-enter-from .statement-copy::before { scale: none; }
+  .fact-matrix.is-live i.on::after { animation: none; }
+  .slidev-vclick-target.slidev-vclick-anim-rise { transition: opacity 120ms linear; }
+  .slidev-vclick-hidden.slidev-vclick-anim-rise { translate: none; }
+  .slidev-layout .slidev-code .line,
+  .slidev-layout .slidev-code .line span,
+  .slidev-code-line-numbers .slidev-code code .line::before { transition: none; }
+}

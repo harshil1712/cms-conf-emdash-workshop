@@ -1,11 +1,14 @@
 ---
 layout: section
+class: art-calendar
 ---
 
 # How this workshop runs
 
 You make the calls. Your agent does the typing.
 
+---
+class: run-of-show
 ---
 
 # Two hours, three parts
@@ -54,6 +57,8 @@ Fun fact: the guide is an EmDash site too. If a prompt is wrong, we fix it in th
 The goal isn't to watch the agent type. Read what it tells you and ask it questions.
 -->
 
+---
+class: legend
 ---
 
 # What the boxes mean

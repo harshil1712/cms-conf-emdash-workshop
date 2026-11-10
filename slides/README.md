@@ -22,6 +22,6 @@ pnpm deploy    # build + wrangler deploy
 | `pages/04-plugins.md` | 4 · Plugins in EmDash (Part 3): the problem, trust contract, sandbox, live demo, the build, payoff | Matt |
 | `pages/05-close.md` | Contributions slide, stays up during Q&A | Both |
 
-Built-in Slidev layouts and the default theme only, no custom CSS. One idea per slide; lists reveal one item per click. Speaker notes are in the `<!-- -->` comment at the end of each slide.
+EmDash theme, light first like the guide: `style.css` (tokens, layouts, spring motion), `layouts/` (cover, section, statement, fact, center, two-cols-header), `setup/` (Shiki and Mermaid colours), `slide-bottom.vue` (the footer chrome). `colorSchema: dark` in `slides.md` turns the whole deck dark for a dim hall (also for exports: `slidev export --dark` doesn't switch the theme). One idea per slide; lists reveal one item per click. Speaker notes are in the `<!-- -->` comment at the end of each slide.
 
 The guide URL on "The guide is your workshop" is public, and the placeholder DID is final.

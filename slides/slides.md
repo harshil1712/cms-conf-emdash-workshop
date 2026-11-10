@@ -1,10 +1,26 @@
 ---
 theme: default
 title: "Ship, Automate, Extend: A Hands-On EmDash CMS Workshop"
+titleTemplate: '%s'
 info: CMS Conf 2026 · Matt Kane, Harshil Agrawal, Noah Pham
+# Room switch: set to `dark` after the room check if the hall is dim
 colorSchema: light
-transition: fade
+canvasWidth: 1920
+transition: rise
+clickAnimation: rise
+lineNumbers: true
+codeCopy: false
 mdc: true
+favicon: /favicon.svg
+fonts:
+  sans: Inter
+  provider: none
+  mono: ui-monospace,SF Mono,SFMono-Regular,Menlo,Consolas,Liberation Mono
+  local: ui-monospace,SF Mono,SFMono-Regular,Menlo,Consolas,Liberation Mono
+  weights: '400,500,600,700'
+  italic: false
+themeConfig:
+  primary: '#ff5e1f'
 layout: cover
 ---
 

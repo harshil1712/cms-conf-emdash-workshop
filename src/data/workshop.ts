@@ -15,7 +15,7 @@ export const workshop = {
   /**
    * Public repo with the checkpoint-a/b/c branches, and the `cover-images/`
    * starter on checkpoint-b. Attendees' agents fetch from it with giget, so it
-   * must be public. Separate from this (private) guide repo. Format: owner/repo.
+   * must be public. Separate from this guide repo. Format: owner/repo.
    */
   repo: "harshil1712/emdash-workshop",
 

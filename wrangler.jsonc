@@ -1,8 +1,7 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "emdash-workshop",
-  // Employee Account. Pinned so a deploy never asks which account to use.
-  "account_id": "d4137232cefc8f440da4a535615a3add",
+  // No account_id here: set CLOUDFLARE_ACCOUNT_ID if your login has more than one account.
   "main": "./src/worker.ts",
   "compatibility_date": "2026-10-01",
   "compatibility_flags": ["nodejs_compat"],

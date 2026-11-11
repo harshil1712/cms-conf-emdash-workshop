@@ -23,7 +23,7 @@ pnpm deploy     # build + wrangler deploy
 
 ### Deploying
 
-1. `pnpm deploy`. The first deploy creates the D1 database `emdash-workshop`, the R2 bucket `emdash-workshop-media`, a KV namespace for sessions, and the Worker. `wrangler.jsonc` pins the Employee Account with `account_id`: change it to deploy somewhere else.
+1. `pnpm deploy`. The first deploy creates the D1 database `emdash-workshop`, the R2 bucket `emdash-workshop-media`, a KV namespace for sessions, and the Worker. If your Wrangler login has more than one account, set `CLOUDFLARE_ACCOUNT_ID` (or add `account_id` to `wrangler.jsonc` locally).
 2. **Straight away**, open `/_emdash/admin` on the deployed URL and run the setup wizard. The first person to finish it becomes the admin. Keep **Sample content** on: that's what loads the guide from the seed. Until then, the page shows an empty state.
 
 ### Where things live
@@ -41,7 +41,6 @@ pnpm deploy     # build + wrangler deploy
 | `src/styles/global.css` | The whole design system: light-only, Inter, EmDash's orange accent |
 | `src/scripts/` | `guide.ts` (copy buttons, prompt expand, disclosures, the top bar) and `rail.ts` (scrollspy, progress, the mobile step menu) |
 | `src/lib/halftone.ts`, `public/brand/` | The part headers' halftone art (the same generator and seeds as the slides) and the EmDash logos |
-| `outline.md` | The talk outline this guide is built from |
 | `slides/` | The Slidev deck for the concept blocks (see `slides/README.md`) |
 
 ### Editing content
@@ -52,25 +51,25 @@ pnpm deploy     # build + wrangler deploy
 - **Signed in?** Every part and step on the page shows an **Edit in admin** link.
 - Parts and steps have drafts and revisions: save a draft to try a change, publish when it's right.
 
-### Before the workshop: TODO
+### The checkpoint repo
 
-- [x] Deploy the guide and claim its admin (see **Deploying**). Deployed to the Employee Account (`d4137232cefc8f440da4a535615a3add`) at https://emdash-workshop.h-demo.workers.dev. The admin is claimed, and the page is public, so attendees can open it.
-- [x] The public repo [`harshil1712/emdash-workshop`](https://github.com/harshil1712/emdash-workshop) (set as `repo` in `src/data/workshop.ts`) has the three checkpoint branches. The starter and catch-up prompts fetch from it with `giget`, which only works on public repos, so it's separate from this guide repo (which has the talk plan and run-through notes in it). Each branch is the site at the root, scaffolded on EmDash 1.4.0 with the current Blog template:
-  - `checkpoint-a`: step 4's featured post card (`src/pages/index.astro`, `src/components/PostCard.astro`), and `featured`/`subtitle` in `emdash-env.d.ts`.
-  - `checkpoint-b`: plus step 8's Related posts (`src/pages/posts/[slug].astro`), and the `cover-images/` starter: `emdash-plugin init` 0.13.5, a Block Kit settings page, the editor-action wiring and a test. `emdash ^1.4.0` and `@emdash-cms/plugin-test ^0.2.11` are dev dependencies only, so `pnpm add file:../cover-images` doesn't install a second copy of EmDash.
-  - `checkpoint-c`: the finished plugin, with tests for the publish rule.
-  - Tested by running every catch-up prompt on a fresh site, then step 14 on both plans (Free in-process, Paid sandboxed): settings save encrypted, Generate cover reaches Replicate, and publishing and scheduling without a cover are rejected. Generation was tested against mocked Replicate responses in the plugin runtime test host. Real generation with a Replicate token worked in the 3 Nov dry run (sandboxed, Workers Free account): three covers generated and published over MCP. The download from Replicate sometimes hangs; see the risks table in `outline.md`.
-  - To rebuild a checkpoint, change the code on its branch and push. Keep `src/` and `emdash-env.d.ts` self-contained: the catch-up prompts copy only those (and `cover-images/`).
-- [x] `placeholderDid`: keep `did:plc:cmsconf2026workshop`. Validate, bundle and the tests pass with it on `checkpoint-c`; only `emdash-plugin publish` needs a real account, and that is the stage demo.
-- [ ] The morning of the workshop, check `npm view emdash version`. The Blog template asks for `emdash ^1.3.0`, so a new 1.x release reaches attendees straight away, whatever version of `create-emdash` they run. If it isn't 1.4.0, run step 1 and the Part 3 steps on it before the session.
-- [ ] Dry-run every prompt with Claude Code, Codex, OpenCode and Cursor, on a brand-new free account and on a Paid account.
-- [ ] Check which scopes each agent's MCP client asks for on the consent screen. Claude Code should ask for `scopes_supported` (all 15). A client that asks for none gets "No valid scopes requested".
-- [ ] Upstream (EmDash), all still open in 1.4.0:
-  - [ ] `WhereValue` doesn't accept `boolean`, but the runtime does. Step 4 casts around it.
-  - [ ] `emdash types --url` writes standalone types that don't augment `EmDashCollections`. Step 4 copies the fields into `emdash-env.d.ts` by hand.
-  - [ ] `scopes_supported` doesn't list per-plugin `mcp:tools:<id>` scopes, so MCP clients can't ask for them. Step 15 uses `mcp:tools` instead.
+The public repo [`harshil1712/emdash-workshop`](https://github.com/harshil1712/emdash-workshop) (set as `repo` in `src/data/workshop.ts`) has the three checkpoint branches. The starter and catch-up prompts fetch from it with `giget`, which only works on public repos. Each branch is the site at the root, scaffolded on EmDash 1.4.0 with the current Blog template:
 
-### Changes from `outline.md`
+- `checkpoint-a`: step 4's featured post card (`src/pages/index.astro`, `src/components/PostCard.astro`), and `featured`/`subtitle` in `emdash-env.d.ts`.
+- `checkpoint-b`: plus step 8's Related posts (`src/pages/posts/[slug].astro`), and the `cover-images/` starter: `emdash-plugin init` 0.13.5, a Block Kit settings page, the editor-action wiring and a test. `emdash ^1.4.0` and `@emdash-cms/plugin-test ^0.2.11` are dev dependencies only, so `pnpm add file:../cover-images` doesn't install a second copy of EmDash.
+- `checkpoint-c`: the finished plugin, with tests for the publish rule.
+
+To rebuild a checkpoint, change the code on its branch and push. Keep `src/` and `emdash-env.d.ts` self-contained: the catch-up prompts copy only those (and `cover-images/`).
+
+The placeholder publisher DID `did:plc:cmsconf2026workshop` passes validate, bundle and the tests on `checkpoint-c`; only `emdash-plugin publish` needs a real Atmosphere account.
+
+### Known upstream issues (EmDash 1.4.0)
+
+- `WhereValue` doesn't accept `boolean`, but the runtime does. Step 4 casts around it.
+- `emdash types --url` writes standalone types that don't augment `EmDashCollections`. Step 4 copies the fields into `emdash-env.d.ts` by hand.
+- `scopes_supported` doesn't list per-plugin `mcp:tools:<id>` scopes, so MCP clients can't ask for them. Step 15 uses `mcp:tools` instead.
+
+### Design notes
 
 - **Agent as developer** asks for a "Related posts" section instead of reading time, because the Blog template already shows reading time.
 - **`EMDASH_ENCRYPTION_KEY`** is set during the first deploy (step 2), not in Part 3, which removes a risk from Part 3. Step 14 checks it again.
@@ -79,7 +78,7 @@ pnpm deploy     # build + wrangler deploy
 - **Step 12** names the route permission, `content:edit_any`, instead of asking for "the narrowest edit permission". Since EmDash 1.3.0 the narrowest is `content:edit_own_drafts` (Contributor), and plugin routes check only the role, not ownership or status.
 - **Step 3** has no separate sign-in step: since EmDash 1.3.0 the setup wizard signs the new admin in after passkey registration.
 - **Step 3** has an "Admin in Polish?" aside: the admin follows the browser language, and EmDash 1.4.0 completed the Polish translation.
-- **`generateCover`** returns early when a post already has a cover. That makes the MCP tool safe to call twice and means it doesn't need `destructive: true`. Because `ctx.content.get` returns the saved post and not a pending draft, it reads the draft with `ctx.content.getRevision` when there is one, so a cover it staged (or an editor removing one) counts. That needs the `content:revisions:read` capability, so the trust contract has five capabilities, not the outline's four. (An earlier version kept a KV note of staged covers, which could return a cover an editor had since removed.)
+- **`generateCover`** returns early when a post already has a cover. That makes the MCP tool safe to call twice and means it doesn't need `destructive: true`. Because `ctx.content.get` returns the saved post and not a pending draft, it reads the draft with `ctx.content.getRevision` when there is one, so a cover it staged (or an editor removing one) counts. That needs the `content:revisions:read` capability, so the trust contract has five capabilities. (An earlier version kept a KV note of staged covers, which could return a cover an editor had since removed.)
 - **Step 14** tells attendees to bump the plugin's `version` before every rebuild: EmDash caches sandboxed plugins by ID and version, so a redeploy with the same version keeps running the old code.
 - **Step 15** tells the agent to call `generateCover` for a missing cover, retry once if it fails, and otherwise stop. The earlier "fix the cause with the tools you have" let an agent attach library photos to get past the rule.
 - **Step 12** adds `zod` at the exact version EmDash uses (4.5.4 in EmDash 1.4.0). `pnpm add zod` installs a newer 4.x, and the MCP tool's `input` schema then fails typecheck.

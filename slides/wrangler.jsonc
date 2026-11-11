@@ -1,8 +1,7 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "emdash-workshop-slides",
-  // Employee Account, same as the guide
-  "account_id": "d4137232cefc8f440da4a535615a3add",
+  // No account_id here: set CLOUDFLARE_ACCOUNT_ID if your login has more than one account.
   "compatibility_date": "2026-10-01",
   // Static Slidev build. Unknown paths (e.g. /12, /presenter) fall back to index.html.
   "assets": {

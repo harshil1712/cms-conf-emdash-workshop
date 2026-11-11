@@ -11,7 +11,7 @@ pnpm export    # slides-export.pdf (uses playwright-chromium)
 pnpm deploy    # build + wrangler deploy
 ```
 
-**Deployed** to the Employee Account (same as the guide) at https://emdash-workshop-slides.h-demo.workers.dev. It's a static-assets Worker (`wrangler.jsonc`) with SPA fallback, so `/12` and `/presenter` work. The deploy script deletes Slidev's Netlify-style `dist/_redirects`, which Workers rejects as an infinite loop.
+**Deployed** at https://emdash-workshop-slides.h-demo.workers.dev. It's a static-assets Worker (`wrangler.jsonc`) with SPA fallback, so `/12` and `/presenter` work. The deploy script deletes Slidev's Netlify-style `dist/_redirects`, which Workers rejects as an infinite loop.
 
 | File | Section | Presenter |
 | --- | --- | --- |

@@ -61,7 +61,7 @@ class: plug-contract
 
 # The trust contract
 
-```jsonc {all|1-7|8|9}
+```jsonc {all|1-7|8-11|12}
 "capabilities": [
   "network:request",
   "content:write",
@@ -69,7 +69,10 @@ class: plug-contract
   "media:write",
   "hooks.content-policy:register"
 ],
-"allowedHosts": ["api.replicate.com", "*.replicate.delivery"],
+"allowedHosts": [
+  "api.replicate.com", "*.replicate.delivery",
+  "ai-gateway-outputs.0d37909e38d3e99c29fa2cd343ac421a.r2.cloudflarestorage.com"
+],
 "admin": { "settingsSchema": { "replicateToken": { "type": "secret" } } }
 ```
 
@@ -85,7 +88,7 @@ class: plug-contract
 A plugin is a manifest plus code: this is emdash-plugin.jsonc. Step 10 writes it.
 
 Click 1: capabilities. Each one adds an API to ctx. No content:read or media:read: write implies read.
-Click 2: allowedHosts. The only hosts the plugin can ever reach.
+Click 2: allowedHosts. The only hosts the plugin can ever reach. Replicate now serves generated images from an R2 bucket (the long host); replicate.delivery covers older outputs.
 Click 3: a secret setting, stored encrypted and never sent back to a browser.
 Click 4: the runtime enforces the contract, and an operator sees it before installing. Changing capabilities between releases needs a version bump, because installed users consented to the old contract.
 -->
@@ -427,7 +430,7 @@ class: plug-approve
 <v-clicks>
 
 - Five capabilities: network, content, revisions, media, publish rules
-- Two hosts: `api.replicate.com` and `*.replicate.delivery`
+- Three hosts: `api.replicate.com`, `*.replicate.delivery`, and Replicate's image outputs bucket on R2
 
 </v-clicks>
 

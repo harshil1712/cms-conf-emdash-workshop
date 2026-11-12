@@ -147,7 +147,7 @@ html.dark .slidev-layout {
   color: var(--accent-ink); background: var(--accent-soft); box-shadow: inset 0 0 0 2px var(--accent-edge);
 }
 
-/* ---------- links (slides 38 and 39 only) ---------- */
+/* ---------- links (slide 38 only) ---------- */
 
 .slidev-layout a {
   color: inherit; border-bottom: 0;
@@ -186,7 +186,7 @@ html.dark .slidev-layout {
 .slidev-layout:has(.slidev-vclick-hidden) li.slidev-vclick-prior :is(strong, b) { color: var(--muted); }
 .slidev-layout:has(.slidev-vclick-hidden) li.slidev-vclick-prior code { color: var(--muted); }
 
-/* ---------- tables (slides 13, 16, 17, 18, 45) ---------- */
+/* ---------- tables (slides 13, 16, 17, 18, 42) ---------- */
 
 .slidev-layout table {
   width: 100%; border-collapse: separate; border-spacing: 0;
@@ -245,7 +245,7 @@ html.dark .slidev-layout.run-of-show tr:has(td > strong) td { background: rgb(25
 .slidev-layout.legend tr:nth-child(3) td:first-child strong::before { background: var(--success-ink); -webkit-mask: var(--mk-check) center / contain no-repeat; mask: var(--mk-check) center / contain no-repeat; }
 .slidev-layout.legend tr:nth-child(4) td:first-child strong::before { background: var(--ink-2); -webkit-mask: var(--mk-eye) center / contain no-repeat; mask: var(--mk-eye) center / contain no-repeat; }
 
-/* ---------- code cards (slides 5, 43, 47, 51, 53, and every other fence) ---------- */
+/* ---------- code cards (slides 5, 41, 43, 47, 49, and every other fence) ---------- */
 
 .slidev-layout .slidev-code {
   border: 2px solid var(--line); box-shadow: var(--ring), var(--lift);
@@ -253,7 +253,7 @@ html.dark .slidev-layout.run-of-show tr:has(td > strong) td { background: rgb(25
 }
 .slidev-layout .slidev-code code { font-family: var(--font-mono); font-variant-ligatures: none; }
 /* a card is as wide as its code (never under 960px), so a two-line snippet isn't a 1680px empty bar.
-   Stacked cards (slide 54) and the output under a prompt (slide 33) keep the full measure, so their edges line up */
+   Stacked cards (slide 50) and the output under a prompt (slide 33) keep the full measure, so their edges line up */
 .slidev-layout.default > .slidev-code-wrapper:not(blockquote + *):not(.slidev-code-wrapper + *):not(:has(+ .slidev-code-wrapper)) {
   width: fit-content; min-width: min(100%, 960px); max-width: 100%;
 }
@@ -297,7 +297,7 @@ html.print .slidev-layout .slidev-code .line::before { color: var(--subtle) !imp
 .slidev-layout blockquote p { max-width: none; }
 .slidev-layout blockquote code { font-size: 1em; padding: 0 0.2em; }
 
-/* ---------- mermaid (slides 8, 30, 49): on the left edge, centred in the height under the title ---------- */
+/* ---------- mermaid (slides 8, 30, 45): on the left edge, centred in the height under the title ---------- */
 
 .slidev-layout .mermaid {
   flex: 1 1 auto; min-height: 0; display: flex; align-items: center; justify-content: flex-start;
@@ -421,7 +421,7 @@ html.dark .section-art.halftone--light { --ht-ink: rgb(245 245 245 / 40%); --ht-
 @keyframes disc-pop { from { scale: 0; } }
 html.print .fact-matrix i.on::after { animation: none; }
 
-/* ---------- center: light, vertically centred, left-aligned (slides 14 and 62) ---------- */
+/* ---------- center: light, vertically centred, left-aligned (slides 14 and 58) ---------- */
 
 .slidev-layout.center { display: flex; flex-direction: column; justify-content: center; padding: 96px 120px 160px; }
 .center-copy { position: relative; z-index: 1; }
@@ -548,4 +548,363 @@ html.print .fact-matrix i.on::after { animation: none; }
   .slidev-layout .slidev-code .line,
   .slidev-layout .slidev-code .line span,
   .slidev-code-line-numbers .slidev-code code .line::before { transition: none; }
+}
+
+/* ==========================================================================
+   Part 3 · Extend (pages/04-plugins.md). Every rule below is scoped to a
+   `plug-*` class that only a plugins slide sets, so no other slide changes.
+   Small parts reuse the deck's spring, shortened to --d-snap, so they land fast.
+   ========================================================================== */
+
+:root {
+  --mk-key: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m15.5 7.5 2.3 2.3a1 1 0 0 0 1.4 0l2.1-2.1a1 1 0 0 0 0-1.4L19 4'/%3E%3Cpath d='m21 2-9.6 9.6'/%3E%3Ccircle cx='7.5' cy='15.5' r='5.5'/%3E%3C/svg%3E");
+  --mk-shield: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z'/%3E%3Cpath d='m9 12 2 2 4-4'/%3E%3C/svg%3E");
+}
+.slidev-layout {
+  --d-snap: 520ms;
+  --danger-soft: color-mix(in srgb, var(--danger) 8%, transparent);
+  --danger-edge: color-mix(in srgb, var(--danger) 28%, transparent);
+  --success-soft: color-mix(in srgb, var(--success-ink) 9%, transparent);
+  --success-edge: color-mix(in srgb, var(--success-ink) 30%, transparent);
+}
+@keyframes plug-stamp { from { scale: 1.9; rotate: -16deg; opacity: 0; } }
+@keyframes plug-disc { from { scale: 0; } }
+@keyframes plug-key { from { rotate: -80deg; scale: 0.5; } }
+@keyframes plug-ping { from { box-shadow: 0 0 0 0 var(--danger-edge); } 70%, to { box-shadow: 0 0 0 18px transparent; } }
+
+/* ---------- Today's plugin: three steps in a row, joined as each lands; then the token ---------- */
+
+.slidev-layout.plug-pipe .pipe { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 72px; margin-top: 80px; }
+.slidev-layout.plug-pipe .pipe-step {
+  position: relative; min-height: 340px; padding: 44px 48px 52px;
+  background: var(--panel); border: 2px solid var(--line); border-radius: 28px; box-shadow: var(--ring), var(--lift);
+  transition: opacity 360ms var(--ease-out), translate 680ms var(--spring), border-color 240ms var(--ease-out);
+}
+.slidev-layout.plug-pipe .pipe-step.slidev-vclick-current { border-color: var(--accent-edge); }
+.slidev-layout.plug-pipe .pipe-n {
+  display: grid; place-items: center; width: 60px; height: 60px; border-radius: 50%;
+  font-size: 28px; font-weight: 600; font-variant-numeric: tabular-nums; color: var(--muted);
+  background: var(--chip); box-shadow: inset 0 0 0 2px var(--line);
+  transition: color 240ms var(--ease-out), background-color 240ms var(--ease-out), box-shadow 240ms var(--ease-out);
+}
+.slidev-layout.plug-pipe .pipe-step.slidev-vclick-current .pipe-n { color: #fff; background: var(--accent); box-shadow: 0 0 0 8px var(--accent-soft); }
+.slidev-layout.plug-pipe .pipe-title { margin-top: 36px; font-size: 48px; font-weight: 600; line-height: 1.1; letter-spacing: -0.03em; color: var(--ink-strong); }
+.slidev-layout.plug-pipe .pipe-sub { margin-top: 14px; font-size: 32px; line-height: 1.35; color: var(--muted); text-wrap: balance; }
+/* the joint into each step: a line that draws, then a caret */
+.slidev-layout.plug-pipe .pipe-step + .pipe-step::before,
+.slidev-layout.plug-pipe .pipe-step + .pipe-step::after { content: ""; position: absolute; top: 74px; }
+.slidev-layout.plug-pipe .pipe-step + .pipe-step::before {
+  right: calc(100% + 18px); width: 40px; height: 4px; margin-top: -2px; border-radius: 4px; background: var(--line-strong);
+  transform-origin: left center; transition: scale var(--d-snap) var(--spring) 140ms;
+}
+.slidev-layout.plug-pipe .pipe-step + .pipe-step::after {
+  right: calc(100% + 6px); width: 26px; height: 26px; margin-top: -13px; background: var(--line-strong);
+  -webkit-mask: var(--mk-caret) center / contain no-repeat; mask: var(--mk-caret) center / contain no-repeat;
+  transition: opacity 200ms var(--ease-out) 300ms, translate var(--d-snap) var(--spring) 300ms;
+}
+.slidev-layout.plug-pipe .pipe-step.slidev-vclick-hidden::before { scale: 0 1; }
+.slidev-layout.plug-pipe .pipe-step.slidev-vclick-hidden::after { opacity: 0; translate: -16px 0; }
+.slidev-layout.plug-pipe .token {
+  display: inline-flex; align-items: center; gap: 22px; align-self: flex-start; margin-top: 72px;
+  padding: 20px 36px 20px 26px; border-radius: 999px;
+  font-size: 36px; line-height: 1.2; color: var(--accent-ink);
+  background: var(--accent-soft); box-shadow: inset 0 0 0 2px var(--accent-edge);
+  transition: opacity 300ms var(--ease-out), translate var(--d-snap) var(--spring), scale var(--d-snap) var(--spring);
+}
+.slidev-layout.plug-pipe .token strong { color: var(--accent-ink); }
+.slidev-layout.plug-pipe .token::before {
+  content: ""; flex: none; width: 44px; height: 44px; background: var(--accent);
+  -webkit-mask: var(--mk-key) center / contain no-repeat; mask: var(--mk-key) center / contain no-repeat;
+}
+.slidev-layout.plug-pipe .token.slidev-vclick-hidden { scale: 0.9; }
+.slidev-layout.plug-pipe .token:not(.slidev-vclick-hidden)::before { animation: plug-key 640ms var(--spring) 120ms both; }
+
+/* ---------- The trust contract: each highlight lights its clause; the seal stamps in last ---------- */
+
+.slidev-layout.plug-contract { --slidev-code-line-height: 40px; }
+.slidev-layout.plug-contract .slidev-code :is(code, .line) { line-height: 40px; }
+.slidev-layout.plug-contract .clauses { display: flex; flex-wrap: wrap; gap: 20px; margin-top: 28px; }
+.slidev-layout.plug-contract .clause {
+  display: inline-flex; align-items: center; gap: 16px; padding: 14px 30px 14px 22px; border-radius: 999px;
+  font-size: 32px; font-weight: 500; line-height: 1.2; color: var(--muted);
+  background: var(--chip); box-shadow: inset 0 0 0 2px var(--line);
+  transition: color 240ms var(--ease-out), background-color 240ms var(--ease-out), box-shadow 240ms var(--ease-out), scale var(--d-snap) var(--spring);
+}
+.slidev-layout.plug-contract .clause::before {
+  content: ""; flex: none; width: 18px; height: 18px; border-radius: 50%; background: var(--line-strong);
+  transition: background-color 240ms var(--ease-out), box-shadow 240ms var(--ease-out);
+}
+.slidev-layout.plug-contract .clause.now { color: var(--ink-strong); background: var(--accent-soft); box-shadow: inset 0 0 0 2px var(--accent-edge); scale: 1.06; }
+.slidev-layout.plug-contract .clause.now::before { background: var(--accent); box-shadow: 0 0 0 6px var(--accent-soft); }
+.slidev-layout.plug-contract .clause.done { color: var(--ink); background: var(--panel); }
+.slidev-layout.plug-contract .clause.done::before {
+  width: 26px; height: 26px; border-radius: 0; background: var(--success-ink);
+  -webkit-mask: var(--mk-check) center / contain no-repeat; mask: var(--mk-check) center / contain no-repeat;
+}
+/* the seal: the trust contract and "an operator approves" share it, because it's the same contract */
+.slidev-layout:is(.plug-contract, .plug-approve) .seal {
+  display: flex; align-items: center; gap: 24px; margin-top: 24px;
+  padding: 16px 40px 16px 24px; border-radius: 24px;
+  font-size: 36px; line-height: 1.3; color: var(--ink-2);
+  background: var(--panel); box-shadow: inset 0 0 0 2px var(--accent-edge), 0 0 0 8px var(--accent-soft), var(--lift);
+  transition: opacity 280ms var(--ease-out), translate var(--d-snap) var(--spring), scale var(--d-snap) var(--spring);
+}
+.slidev-layout.plug-approve .seal { margin-top: 48px; }
+.slidev-layout:is(.plug-contract, .plug-approve) .seal strong { color: var(--ink-strong); }
+.slidev-layout:is(.plug-contract, .plug-approve) .seal::before {
+  content: ""; flex: none; width: 54px; height: 54px; background: var(--accent);
+  -webkit-mask: var(--mk-shield) center / contain no-repeat; mask: var(--mk-shield) center / contain no-repeat;
+}
+.slidev-layout:is(.plug-contract, .plug-approve) .seal.slidev-vclick-hidden { scale: 0.94; }
+.slidev-layout:is(.plug-contract, .plug-approve) .seal:not(.slidev-vclick-hidden)::before { animation: plug-stamp 600ms var(--spring) 140ms both; }
+
+/* ---------- Two ways to run it: the rows that differ are tinted; rows land in order, crosses last ---------- */
+
+.slidev-layout.plug-ways tbody tr:nth-child(n + 5) td { background: var(--danger-soft); }
+.slidev-layout.plug-ways tbody tr:nth-child(5) td { border-top-color: var(--danger-edge); }
+.slidev-layout.plug-ways tbody tr:last-child td:first-child { border-bottom-left-radius: 26px; }
+.slidev-layout.plug-ways tbody tr:last-child td:last-child { border-bottom-right-radius: 26px; }
+.slidev-layout.plug-ways tbody tr:nth-child(1) { --r: 0; }
+.slidev-layout.plug-ways tbody tr:nth-child(2) { --r: 1; }
+.slidev-layout.plug-ways tbody tr:nth-child(3) { --r: 2; }
+.slidev-layout.plug-ways tbody tr:nth-child(4) { --r: 3; }
+.slidev-layout.plug-ways tbody tr:nth-child(5) { --r: 4; }
+.slidev-layout.plug-ways tbody tr:nth-child(6) { --r: 5; }
+.rise-enter-active .slidev-layout.plug-ways tbody td {
+  transition: opacity 320ms var(--ease-out) calc(200ms + var(--r) * 50ms), translate var(--d-snap) var(--spring) calc(200ms + var(--r) * 50ms);
+}
+.rise-enter-from .slidev-layout.plug-ways tbody td { opacity: 0; translate: 0 14px; }
+.rise-enter-active .slidev-layout.plug-ways .mk-no { transition: scale var(--d-snap) var(--spring) 600ms; }
+.rise-enter-from .slidev-layout.plug-ways .mk-no { scale: 0; }
+
+/* ---------- The live demo: "Live demo" is the title's eyebrow, its red dot pinging as the slide comes on.
+   The attack lines get a red band, and two notes say in words what each part does ---------- */
+
+.slidev-layout.plug-live > .live-badge { align-self: flex-start; margin-bottom: 28px; }
+.slidev-layout.plug-live .live-badge {
+  display: inline-flex; align-items: center; gap: 18px;
+  font-size: 32px; font-weight: 600; line-height: 1.2; letter-spacing: -0.01em; color: var(--danger);
+}
+.slidev-layout.plug-live .live-badge::before { content: ""; flex: none; width: 18px; height: 18px; border-radius: 50%; background: var(--danger); }
+.slidev-layout.plug-live .live-badge.is-live::before { animation: plug-ping 1400ms var(--ease-out) 400ms 3; }
+.slidev-layout.plug-live .heist { display: flex; align-items: flex-start; gap: 64px; margin-top: 56px; }
+.slidev-layout.plug-live .heist > .slidev-code-wrapper { flex: none; --slidev-code-margin: 0; }
+.slidev-layout.plug-live .slidev-code:has(.slidev-code-dishonored) .line.slidev-code-highlighted { background: var(--danger-soft); box-shadow: inset 6px 0 0 var(--danger); }
+.slidev-layout.plug-live .slidev-code:has(.slidev-code-dishonored) .line.slidev-code-highlighted::before { color: var(--danger); }
+.slidev-layout.plug-live .heist-notes { position: relative; flex: 1; align-self: stretch; min-width: 0; }
+.slidev-layout.plug-live .heist-note {
+  position: absolute; left: 0; right: 0; translate: 0 -50%;
+  display: flex; align-items: center; gap: 18px;
+  font-size: 32px; font-weight: 500; line-height: 1.25; color: var(--ink);
+  transition: color 240ms var(--ease-out), opacity 240ms var(--ease-out), translate var(--d-snap) var(--spring);
+}
+/* centred on their lines (measured on the card: line 1 at 55px, lines 2–5 around 180px) */
+.slidev-layout.plug-live .heist-note.n1 { top: 55px; }
+.slidev-layout.plug-live .heist-note.n2 { top: 180px; opacity: 0; translate: -16px -50%; }
+.slidev-layout.plug-live .heist-note.n2.on { opacity: 1; translate: 0 -50%; color: var(--danger); }
+.slidev-layout.plug-live .heist-note.dim { color: var(--muted); }
+/* each note's joint back to the card */
+.slidev-layout.plug-live .heist-note::before {
+  content: ""; position: absolute; right: 100%; margin-right: 16px; width: 32px; height: 3px; border-radius: 3px;
+  background: var(--line-strong); transition: background-color 240ms var(--ease-out);
+}
+.slidev-layout.plug-live .heist-note.on::before { background: var(--danger-edge); }
+/* each note: what it does, over the call that does it */
+.slidev-layout.plug-live .heist-note > span { display: grid; justify-items: start; gap: 8px; }
+.slidev-layout.plug-live .heist-note strong { font-weight: 600; color: inherit; }
+.slidev-layout.plug-live .heist-note code { font-size: 24px; }
+.slidev-layout.plug-live .heist-note b {
+  display: grid; place-items: center; flex: none; width: 48px; height: 48px; border-radius: 50%;
+  font-size: 22px; font-weight: 600; font-variant-numeric: tabular-nums; color: var(--muted);
+  background: var(--panel); box-shadow: inset 0 0 0 2px var(--line-strong);
+  transition: color 240ms var(--ease-out), background-color 240ms var(--ease-out), box-shadow 240ms var(--ease-out);
+}
+.slidev-layout.plug-live .heist-note.on b { color: #fff; background: var(--danger); box-shadow: 0 0 0 8px var(--danger-soft); }
+.slidev-layout.plug-live .heist-note.on code { color: var(--danger); background: var(--danger-soft); box-shadow: inset 0 0 0 2px var(--danger-edge); }
+
+/* ---------- What happens: three attempts, each stamped with a cross as it lands; then the green line ---------- */
+
+.slidev-layout.plug-blocked .attempts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px; margin-top: 56px; }
+.slidev-layout.plug-blocked .attempt {
+  position: relative; padding: 40px 44px 44px;
+  background: var(--panel); border: 2px solid var(--line); border-radius: 28px; box-shadow: var(--ring), var(--lift);
+  transition: opacity 360ms var(--ease-out), translate 680ms var(--spring), border-color 240ms var(--ease-out);
+}
+.slidev-layout.plug-blocked .attempt.slidev-vclick-current { border-color: var(--danger-edge); }
+.slidev-layout.plug-blocked .attempt > code { font-size: 36px; }
+.slidev-layout.plug-blocked .attempt p { margin-top: 32px; font-size: 34px; line-height: 1.35; color: var(--ink-2); }
+.slidev-layout.plug-blocked .attempt::before,
+.slidev-layout.plug-blocked .attempt::after { content: ""; position: absolute; top: 32px; right: 32px; width: 64px; height: 64px; }
+.slidev-layout.plug-blocked .attempt::before { border-radius: 50%; background: var(--danger-soft); box-shadow: inset 0 0 0 2px var(--danger-edge); }
+.slidev-layout.plug-blocked .attempt::after {
+  background: var(--danger);
+  -webkit-mask: var(--mk-x) center / 34px no-repeat; mask: var(--mk-x) center / 34px no-repeat;
+}
+.slidev-layout.plug-blocked .attempt:not(.slidev-vclick-hidden)::before { animation: plug-disc var(--d-snap) var(--spring) 160ms both; }
+.slidev-layout.plug-blocked .attempt:not(.slidev-vclick-hidden)::after { animation: plug-stamp 600ms var(--spring) 200ms both; }
+.slidev-layout.plug-blocked .works {
+  display: flex; align-items: center; gap: 24px; margin-top: 48px; padding: 24px 40px 24px 28px; border-radius: 24px;
+  font-size: 36px; line-height: 1.3; color: var(--ink);
+  background: var(--success-soft); box-shadow: inset 0 0 0 2px var(--success-edge);
+  transition: opacity 300ms var(--ease-out), translate var(--d-snap) var(--spring);
+}
+.slidev-layout.plug-blocked .works strong { color: var(--success-ink); }
+.slidev-layout.plug-blocked .works::before {
+  content: ""; flex: none; width: 48px; height: 48px; background: var(--success-ink);
+  -webkit-mask: var(--mk-check) center / contain no-repeat; mask: var(--mk-check) center / contain no-repeat;
+}
+.slidev-layout.plug-blocked .works:not(.slidev-vclick-hidden)::before { animation: plug-stamp 600ms var(--spring) 140ms both; }
+
+/* ---------- What you'll build: the diagram wipes in left to right, the way it reads ---------- */
+
+.slidev-layout.plug-build > .mermaid { clip-path: inset(-24px); }
+.rise-enter-active .slidev-layout.plug-build > .mermaid {
+  transition:
+    translate var(--d-spring) var(--spring) calc(80ms + var(--d, 0ms)),
+    opacity 420ms var(--ease-out) calc(80ms + var(--d, 0ms)),
+    clip-path 860ms var(--ease-out) 240ms;
+}
+.rise-enter-from .slidev-layout.plug-build > .mermaid { clip-path: inset(-24px 100% -24px -24px); }
+
+/* ---------- generateCover: a five-step tracker follows the highlighted line ---------- */
+
+.slidev-layout.plug-steps .steps { position: relative; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); margin-top: 48px; }
+.slidev-layout.plug-steps .steps + .slidev-code-wrapper { --slidev-code-margin: 48px 0 0; }
+.slidev-layout.plug-steps .steps::before,
+.slidev-layout.plug-steps .steps::after { content: ""; position: absolute; top: 26px; left: 10%; right: 10%; height: 4px; margin-top: -2px; border-radius: 4px; }
+.slidev-layout.plug-steps .steps::before { background: var(--line); }
+.slidev-layout.plug-steps .steps::after {
+  background: var(--accent); transform-origin: left center; scale: var(--p, 0) 1;
+  transition: scale var(--d-snap) var(--spring);
+}
+.slidev-layout.plug-steps .step {
+  position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 18px;
+  font-size: 30px; font-weight: 500; line-height: 1.2; text-align: center; color: var(--muted);
+  transition: color 240ms var(--ease-out);
+}
+.slidev-layout.plug-steps .step b {
+  position: relative; display: grid; place-items: center; width: 52px; height: 52px; border-radius: 50%;
+  font-size: 24px; font-weight: 600; font-variant-numeric: tabular-nums; color: var(--muted);
+  background: var(--panel); box-shadow: inset 0 0 0 2px var(--line-strong);
+  transition: color 240ms var(--ease-out), background-color 240ms var(--ease-out), box-shadow 240ms var(--ease-out), scale var(--d-snap) var(--spring);
+}
+.slidev-layout.plug-steps .step.now { color: var(--ink-strong); }
+.slidev-layout.plug-steps .step.now b { color: #fff; background: var(--accent); box-shadow: 0 0 0 8px var(--accent-soft); scale: 1.14; }
+.slidev-layout.plug-steps .step.done { color: var(--ink); }
+.slidev-layout.plug-steps .step.done b { color: transparent; background: var(--accent); box-shadow: none; }
+.slidev-layout.plug-steps .step.done b::after {
+  content: ""; position: absolute; inset: 13px; background: #fff;
+  -webkit-mask: var(--mk-check) center / contain no-repeat; mask: var(--mk-check) center / contain no-repeat;
+}
+
+/* ---------- The MCP tool: a callout points at the description while it's highlighted ---------- */
+
+.slidev-layout.plug-tool .callout {
+  position: relative; margin-top: 36px; padding: 20px 36px; border-radius: 20px;
+  font-size: 36px; font-weight: 500; line-height: 1.3; color: var(--accent-ink);
+  background: var(--hub-fill); box-shadow: inset 0 0 0 2px var(--accent-edge);
+  opacity: 0; translate: 0 -14px; transition: opacity 240ms var(--ease-out), translate var(--d-snap) var(--spring);
+}
+.slidev-layout.plug-tool .callout::before {
+  content: ""; position: absolute; bottom: calc(100% - 2px); left: 60px; width: 28px; height: 14px;
+  background: var(--hub-fill); clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+.slidev-layout.plug-tool .callout.on { opacity: 1; translate: 0 0; }
+
+/* ---------- The publish rule: what a publish without a cover gets back ---------- */
+
+.slidev-layout.plug-rule .rejected { display: flex; align-items: center; gap: 28px; margin-top: 40px; }
+.slidev-layout.plug-rule .mock-btn { padding: 16px 36px; border-radius: 14px; font-size: 30px; font-weight: 600; color: var(--stage); background: var(--ink-strong); }
+.slidev-layout.plug-rule .toast {
+  display: inline-flex; align-items: center; gap: 18px; padding: 16px 32px 16px 22px; border-radius: 16px;
+  font-size: 30px; font-weight: 500; color: var(--danger); background: var(--danger-soft); box-shadow: inset 0 0 0 2px var(--danger-edge);
+}
+.slidev-layout.plug-rule .toast::before {
+  content: ""; flex: none; width: 28px; height: 28px; background: var(--danger);
+  -webkit-mask: var(--mk-x) center / contain no-repeat; mask: var(--mk-x) center / contain no-repeat;
+}
+.rise-enter-active .slidev-layout.plug-rule .toast { transition: opacity 260ms var(--ease-out) 560ms, translate var(--d-snap) var(--spring) 560ms; }
+.rise-enter-from .slidev-layout.plug-rule .toast { opacity: 0; translate: -32px 0; }
+
+/* ---------- The payoff: a timeline; the fill runs down as steps land, red at the rejection, green at the end ---------- */
+
+.slidev-layout.plug-payoff ol { position: relative; list-style: none; padding-inline-start: 0; counter-reset: pay; gap: 36px; }
+.slidev-layout.plug-payoff ol > li { padding-inline-start: 104px; line-height: 64px; counter-increment: pay; }
+/* the track runs from the first disc's centre to the last one's */
+.slidev-layout.plug-payoff ol::before,
+.slidev-layout.plug-payoff ol::after { content: ""; position: absolute; left: 30px; top: 32px; bottom: 32px; width: 4px; border-radius: 4px; }
+.slidev-layout.plug-payoff ol::before { background: var(--line); }
+.slidev-layout.plug-payoff ol::after { background: var(--accent); transform-origin: top center; scale: 1 0; transition: scale 600ms var(--spring); }
+.slidev-layout.plug-payoff ol:has(> li:nth-child(2):not(.slidev-vclick-hidden))::after { scale: 1 0.25; }
+.slidev-layout.plug-payoff ol:has(> li:nth-child(3):not(.slidev-vclick-hidden))::after { scale: 1 0.5; }
+.slidev-layout.plug-payoff ol:has(> li:nth-child(4):not(.slidev-vclick-hidden))::after { scale: 1 0.75; }
+.slidev-layout.plug-payoff ol:has(> li:nth-child(5):not(.slidev-vclick-hidden))::after { scale: 1 1; }
+.slidev-layout.plug-payoff ol > li::before,
+.slidev-layout.plug-payoff ol > li::after { position: absolute; z-index: 1; left: 0; top: 0; width: 64px; height: 64px; }
+.slidev-layout.plug-payoff ol > li::before {
+  content: counter(pay); display: grid; place-items: center; border-radius: 50%;
+  font-size: 26px; font-weight: 600; line-height: 1; font-variant-numeric: tabular-nums; letter-spacing: 0; color: var(--muted);
+  background: var(--panel); box-shadow: inset 0 0 0 2px var(--line-strong);
+  transition: color 240ms var(--ease-out), background-color 240ms var(--ease-out), box-shadow 240ms var(--ease-out);
+}
+.slidev-layout.plug-payoff ol > li:not(.slidev-vclick-hidden)::before { animation: plug-disc var(--d-snap) var(--spring) 60ms both; }
+.slidev-layout.plug-payoff ol > li.slidev-vclick-current::before { color: #fff; background: var(--accent); box-shadow: 0 0 0 8px var(--accent-soft); }
+/* the rejection: a red ring with a cross; the publish: a green disc with a tick */
+.slidev-layout.plug-payoff ol > li:nth-child(3)::before { content: ""; background: var(--panel); box-shadow: inset 0 0 0 2px var(--danger-edge), 0 0 0 8px var(--danger-soft); }
+.slidev-layout.plug-payoff ol > li:nth-child(5)::before { content: ""; background: var(--success-ink); box-shadow: 0 0 0 8px var(--success-soft); }
+.slidev-layout.plug-payoff ol > li:is(:nth-child(3), :nth-child(5))::after {
+  content: ""; background: var(--danger);
+  -webkit-mask: var(--mk-x) center / 32px no-repeat; mask: var(--mk-x) center / 32px no-repeat;
+}
+.slidev-layout.plug-payoff ol > li:nth-child(5)::after { background: #fff; -webkit-mask-image: var(--mk-check); mask-image: var(--mk-check); }
+.slidev-layout.plug-payoff ol > li:is(:nth-child(3), :nth-child(5)):not(.slidev-vclick-hidden)::after { animation: plug-stamp 600ms var(--spring) 160ms both; }
+.slidev-layout.plug-payoff ol > li:nth-child(3) code { color: var(--danger); background: var(--danger-soft); box-shadow: inset 0 0 0 2px var(--danger-edge); }
+.slidev-layout.plug-payoff ol > li:nth-child(5) { font-weight: 600; color: var(--success-ink); }
+
+/* ---------- The punchline: "Your plugin did." lands in orange, and its underline draws in ---------- */
+
+.slidev-layout.plug-punch .hl {
+  color: var(--accent-display);
+  background: linear-gradient(var(--accent-edge), var(--accent-edge)) 0 94% / 100% 0.12em no-repeat;
+  -webkit-box-decoration-break: clone; box-decoration-break: clone;
+}
+.rise-enter-active .slidev-layout.plug-punch .hl { transition: background-size 760ms var(--spring) 460ms; }
+.rise-enter-from .slidev-layout.plug-punch .hl { background-size: 0% 0.12em; }
+
+/* ---------- The stage: the title stays where it is on every slide; the body is centred in the space
+   between it and the footer, and code cards take the full measure like the cards around them ---------- */
+
+.slidev-layout.default[class*="plug-"] > h1:not(:has(+ p)),
+.slidev-layout.default[class*="plug-"] > h1 + p,
+.slidev-layout.default[class*="plug-"] > :last-child { margin-bottom: auto; }
+.slidev-layout.default[class*="plug-"] > h1 + .slidev-code-wrapper:last-child { --slidev-code-margin: 56px 0 auto; }
+.slidev-layout.plug-steps .steps + .slidev-code-wrapper:last-child { --slidev-code-margin: 48px 0 auto; }
+.slidev-layout.default[class*="plug-"] > .slidev-code-wrapper { width: auto !important; min-width: 0 !important; max-width: none !important; }
+/* two-column slides (The starter, Two entry points, Install it): the cards sit centred under the title, at one height */
+.slidev-layout.two-cols-header.plug-cols { grid-template-rows: auto 1fr auto 1fr; }
+.slidev-layout.plug-cols :is(.col-left, .col-right) { grid-row: 3; }
+.slidev-layout.plug-cols .col-bottom { grid-row: 4; }
+
+/* ---------- Plugins slides in print and with reduced motion: final states, no movement ---------- */
+
+html.print .slidev-layout[class*="plug-"] *,
+html.print .slidev-layout[class*="plug-"] *::before,
+html.print .slidev-layout[class*="plug-"] *::after { animation: none !important; transition: none !important; }
+html.print .slidev-layout.plug-tool .callout { opacity: 1; translate: none; }
+html.print .slidev-layout.plug-live .heist-note.n2 { opacity: 1; translate: 0 -50%; }
+@media (prefers-reduced-motion: reduce) {
+  .slidev-layout[class*="plug-"] *,
+  .slidev-layout[class*="plug-"] *::before,
+  .slidev-layout[class*="plug-"] *::after { animation: none !important; }
+  .slidev-layout[class*="plug-"] :is(.pipe-step, .token, .clause, .seal, .attempt, .works, .step, .step b, .callout, .heist-note),
+  .slidev-layout.plug-steps .steps::after,
+  .slidev-layout.plug-payoff ol::after { transition: opacity 120ms linear !important; }
+  .slidev-layout.plug-pipe .pipe-step.slidev-vclick-hidden::before { scale: none; }
+  .slidev-layout.plug-pipe .pipe-step.slidev-vclick-hidden::after { translate: none; }
+  .rise-enter-active .slidev-layout[class*="plug-"] :is(tbody td, .mk-no, .toast, .hl),
+  .rise-enter-active .slidev-layout.plug-build > .mermaid { transition: none; }
+  .rise-enter-from .slidev-layout[class*="plug-"] :is(tbody td, .toast) { opacity: 1; translate: none; scale: none; }
+  .rise-enter-from .slidev-layout.plug-ways .mk-no { scale: none; }
+  .rise-enter-from .slidev-layout.plug-build > .mermaid { clip-path: inset(-24px); }
+  .rise-enter-from .slidev-layout.plug-punch .hl { background-size: 100% 0.12em; }
 }

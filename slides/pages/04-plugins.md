@@ -175,12 +175,37 @@ flowchart LR
   G --> P[(The post)]
 ```
 
-You write the trust contract, `generateCover`, two entry points and the publish rule. The starter has the rest.
-
 <!--
 One function, every entry point. Editors and agents call exactly the same code, through private routes.
+-->
 
-Step 9. The starter has the parts that aren't worth typing in a workshop: the scaffold, the settings page, the editor-action wiring and the test setup.
+---
+layout: two-cols-header
+layoutClass: plug-cols
+---
+
+# The starter
+
+::left::
+
+### Already done
+
+- Scaffold
+- Settings page
+- Editor-action wiring
+- Test setup
+
+::right::
+
+### You write
+
+- The trust contract
+- `generateCover`
+- Two entry points
+- The publish rule
+
+<!--
+Step 9. The starter has the parts that aren't worth typing in a workshop.
 -->
 
 ---
@@ -212,12 +237,33 @@ Step 11. One click per line:
 -->
 
 ---
+layout: two-cols-header
+layoutClass: plug-cols
+---
+
+# Two entry points, one function
+
+::left::
+
+### Editors
+
+A **Generate cover** button in the post editor
+
+::right::
+
+### Agents
+
+An MCP tool: `cover-images__generateCover`
+
+<!--
+Step 12. Both call private routes with the permission content:edit_any. A plugin route checks only the user's role, not who owns the post, so anything narrower would let Authors change anyone's post.
+-->
+
+---
 class: plug-tool
 ---
 
 # The MCP tool
-
-Editors get a **Generate cover** button. Agents get this tool:
 
 ```ts {all|3-4}
 mcp: { tools: {
@@ -233,9 +279,7 @@ mcp: { tools: {
 <div class="callout" :class="{ on: $clicks >= 1 }">The description tells the agent when to use it.</div>
 
 <!--
-Step 12. Both entry points call private routes with the permission content:edit_any. A plugin route checks only the user's role, not who owns the post, so anything narrower would let Authors change anyone's post.
-
-The tool appears as `cover-images__generateCover`. Its description tells the agent when to use it. That's what makes the payoff work without you telling the agent anything.
+The description tells the agent when to use it. That's what makes the payoff work without you telling the agent anything.
 -->
 
 ---
@@ -267,22 +311,33 @@ Tests call host.invokeHook with a post that has a cover and one that doesn't. Ge
 
 ---
 layout: statement
-class: plug-paths
 ---
 
 # Rules beat prompts
-
-The hook runs on every path:
-
-<div class="paths"><span>The admin</span><span>The REST API</span><span>MCP</span><span>The scheduler</span><span>Other plugins</span></div>
 
 <!--
 You could ask your agent to always add a cover. It might forget. A hook doesn't.
 -->
 
 ---
+class: plug-list
+---
+
+# The hook runs on every path
+
+<v-clicks>
+
+- The admin
+- The REST API
+- MCP
+- The scheduler
+- Other plugins
+
+</v-clicks>
+
+---
 layout: two-cols-header
-layoutClass: plug-install
+layoutClass: plug-cols
 ---
 
 # Install it on your live site
@@ -359,10 +414,21 @@ pnpm exec emdash-plugin bundle
 pnpm exec emdash-plugin publish   # on stage only
 ```
 
-<div v-click class="seal"><span><strong>Approved before install.</strong> The same contract you wrote: five capabilities, two hosts.</span></div>
-
 <!--
 Step 16. Attendees run validate and bundle. Matt runs publish live: it signs the release with an Atmosphere account. After review, anyone can install it from the registry.
-
-The consent screen lists the five capabilities (network, content, revisions, media, publish rules) and the two hosts (api.replicate.com and *.replicate.delivery).
 -->
+
+---
+class: plug-approve
+---
+
+# Before installing, an operator approves
+
+<v-clicks>
+
+- Five capabilities: network, content, revisions, media, publish rules
+- Two hosts: `api.replicate.com` and `*.replicate.delivery`
+
+</v-clicks>
+
+<div v-click class="seal"><span><strong>The same contract you wrote.</strong></span></div>
